@@ -193,7 +193,7 @@ public class Door : MonoBehaviour {
 	void OnGUI ()
 	{
 		// Access InReach variable from raycasting script.
-		GameObject Player = GameObject.Find("Player");
+		GameObject Player = GameObject.Find("FirstPersonCharacter");
 		Detection detection = Player.GetComponent<Detection>();
 
 		if (detection.InReach == true)
