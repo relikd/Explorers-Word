@@ -5,36 +5,32 @@ using System.Collections;
 
 public class VictorianLight : MonoBehaviour 
 {
-	
-
 	public Material LightsOn;
 	public Material LightsOff;
 
 	[HideInInspector] public bool Running = false;
-
-	private GameObject gaga;
-	VictorianLight() {
-		
-	}
+	private string LightsOnName = "Streetlight_On";
+	private string LightsOffName = "Streetlight_Off";
 
 	void Update() {
 	}
 
 	void Start() {
 		enabled = true;
-
-		GameObject go = GameObject.CreatePrimitive(PrimitiveType.Plane);
-		Renderer rend = go.GetComponent<Renderer>();
-		//this. = Resources.Load("Victorian Streetlight/Material/Streetlight_On") as Material;
-
-
-		gaga = Instantiate(Resources.Load("Victorian Streetlight/Prefabs/Streetlight_00_on", typeof(GameObject))) as GameObject;
-
 	}
 
 	public void TurnLightsOn() {
-		this.GetComponent<Renderer> ().material = LightsOn;
-//		this.gaga.GetComponent<Renderer>().material.mainTexture
+		//Material currentMaterial = this.GetComponent<Renderer> ().material;
+		print(GetComponent<Renderer> ().material.name);
+
+		if (GetComponent<Renderer> ().material.name.Contains(LightsOffName)) {
+			GetComponent<Renderer> ().material = LightsOn;
+			Running = true;
+		} else {
+			GetComponent<Renderer> ().material = LightsOff;
+			Running = true;
+		}
+		Running = false;
 	}
 	
 	void OnGUI ()

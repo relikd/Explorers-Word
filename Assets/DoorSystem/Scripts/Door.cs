@@ -79,7 +79,7 @@ public class Door : MonoBehaviour {
 				HingePosCopy.y = PosDoorY;
 
 				HingeRotCopy.x = RotDoorX;
-				HingeRotCopy.y = -StartAngle;
+				HingeRotCopy.y = StartAngle;
 				HingeRotCopy.z = RotDoorZ;
 			}
 
