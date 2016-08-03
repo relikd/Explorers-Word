@@ -5,10 +5,14 @@ using System.Collections;
 
 public class VictorianLight : MonoBehaviour 
 {
+	
+
+	public Material LightsOn;
+	public Material LightsOff;
+
 	[HideInInspector] public bool Running = false;
 
-	private Material material;
-
+	private GameObject gaga;
 	VictorianLight() {
 		
 	}
@@ -18,12 +22,19 @@ public class VictorianLight : MonoBehaviour
 
 	void Start() {
 		enabled = true;
-		material = Resources.Load("Materials/Streetlight_On", typeof(Material)) as Material;
+
+		GameObject go = GameObject.CreatePrimitive(PrimitiveType.Plane);
+		Renderer rend = go.GetComponent<Renderer>();
+		//this. = Resources.Load("Victorian Streetlight/Material/Streetlight_On") as Material;
+
+
+		gaga = Instantiate(Resources.Load("Victorian Streetlight/Prefabs/Streetlight_00_on", typeof(GameObject))) as GameObject;
+
 	}
 
 	public void TurnLightsOn() {
-		GetComponent<Renderer> ().material = this.material;
-	
+		this.GetComponent<Renderer> ().material = LightsOn;
+//		this.gaga.GetComponent<Renderer>().material.mainTexture
 	}
 	
 	void OnGUI ()
@@ -35,7 +46,7 @@ public class VictorianLight : MonoBehaviour
 		if (detection.InReach == true)
 		{
 			GUI.color = Color.white;
-			GUI.Box(new Rect(20, 20, 200, 25), "Press 'E' to open/close");
+			GUI.Box(new Rect(20, 20, 200, 25), "Press 'E' to turn on / off");
 		}
 	}
 }
