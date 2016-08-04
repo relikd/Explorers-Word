@@ -20,8 +20,6 @@ public class VictorianLight : MonoBehaviour
 	}
 
 	public void TurnLightsOn() {
-		//Material currentMaterial = this.GetComponent<Renderer> ().material;
-		print(GetComponent<Renderer> ().material.name);
 
 		if (GetComponent<Renderer> ().material.name.Contains("Streetlight_Off")) {
 			GetComponent<Renderer> ().material = LightsOn;
@@ -37,7 +35,7 @@ public class VictorianLight : MonoBehaviour
 	{
 		// Access InReach variable from raycasting script.
 		GameObject Player = GameObject.Find("FirstPersonCharacter");
-		TurnLightOn detection = Player.GetComponent<TurnLightOn>();
+		Reachable detection = Player.GetComponent<Reachable>();
 
 		if (detection.InReach == true)
 		{
