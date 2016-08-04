@@ -52,7 +52,7 @@ public class TurnLightOn : MonoBehaviour
 			{
 				InReach = true;
 
-				if (Input.GetKey(KeyCode.E))
+				if (Input.GetKeyUp(KeyCode.E))
 				{
 					// Give the object that was hit the name 'Door'.
 					GameObject CurrentVictorianLight = hit.transform.gameObject;
