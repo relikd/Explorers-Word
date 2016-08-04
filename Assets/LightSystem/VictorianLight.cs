@@ -23,7 +23,7 @@ public class VictorianLight : MonoBehaviour
 		//Material currentMaterial = this.GetComponent<Renderer> ().material;
 		print(GetComponent<Renderer> ().material.name);
 
-		if (GetComponent<Renderer> ().material.name.Contains(LightsOffName)) {
+		if (GetComponent<Renderer> ().material.name.Contains("Streetlight_Off")) {
 			GetComponent<Renderer> ().material = LightsOn;
 			Running = true;
 		} else {
@@ -42,7 +42,7 @@ public class VictorianLight : MonoBehaviour
 		if (detection.InReach == true)
 		{
 			GUI.color = Color.white;
-			GUI.Box(new Rect(20, 20, 200, 25), "Press 'E' to turn on / off");
+			GUI.Box(new Rect(Screen.width / 2, Screen.height / 2, 200, 25), "Press 'E' to turn on / off");
 		}
 	}
 }
