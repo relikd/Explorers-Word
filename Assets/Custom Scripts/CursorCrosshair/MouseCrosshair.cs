@@ -25,7 +25,7 @@ public class MouseCrosshair : MonoBehaviour {
 	{
 		GUI.DrawTexture (positionDot, CrosshairDot);
 		GameObject Player = GameObject.Find("FirstPersonCharacter");
-		TurnLightOn detection = Player.GetComponent<TurnLightOn>();
+		Reachable detection = Player.GetComponent<Reachable>();
 
 		if (detection.InReach == true) {
 			GUI.DrawTexture (positionCircle,  CrosshairCircle);
