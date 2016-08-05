@@ -9,8 +9,6 @@ public class VictorianLight : MonoBehaviour
 	public Material LightsOff;
 
 	[HideInInspector] public bool Running = false;
-	private string LightsOnName = "Streetlight_On";
-	private string LightsOffName = "Streetlight_Off";
 
 	void Update() {
 	}

@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 public class TurnLightsOn : MonoBehaviour
 {
-
+	public string TriggerTag;
 
 	//START FUNCTION
 	void Start()
@@ -21,7 +21,7 @@ public class TurnLightsOn : MonoBehaviour
 
 		if (detection.InReach == true)
 		{
-			if (Input.GetKeyUp (KeyCode.E)) {
+			if (Input.GetKeyUp (KeyCode.E) && detection.RaycastHit.collider.tag == TriggerTag) {
 				// Give the object that was hit the name 'Door'.
 				GameObject CurrentVictorianLight = detection.RaycastHit.transform.gameObject;
 
