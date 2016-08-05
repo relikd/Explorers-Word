@@ -6,7 +6,7 @@ using UnityEngine.UI;
 	{
 		public float Reach = 0F;
 		//[Tooltip("The tag that triggers the object to be openable")]
-		public string TriggerTag = "asdfs";
+		//public string TriggerTag = "asdfs";
 
 		// PRIVATE SETTINGS
 		[HideInInspector] public bool InReach;
@@ -23,11 +23,7 @@ using UnityEngine.UI;
 		if (Physics.Raycast (ray, out hit, Reach))
 		{
 			RaycastHit = hit;	
-			if (hit.collider.tag == TriggerTag) 
-			{
-				InReach = true;
-			} else
-				InReach = false;
+			InReach = true;
 				
 		}else
 			InReach = false;
