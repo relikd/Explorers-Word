@@ -5,6 +5,8 @@ using UnityEngine.UI;
 
 public class TurnLightsOn : MonoBehaviour
 {
+
+
 	//START FUNCTION
 	void Start()
 	{
