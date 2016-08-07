@@ -2,7 +2,7 @@
 using System.Collections;
 
 public class MouseLock : MonoBehaviour {
-	CursorLockMode wantedMode;
+	public CursorLockMode wantedMode;
 
 	// Apply requested cursor state
 	void SetCursorState ()
