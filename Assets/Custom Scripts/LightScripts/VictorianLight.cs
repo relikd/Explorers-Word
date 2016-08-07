@@ -35,7 +35,8 @@ public class VictorianLight : MonoBehaviour
 		GameObject Player = GameObject.Find("FirstPersonCharacter");
 		Reachable detection = Player.GetComponent<Reachable>();
 
-		if (detection.InReach == true)
+
+		if (detection.InReach == true && detection.RaycastHit.collider.tag == gameObject.tag)
 		{
 			GUI.color = Color.white;
 			GUI.Box(new Rect(Screen.width / 2, Screen.height / 2, 200, 25), "Press 'E' to turn on / off");
