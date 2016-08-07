@@ -10,9 +10,7 @@ public class HoldableObject : MonoBehaviour
 	//[HideInInspector] public bool Running = false;
 	[HideInInspector] public bool currentlyPicked;
 
-
 	void Update() {
-
 
 	}
 
@@ -40,12 +38,19 @@ public class HoldableObject : MonoBehaviour
 
 		if (Input.GetKeyUp (KeyCode.E) ) {
 			if (currentlyPicked == false && detection.RaycastHit.collider.tag == TriggerTag && detection.InReach == true) {
+				HandleRigidBody (true);
 				Pickup ();
 			} else {
+				HandleRigidBody (false);
 				Drop();
 			}
 		}
-	
+	}
+
+	private void HandleRigidBody(bool isKinematic) {
+		if (gameObject.GetComponent<Rigidbody> ()) {
+			gameObject.GetComponent<Rigidbody> ().isKinematic = isKinematic;
+		}
 	}
 
 	void OnGUI ()
