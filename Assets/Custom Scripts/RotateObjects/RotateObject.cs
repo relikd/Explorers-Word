@@ -6,11 +6,14 @@ namespace AssemblyCSharp
 {
 	public class RotateObject : MonoBehaviour
 	{
-		public int degree; 
+		public int degree;
+		public bool rotateXAxis = false;
+		public bool rotateYAxis = true;
+		public bool rotateZAxis = false;
 
 		void LateUpdate() {
 			if (Input.GetKey (KeyCode.E)) {
-				gameObject.transform.Rotate (Vector3.up * degree);
+				gameObject.transform.Rotate(rotateXAxis?degree:0,rotateYAxis?degree:0,rotateZAxis?degree:0);
 
 			}
 		}
