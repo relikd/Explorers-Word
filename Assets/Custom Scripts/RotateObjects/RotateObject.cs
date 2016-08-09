@@ -6,16 +6,32 @@ namespace AssemblyCSharp
 {
 	public class RotateObject : MonoBehaviour
 	{
-		public int degree;
-		public bool rotateXAxis = false;
-		public bool rotateYAxis = true;
-		public bool rotateZAxis = false;
+		private RotationLimiter rl_script;
+
+		public float rotateXAxisBy = 0;
+		public float rotateYAxisBy = 10;
+		public float rotateZAxisBy = 0;
+		public bool stepAngle = false;
 
 		void LateUpdate() {
-			if (Input.GetKey (KeyCode.E)) {
-				gameObject.transform.Rotate(rotateXAxis?degree:0,rotateYAxis?degree:0,rotateZAxis?degree:0);
+			if (stepAngle ? Input.GetKeyUp(KeyCode.E) : Input.GetKey(KeyCode.E)) {
 
+				gameObject.transform.Rotate(rotateXAxisBy,rotateYAxisBy,rotateZAxisBy);
+
+				if (rl_script) {
+					int ool = rl_script.outOfLimit ();
+					if ((ool & 1)!=0) rotateXAxisBy *= -1;
+					if ((ool & 2)!=0) rotateYAxisBy *= -1;
+					if ((ool & 4)!=0) rotateZAxisBy *= -1;
+
+					if (ool > 0 && !rl_script.isDirectlyOnLimit())
+						gameObject.transform.Rotate(rotateXAxisBy,rotateYAxisBy,rotateZAxisBy);
+				}
 			}
+		}
+
+		void Start () {
+			rl_script = gameObject.GetComponent<RotationLimiter>();
 		}
 
 		void OnGUI ()
