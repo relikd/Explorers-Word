@@ -7,9 +7,10 @@ namespace ExplorersBook
 	public class OpenExplorersBook : MonoBehaviour
 	{
 		public GameObject explBook;
-		public RectTransform canvas;
-		public RectTransform UI_Element;
-		public Camera cammera;
+//		public RectTransform canvas;
+//		public RectTransform UI_Element;
+//		public Camera cammera;
+		public GameObject inputField;
 
 		private bool isActive = false;
 		private bool rotated = false;
@@ -22,7 +23,12 @@ namespace ExplorersBook
 				explBook.SetActive (isActive);
 				DisablePlayerMovement ();
 				UnlockMouseMovement ();
+				ActivateUserInputField ();
 			}
+		}
+
+		private void ActivateUserInputField() {
+			inputField.SetActive(isActive);
 		}
 
 		private void DisablePlayerMovement() {
@@ -43,27 +49,27 @@ namespace ExplorersBook
 		void OnGUI() {
 			//GUI.Label (new Rect (0, 0, Screen.width, Screen.height), "Here is a block of text\nlalalala\nanother line\nI could do this all day!");
 			if (!rotated) { 
-				Vector3 explorersBookRotation = explBook.transform.rotation.eulerAngles;
-//				Vector3 explorersBookTranslation = explBook.transform.position;
-//				TextPanel.transform.position = explorersBookTranslation;
-//				TextPanel.transform.Rotate (explorersBookRotation);
-				UI_Element.transform.Rotate(explorersBookRotation);
-				RectTransform CanvasRect = canvas.GetComponent<RectTransform> ();
-
-				Vector2 ViewportPosition = cammera.WorldToViewportPoint (explBook.transform.position);
-				Vector2 WorldObject_ScreenPosition = new Vector2 (
-					((ViewportPosition.x * canvas.sizeDelta.x) - (CanvasRect.sizeDelta.x * 0.5f)),
-					((ViewportPosition.x * canvas.sizeDelta.y) - (CanvasRect.sizeDelta.y * 0.5f)));
-
-
-				Vector2 BookScreenCoord = RectTransformUtility.WorldToScreenPoint (cammera, explBook.transform.position);
-
-
-				UI_Element.anchoredPosition3D = WorldObject_ScreenPosition;
-				 
-
-				//UI_Element.transform.SetParent(explBook.transform);
-				rotated = true;
+//				Vector3 explorersBookRotation = explBook.transform.rotation.eulerAngles;
+////				Vector3 explorersBookTranslation = explBook.transform.position;
+////				TextPanel.transform.position = explorersBookTranslation;
+////				TextPanel.transform.Rotate (explorersBookRotation);
+//				UI_Element.transform.Rotate(explorersBookRotation);
+//				RectTransform CanvasRect = canvas.GetComponent<RectTransform> ();
+//
+//				Vector2 ViewportPosition = cammera.WorldToViewportPoint (explBook.transform.position);
+//				Vector2 WorldObject_ScreenPosition = new Vector2 (
+//					((ViewportPosition.x * canvas.sizeDelta.x) - (CanvasRect.sizeDelta.x * 0.5f)),
+//					((ViewportPosition.x * canvas.sizeDelta.y) - (CanvasRect.sizeDelta.y * 0.5f)));
+//
+//
+//				Vector2 BookScreenCoord = RectTransformUtility.WorldToScreenPoint (cammera, explBook.transform.position);
+//
+//
+//				UI_Element.anchoredPosition3D = WorldObject_ScreenPosition;
+//				 
+//
+//				//UI_Element.transform.SetParent(explBook.transform);
+//				rotated = true;
 			}
 		}
 
