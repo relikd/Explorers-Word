@@ -6,7 +6,6 @@ namespace ExplorersBook
 {
 	public class OpenExplorersBook : MonoBehaviour
 	{
-		public RectTransform TextPanel;
 		public GameObject explBook;
 		public RectTransform canvas;
 		public RectTransform UI_Element;
@@ -61,10 +60,9 @@ namespace ExplorersBook
 
 
 				UI_Element.anchoredPosition3D = WorldObject_ScreenPosition;
-				TextPanel.anchoredPosition = ViewportPosition;
+				 
 
 				//UI_Element.transform.SetParent(explBook.transform);
-
 				rotated = true;
 			}
 		}
