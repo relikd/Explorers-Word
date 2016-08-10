@@ -27,8 +27,10 @@ public class HoldableObject : MonoBehaviour, Interactable
 	}
 
 	public void HandleRaycastCollission() {
-		HandleRigidBody (true);		
-		Pickup ();
+		if (Input.GetKeyUp (KeyCode.E)) {
+			HandleRigidBody (true);		
+			Pickup ();
+		}
 	}
 
 	void Pickup() {
