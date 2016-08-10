@@ -1,22 +1,27 @@
 fileFormatVersion: 2
-guid: a1ee50049aab1424b8dfc154b64ea00b
-timeCreated: 1470553228
+guid: 3b67b71bb868d4fa8ae804f1e2590c50
+timeCreated: 1470849682
 licenseType: Free
 ModelImporter:
   serializedVersion: 19
   fileIDToRecycleName:
-    100000: //RootNode
-    100002: image_plane
+    100000: horizontal_plane
+    100002: //RootNode
     100004: rahmen
-    400000: //RootNode
-    400002: image_plane
+    100006: vertical_plane
+    400000: horizontal_plane
+    400002: //RootNode
     400004: rahmen
-    2300000: image_plane
+    400006: vertical_plane
+    2300000: horizontal_plane
     2300002: rahmen
-    3300000: image_plane
+    2300004: vertical_plane
+    3300000: horizontal_plane
     3300002: rahmen
-    4300000: image_plane
-    4300002: rahmen
+    3300004: vertical_plane
+    4300000: vertical_plane
+    4300002: horizontal_plane
+    4300004: rahmen
   materials:
     importMaterials: 1
     materialName: 0
