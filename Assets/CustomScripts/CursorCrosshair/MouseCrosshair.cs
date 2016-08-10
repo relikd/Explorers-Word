@@ -1,11 +1,13 @@
 ﻿using UnityEngine;
 using System.Collections;
+using Interaction;
 
-public class MouseCrosshair : MonoBehaviour {
+public class MouseCrosshair : MonoBehaviour, Interactable {
 	public Texture2D CrosshairDot;
 	public Texture2D CrosshairCircle;
 	private Rect positionDot;
 	private Rect positionCircle;
+	private bool shouldChangeTexture;
 
 	// Use this for initialization
 	void Start () {
@@ -21,13 +23,18 @@ public class MouseCrosshair : MonoBehaviour {
 		
 	}
 
+	public void HandleRaycastCollission() {
+		
+	}
+
+	public void EnableGUI(bool enable) {
+		shouldChangeTexture = enable;
+	}
+
 	void OnGUI ()
 	{
 		GUI.DrawTexture (positionDot, CrosshairDot);
-		GameObject Player = GameObject.Find("FirstPersonCharacter");
-		Reachable detection = Player.GetComponent<Reachable>();
-
-		if (detection.InReach == true) {
+		if (shouldChangeTexture) {
 			GUI.DrawTexture (positionCircle,  CrosshairCircle);
 		}
 	}

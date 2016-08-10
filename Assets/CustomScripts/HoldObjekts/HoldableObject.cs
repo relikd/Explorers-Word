@@ -8,7 +8,6 @@ namespace Interaction {
 public class HoldableObject : MonoBehaviour, Interactable
 {
 	public GameObject target;
-	public string TriggerTag;
 	[HideInInspector]public bool shouldDepictText;
 
 	void Update() {

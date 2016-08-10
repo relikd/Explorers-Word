@@ -9,7 +9,7 @@ public class VictorianLight : MonoBehaviour, Interactable
 	public Material LightsOn;
 	public Material LightsOff;
 
-	[HideInInspector] public bool shouldDisplayText = false;
+	[HideInInspector] private bool shouldDisplayText = false;
 
 	void Update() {
 	}

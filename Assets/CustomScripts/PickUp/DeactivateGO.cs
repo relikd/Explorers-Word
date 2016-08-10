@@ -1,10 +1,11 @@
 ﻿using UnityEngine;
 using System.Collections;
+using Interaction;
 
-public class DeactivateGO : MonoBehaviour {
+public class DeactivateGO : MonoBehaviour, Interactable {
 
-	public string TriggerTag;
 	public bool shouldPickUpStatic = false;
+	private bool shouldDepictText;
 
 	void Start ()
 	{
@@ -12,26 +13,27 @@ public class DeactivateGO : MonoBehaviour {
 	}
 		
 	void LateUpdate() {
-	
+
+	}
+
+	public void HandleRaycastCollission() {
 		GameObject Player = GameObject.Find("FirstPersonCharacter");
 		Reachable detection = Player.GetComponent<Reachable>();
 
 		gameObject.isStatic = !shouldPickUpStatic;
 
-		if (Input.GetKeyUp (KeyCode.E) ) {
-			if (detection.RaycastHit.collider.tag == TriggerTag && detection.InReach == true) {
-				this.gameObject.SetActive(false);
-			}
+		if (Input.GetKeyUp (KeyCode.T) ) {		 
+			this.gameObject.SetActive(false);
 		}
+	}
+	
+	public void EnableGUI(bool enable) {
+		shouldDepictText = enable;
 	}
 
 	void OnGUI ()
 	{
-		// Access InReach variable from raycasting script.
-		GameObject Player = GameObject.Find("FirstPersonCharacter");
-		Reachable detection = Player.GetComponent<Reachable>();
-
-		if (detection.InReach == true && detection.RaycastHit.collider.tag == gameObject.tag)
+		if (shouldDepictText)
 		{
 			GUI.color = Color.white;
 			GUI.Box(new Rect(Screen.width / 2, (Screen.height / 2) + 10, 200, 25), "Press 'E' to take");
