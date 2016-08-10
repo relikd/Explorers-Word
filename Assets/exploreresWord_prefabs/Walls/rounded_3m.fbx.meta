@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: f562083cf07064f62bd6e2acec04dcae
+guid: 8ea088b802e1e40128b03ce827b88d81
 timeCreated: 1470829120
 licenseType: Free
 ModelImporter:
@@ -9,7 +9,7 @@ ModelImporter:
     400000: //RootNode
     2300000: //RootNode
     3300000: //RootNode
-    4300000: door
+    4300000: rounded_3m
   materials:
     importMaterials: 1
     materialName: 0
