@@ -3,12 +3,13 @@ using UnityEngine;
 using UnityEditor;
 using System.Collections;
 
-public class HoldableObject : MonoBehaviour 
+public class HoldableObject : MonoBehaviour, Interactable
 {
 	public GameObject target;
 	public string TriggerTag;
 	//[HideInInspector] public bool Running = false;
 	[HideInInspector] public bool currentlyPicked;
+	public bool shouldDepictText;
 
 	void Update() {
 
@@ -18,33 +19,30 @@ public class HoldableObject : MonoBehaviour
 		enabled = true;
 	}
 
-	 void Pickup() {
+	void LateUpdate() {
+		if (Input.GetKeyDown (KeyCode.E) && currentlyPicked == true) {
+			Drop ();
+			HandleRigidBody (false);
+		}
+	}
+
+	public void HandleRaycastCollission() {
+		HandleRigidBody (true);		
+		Pickup ();
+		currentlyPicked = true;
+	}
+
+	void Pickup() {
 		this.transform.position = this.target.transform.position;
 		this.transform.parent = GameObject.Find ("FPSController").transform;
 		this.transform.parent = GameObject.Find ("FirstPersonCharacter").transform;
-		currentlyPicked = true;
+		shouldDepictText = false;
 	}
 
 	void Drop() {
 		this.transform.parent = GameObject.Find ("FPSController").transform;
 		this.transform.parent = null;
-		currentlyPicked = false;
-	}
-
-	void LateUpdate() {
-		GameObject Player = GameObject.Find("FirstPersonCharacter");
-		Reachable detection = Player.GetComponent<Reachable>();
-
-
-		if (Input.GetKeyUp (KeyCode.E) ) {
-			if (currentlyPicked == false && detection.RaycastHit.collider.tag == TriggerTag && detection.InReach == true) {
-				HandleRigidBody (true);
-				Pickup ();
-			} else {
-				HandleRigidBody (false);
-				Drop();
-			}
-		}
+		shouldDepictText = false;
 	}
 
 	private void HandleRigidBody(bool isKinematic) {
@@ -53,16 +51,17 @@ public class HoldableObject : MonoBehaviour
 		}
 	}
 
+	public void EnableGUI() {
+		shouldDepictText = true;
+	}
+
 	void OnGUI ()
 	{
-		// Access InReach variable from raycasting script.
-		GameObject Player = GameObject.Find("FirstPersonCharacter");
-		Reachable detection = Player.GetComponent<Reachable>();
-
-		if (detection.InReach == true && detection.RaycastHit.collider.tag == gameObject.tag)
+		if (shouldDepictText)
 		{
 			GUI.color = Color.white;
 			GUI.Box(new Rect(Screen.width / 2, (Screen.height / 2) + 10, 200, 25), "Press 'E' to hold / drop");
+					
 		}
 	}
 }
