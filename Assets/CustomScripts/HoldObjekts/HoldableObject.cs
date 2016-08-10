@@ -7,9 +7,7 @@ public class HoldableObject : MonoBehaviour, Interactable
 {
 	public GameObject target;
 	public string TriggerTag;
-	//[HideInInspector] public bool Running = false;
-	[HideInInspector] public bool currentlyPicked;
-	public bool shouldDepictText;
+	[HideInInspector]public bool shouldDepictText;
 
 	void Update() {
 
@@ -20,7 +18,7 @@ public class HoldableObject : MonoBehaviour, Interactable
 	}
 
 	void LateUpdate() {
-		if (Input.GetKeyDown (KeyCode.E) && currentlyPicked == true) {
+		if (Input.GetKeyDown (KeyCode.E) && shouldDepictText == false) {
 			Drop ();
 			HandleRigidBody (false);
 		}
@@ -29,7 +27,6 @@ public class HoldableObject : MonoBehaviour, Interactable
 	public void HandleRaycastCollission() {
 		HandleRigidBody (true);		
 		Pickup ();
-		currentlyPicked = true;
 	}
 
 	void Pickup() {
