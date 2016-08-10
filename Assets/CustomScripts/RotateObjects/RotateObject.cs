@@ -12,7 +12,7 @@ namespace Interaction
 		public float rotateYAxisBy = 10;
 		public float rotateZAxisBy = 0;
 		public bool stepAngle = false;
-		[HideInInspector] bool shouldDepictText;
+		private bool shouldDepictText;
 
 		void LateUpdate() {
 			

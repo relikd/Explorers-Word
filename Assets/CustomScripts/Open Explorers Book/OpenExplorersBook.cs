@@ -7,9 +7,6 @@ namespace ExplorersBook
 	public class OpenExplorersBook : MonoBehaviour
 	{
 		public GameObject explBook;
-//		public RectTransform canvas;
-//		public RectTransform UI_Element;
-//		public Camera cammera;
 		public GameObject inputField;
 
 		private bool isActive = false;
