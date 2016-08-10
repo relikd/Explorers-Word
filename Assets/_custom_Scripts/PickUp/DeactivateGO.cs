@@ -17,8 +17,8 @@ public class DeactivateGO : MonoBehaviour, Interactable {
 	}
 
 	public void HandleRaycastCollission() {
-		GameObject Player = GameObject.Find("FirstPersonCharacter");
-		Reachable detection = Player.GetComponent<Reachable>();
+		//GameObject Player = GameObject.Find("FirstPersonCharacter");
+		//Reachable detection = Player.GetComponent<Reachable>();
 
 		gameObject.isStatic = !shouldPickUpStatic;
 
