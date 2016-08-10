@@ -2,13 +2,14 @@
 using UnityEngine;
 using UnityEditor;
 using System.Collections;
+using Interaction;
 
-public class VictorianLight : MonoBehaviour 
+public class VictorianLight : MonoBehaviour, Interactable 
 {
 	public Material LightsOn;
 	public Material LightsOff;
 
-	[HideInInspector] public bool Running = false;
+	[HideInInspector] public bool shouldDisplayText = false;
 
 	void Update() {
 	}
@@ -17,26 +18,23 @@ public class VictorianLight : MonoBehaviour
 		enabled = true;
 	}
 
-	public void TurnLightsOn() {
-
-		if (GetComponent<Renderer> ().material.name.Contains("Streetlight_Off")) {
-			GetComponent<Renderer> ().material = LightsOn;
-			Running = true;
-		} else {
-			GetComponent<Renderer> ().material = LightsOff;
-			Running = true;
+	public void HandleRaycastCollission() {
+		if (Input.GetKeyUp (KeyCode.E)) {
+			if (GetComponent<Renderer> ().material.name.Contains ("Streetlight_Off")) {
+				GetComponent<Renderer> ().material = LightsOn;
+			} else {
+				GetComponent<Renderer> ().material = LightsOff;
+			}
 		}
-		Running = false;
 	}
-	
+
+	public void EnableGUI(bool enable) {
+		shouldDisplayText = enable;
+	}
+
 	void OnGUI ()
 	{
-		// Access InReach variable from raycasting script.
-		GameObject Player = GameObject.Find("FirstPersonCharacter");
-		Reachable detection = Player.GetComponent<Reachable>();
-
-
-		if (detection.InReach == true && detection.RaycastHit.collider.tag == gameObject.tag)
+		if (shouldDisplayText)
 		{
 			GUI.color = Color.white;
 			GUI.Box(new Rect(Screen.width / 2, Screen.height / 2, 200, 25), "Press 'E' to turn on / off");
