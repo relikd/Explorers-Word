@@ -1,37 +1,37 @@
 fileFormatVersion: 2
-guid: e23d30559d1674e118ff4f23b09a7e7d
-timeCreated: 1470856375
+guid: 270e1ea47ab9644d1a7e4048c1c34dac
+timeCreated: 1470856069
 licenseType: Free
 ModelImporter:
   serializedVersion: 19
   fileIDToRecycleName:
-    100000: draht
-    100002: //RootNode
-    100004: globe 1
-    100006: halter
-    100008: podest
-    100010: stand
-    400000: draht
-    400002: //RootNode
-    400004: globe 1
-    400006: halter
-    400008: podest
-    400010: stand
-    2300000: draht
-    2300002: globe 1
-    2300004: halter
-    2300006: podest
-    2300008: stand
-    3300000: draht
-    3300002: globe 1
-    3300004: halter
-    3300006: podest
-    3300008: stand
-    4300000: stand
-    4300002: draht
-    4300004: halter
-    4300006: globe
-    4300008: podest
+    100000: frame
+    100002: grid
+    100004: horizontal_bottom
+    100006: horizontal_top
+    100008: vertical
+    100010: //RootNode
+    400000: frame
+    400002: grid
+    400004: horizontal_bottom
+    400006: horizontal_top
+    400008: vertical
+    400010: //RootNode
+    2300000: frame
+    2300002: horizontal_bottom
+    2300004: horizontal_top
+    2300006: vertical
+    2300008: //RootNode
+    3300000: frame
+    3300002: horizontal_bottom
+    3300004: horizontal_top
+    3300006: vertical
+    3300008: //RootNode
+    4300000: window_large
+    4300002: frame
+    4300004: vertical
+    4300006: horizontal_top
+    4300008: horizontal_bottom
   materials:
     importMaterials: 1
     materialName: 0
