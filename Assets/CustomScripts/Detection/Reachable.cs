@@ -12,11 +12,10 @@ using UnityEngine.UI;
 		[HideInInspector] public bool InReach;
 		[HideInInspector] public RaycastHit RaycastHit;
 
-		void Update()
+		void LateUpdate()
 		{
 		// Set origin of ray to 'center of screen' and direction of ray to 'cameraview'.
 		Ray ray = Camera.main.ViewportPointToRay (new Vector3 (0.5F, 0.5F, 0F));
-
 		RaycastHit hit; // Variable reading information about the collider hit.
 
 		// Cast a ray from the center of screen towards where the player is looking.
@@ -24,6 +23,16 @@ using UnityEngine.UI;
 		{
 			RaycastHit = hit;	
 			InReach = true;
+
+			GameObject go = hit.transform.gameObject;
+			// Get access to the 'DoorOpening' script attached to the door that was hit.
+			Interactable goInteraction = go.GetComponent<Interactable>();
+
+			goInteraction.EnableGUI();
+
+			if (Input.GetKeyUp (KeyCode.E)) {
+				goInteraction.HandleRaycastCollission ();
+			}
 				
 		}else
 			InReach = false;
