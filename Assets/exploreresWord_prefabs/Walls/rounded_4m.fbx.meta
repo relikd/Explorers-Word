@@ -1,6 +1,6 @@
 fileFormatVersion: 2
-guid: 9ce2ebccee5d242dd8cb7c59a81f9215
-timeCreated: 1470800970
+guid: eee301317b86b414985aa52d99309008
+timeCreated: 1470829120
 licenseType: Free
 ModelImporter:
   serializedVersion: 19
@@ -9,7 +9,7 @@ ModelImporter:
     400000: //RootNode
     2300000: //RootNode
     3300000: //RootNode
-    4300000: rounded_edge_2m
+    4300000: rounded_4m
   materials:
     importMaterials: 1
     materialName: 0
