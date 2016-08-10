@@ -6,6 +6,7 @@ using Interaction;
 	public class Reachable : MonoBehaviour
 	{
 		GameObject currentGameObject;
+		bool initial = true;
 		public float Reach = 0F;
 		//[Tooltip("The tag that triggers the object to be openable")]
 		//public string TriggerTag = "asdfs";
@@ -24,26 +25,37 @@ using Interaction;
 			if (Physics.Raycast (ray, out hit, Reach)) {
 				RaycastHit = hit;	
 				
+
 				GameObject go = hit.transform.gameObject;
+			Debug.Log (go);
+
+			if (initial) {
 				currentGameObject = go;
-				Interactable[] goInteraction = go.GetComponents<Interactable> ();
+				initial = false;
+			}
+
+			if (currentGameObject == go ) {
+				currentGameObject = go;
+			} else {
+				deactiveGUI();
+				currentGameObject = go;
+			}
+
+				Interactable[] goInteraction = go.GetComponentsInChildren<Interactable> ();
 				foreach (Interactable i in goInteraction) {
 					i.EnableGUI (true);
 					i.HandleRaycastCollission();
 				}
-			} else {
-				InReach = false;
-				deactiveGUI();
+		} else {
+			deactiveGUI ();
 			}
-		}
+	}
 		
 	private void deactiveGUI() {
-			if (currentGameObject) {
-				Interactable[] goInteraction = currentGameObject.GetComponents<Interactable> ();
+			Interactable[] goInteraction = currentGameObject.GetComponents<Interactable> ();
 				foreach (Interactable i in goInteraction) {
 					i.EnableGUI (false);
 				}
-			}
 	}
 
 	}
