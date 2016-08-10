@@ -19,8 +19,7 @@ namespace Interaction
 		}
 
 		public void HandleRaycastCollision(){
-//			if (stepAngle ? Input.GetKeyUp(KeyCode.E) : Input.GetKey(KeyCode.E)) {
-			Debug.Log("asdfasdfasdfasdfasdf");
+		if (stepAngle ? Input.GetKeyUp(KeyCode.R) : Input.GetKey(KeyCode.R)) {
 				gameObject.transform.Rotate(rotateXAxisBy,rotateYAxisBy,rotateZAxisBy);
 
 				if (rl_script) {
@@ -33,7 +32,7 @@ namespace Interaction
 						gameObject.transform.Rotate(rotateXAxisBy,rotateYAxisBy,rotateZAxisBy);
 				}
 				shouldDepictText = false;
-//			}
+		}
 		}
 
 		public void EnableGUI(bool enable) {
