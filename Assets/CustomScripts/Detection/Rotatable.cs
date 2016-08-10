@@ -6,7 +6,6 @@ namespace Interaction
 	{
 		void HandleRaycastCollision () ;
 		void EnableGUI (bool enable);
-		bool foo();
 	}
 }
 

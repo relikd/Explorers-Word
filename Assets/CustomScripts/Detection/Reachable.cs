@@ -35,9 +35,9 @@ using Interaction;
 			goRotateAction.EnableGUI (true);
 			goInteraction.EnableGUI (true);
 
-			if (Input.GetKeyUp (KeyCode.R)) {
+
 				goRotateAction.HandleRaycastCollision ();
-			}
+
 
 			if (Input.GetKeyUp (KeyCode.E)) {
 				goInteraction.HandleRaycastCollission ();
