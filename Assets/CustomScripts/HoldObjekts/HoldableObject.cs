@@ -3,6 +3,8 @@ using UnityEngine;
 using UnityEditor;
 using System.Collections;
 
+
+namespace Interaction {
 public class HoldableObject : MonoBehaviour, Interactable
 {
 	public GameObject target;
@@ -18,7 +20,7 @@ public class HoldableObject : MonoBehaviour, Interactable
 	}
 
 	void LateUpdate() {
-		if (Input.GetKeyDown (KeyCode.E) && shouldDepictText == false) {
+		if (Input.GetKeyDown (KeyCode.E)) {
 			Drop ();
 			HandleRigidBody (false);
 		}
@@ -33,13 +35,13 @@ public class HoldableObject : MonoBehaviour, Interactable
 		this.transform.position = this.target.transform.position;
 		this.transform.parent = GameObject.Find ("FPSController").transform;
 		this.transform.parent = GameObject.Find ("FirstPersonCharacter").transform;
-		shouldDepictText = false;
+		
 	}
 
 	void Drop() {
 		this.transform.parent = GameObject.Find ("FPSController").transform;
 		this.transform.parent = null;
-		shouldDepictText = false;
+		
 	}
 
 	private void HandleRigidBody(bool isKinematic) {
@@ -48,8 +50,8 @@ public class HoldableObject : MonoBehaviour, Interactable
 		}
 	}
 
-	public void EnableGUI() {
-		shouldDepictText = true;
+	public void EnableGUI(bool enable) {
+			shouldDepictText = enable;
 	}
 
 	void OnGUI ()
@@ -57,8 +59,9 @@ public class HoldableObject : MonoBehaviour, Interactable
 		if (shouldDepictText)
 		{
 			GUI.color = Color.white;
-			GUI.Box(new Rect(Screen.width / 2, (Screen.height / 2) + 10, 200, 25), "Press 'E' to hold / drop");
+			GUI.Box(new Rect(Screen.width / 2, (Screen.height / 2) + 10, 200, 25), "Press 'E' to h / d");
 					
 		}
 	}
+}
 }
