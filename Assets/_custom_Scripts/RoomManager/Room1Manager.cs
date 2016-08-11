@@ -3,12 +3,16 @@ using System.Collections;
 
 public class Room1Manager : MonoBehaviour {
 
-	private GameObject plate_v, plate_h, crystal_small, crystal_large;
-	private GameObject light_plate_v, light_plate_h;
-	private int correct_angle_crystal_large, correct_angle_crystal_small, correct_angle_plate_v, correct_angle_plate_h;
+	private Transform plate_v, plate_h, crystal_small, crystal_large;
+	private int correct_angle_plate_v, correct_angle_plate_h;
+	private string lastPuzzleState;
+	private ArrayList activeLights;
+
+	private const string LIGHT_IDENT = "lichtstrahl";
 
 	void Start () {
 		saveInitialPuzzleState ();
+		activeLights = new ArrayList ();
 	}
 
 	void LateUpdate () {
@@ -16,59 +20,90 @@ public class Room1Manager : MonoBehaviour {
 	}
 
 	void saveInitialPuzzleState () {
-		plate_v = GameObject.Find ("plate_grp_v");
-		plate_h = GameObject.Find ("gold_plate_h");
-		crystal_small = GameObject.Find ("SM_Cristall_15");
-		crystal_large = GameObject.Find ("SM_Cristall_39");
-		light_plate_v = plate_v.transform.FindChild ("lichtstrahl").gameObject;
-		light_plate_h = plate_h.transform.FindChild ("lichtstrahl").gameObject;
+		plate_v = GameObject.Find ("plate_grp_v").transform;
+		plate_h = GameObject.Find ("gold_plate_h").transform;
+		crystal_small = GameObject.Find ("SM_Cristall_15").transform;
+		crystal_large = GameObject.Find ("SM_Cristall_39").transform;
 
 		// save correct angle first
-		correct_angle_crystal_large = (int)crystal_large.transform.rotation.eulerAngles.y;
-		correct_angle_crystal_small = (int)crystal_small.transform.rotation.eulerAngles.y;
-		correct_angle_plate_v = (int)plate_v.transform.rotation.eulerAngles.x;
-		correct_angle_plate_h = (int)plate_h.transform.rotation.eulerAngles.y;
+		correct_angle_plate_v = (int)plate_v.rotation.eulerAngles.x;
+		correct_angle_plate_h = (int)plate_h.rotation.eulerAngles.y;
 
 		// change starting position
-		plate_v.transform.Rotate (new Vector3(-21,0,0)); // x -21 to 14 step 7
-		plate_h.transform.Rotate (new Vector3(0,60,0)); // y -80 to 60 step 20
-		crystal_small.transform.Rotate (new Vector3(0,60,0)); // step 30
-		crystal_large.transform.Rotate (new Vector3(0,90,0)); // step 45
+		plate_v.Rotate (new Vector3(-21,0,0)); // x -21 to 14 step 7
+		plate_h.Rotate (new Vector3(0,60,0)); // y -80 to 60 step 20
+		crystal_small.Rotate (new Vector3(0,60,0)); // step 30
+		crystal_large.Rotate (new Vector3(0,90,0)); // step 45
 
-		// disable beam of light
-		light_plate_v.SetActive (false);
-		light_plate_h.SetActive (false);
-		foreach (Transform light in crystal_large.transform) {
+		// disable initial beams of light
+		plate_v.FindChild (LIGHT_IDENT).gameObject.SetActive (false);
+		plate_h.FindChild (LIGHT_IDENT).gameObject.SetActive (false);
+		foreach (Transform light in crystal_large) {
 			light.gameObject.SetActive (false);
 		}
 	}
 
 	void reEvaluatePuzzle () {
-		
-		bool activate_large_crystal = correctAngle (crystal_small);
-		bool activate_v = (activate_large_crystal && correctAngle (crystal_large));
-		bool activate_h = ((activate_large_crystal && correctAngle (crystal_large)) || equalAngleY (crystal_small, 270));
-		bool activate_book = (activate_v && activate_h && correctAngle (plate_v) && correctAngle (plate_h));
 
-		light_plate_v.SetActive (activate_v);
-		light_plate_h.SetActive (activate_h);
-		foreach (Transform light in crystal_large.transform) {
-			light.gameObject.SetActive (activate_large_crystal);
+		if (currentPuzzleState ().Equals (lastPuzzleState))
+			return;
+		lastPuzzleState = currentPuzzleState ();
+
+
+		// clear previous
+		foreach (Transform light in activeLights) {
+			light.gameObject.SetActive (false);
 		}
+		activeLights.Clear ();
 
-		if (activate_book) {
-			// will be called alot once finished
+		// begin all ray casting from first small crystal
+		lightHitObject (crystal_small);
+
+
+		// check if light is on (in activeLights) and angle is correct
+		if (correctAngle (plate_v) && correctAngle (plate_h) && 
+			activeLights.Contains (plate_v.FindChild (LIGHT_IDENT)) &&
+			activeLights.Contains (plate_h.FindChild (LIGHT_IDENT)))
+		{
+			// activate book
 			Debug.Log ("You solved it");
 		}
 	}
 
-	bool equalAngleY(GameObject go, int angle) {
-		return (int)go.transform.rotation.eulerAngles.y == angle;
+	string currentPuzzleState() {
+		string state = "s:" + crystal_small.rotation.eulerAngles.y;
+		state += ",l:" + crystal_large.rotation.eulerAngles.y;
+		state += ",v:" + plate_v.rotation.eulerAngles.x;
+		state += ",h:"+plate_h.rotation.eulerAngles.y;
+		return state;
 	}
-	bool correctAngle(GameObject go) {
-		Vector3 r = go.transform.rotation.eulerAngles;
-		if (go == crystal_small) return (int)r.y == correct_angle_crystal_small;
-		if (go == crystal_large) return (int)r.y == correct_angle_crystal_large;
+
+	void lightHitObject(Transform t) {
+		// go through all children
+		for (int i = 0; i < t.childCount; i++) {
+			Transform child = t.GetChild (i);
+			lightHitObject (child);
+		}
+		// if light beam found recast
+		if (t.name.Contains (LIGHT_IDENT) && !activeLights.Contains (t))
+		{
+			activeLights.Add (t);
+			t.gameObject.SetActive (true);
+			// set length of light beam
+			RaycastHit hit;
+			Ray ray = new Ray (t.position, t.up);
+			if (Physics.Raycast (ray, out hit, 100)) {
+				// TODO: adjust distance for specific objects
+				t.localScale = new Vector3 (1, hit.distance, 1);
+				lightHitObject (hit.transform);
+			} else {
+				t.localScale = new Vector3 (1, 100, 1);
+			}
+		}
+	}
+
+	bool correctAngle(Transform go) {
+		Vector3 r = go.rotation.eulerAngles;
 		if (go == plate_v) return (int)r.x == correct_angle_plate_v;
 		if (go == plate_h) return (int)r.y == correct_angle_plate_h;
 		return false;
