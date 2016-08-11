@@ -24,12 +24,17 @@ namespace Interaction
 
 				if (rl_script) {
 					int ool = rl_script.outOfLimit ();
-					if ((ool & 1)!=0) rotateXAxisBy *= -1;
-					if ((ool & 2)!=0) rotateYAxisBy *= -1;
-					if ((ool & 4)!=0) rotateZAxisBy *= -1;
+					int dol = rl_script.directlyOnLimit ();
+					int edge = ool | dol;
+					if ((edge & 1)!=0) rotateXAxisBy *= -1;
+					if ((edge & 2)!=0) rotateYAxisBy *= -1;
+					if ((edge & 4)!=0) rotateZAxisBy *= -1;
 
-					if (ool > 0 && !rl_script.isDirectlyOnLimit())
-						gameObject.transform.Rotate(rotateXAxisBy,rotateYAxisBy,rotateZAxisBy);
+					if (ool > 0) {
+						gameObject.transform.Rotate (rotateXAxisBy, rotateYAxisBy, rotateZAxisBy);
+						if (rl_script.directlyOnLimit () > 0)
+							gameObject.transform.Rotate(rotateXAxisBy,rotateYAxisBy,rotateZAxisBy);
+					}
 				}
 				shouldDepictText = false;
 		}
