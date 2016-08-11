@@ -26,7 +26,7 @@ public class CustomDebug : EditorWindow {
 	}
 
 	void OnGUI () {
-		GUILayout.Label ("Corresponding .meta Cleanup Tool", EditorStyles.boldLabel);
+		GUILayout.Label (".meta Cleanup Tool", EditorStyles.boldLabel);
 		
 		EditorGUILayout.BeginHorizontal ();
 		if (GUILayout.Button ("Show only")) {
