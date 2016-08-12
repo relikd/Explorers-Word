@@ -20,7 +20,10 @@ public class BookInTheShelve : MonoBehaviour, Interactable
 
 	private void playAnimation() {
 		Animator anim = gameObject.GetComponent<Animator> ();
-		anim.SetBool ("Trigger", true);
+		if (anim) {
+			anim.SetBool ("Trigger", true);
+
+		}
 	}
 
 	public void EnableGUI(bool enable) {
