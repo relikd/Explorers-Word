@@ -1,6 +1,6 @@
 fileFormatVersion: 2
-guid: eee301317b86b414985aa52d99309008
-timeCreated: 1470829120
+guid: 9b00aa7ab9fd04e33a5382f40a15df0c
+timeCreated: 1471010903
 licenseType: Free
 ModelImporter:
   serializedVersion: 19
@@ -10,6 +10,7 @@ ModelImporter:
     2300000: //RootNode
     3300000: //RootNode
     4300000: rounded_4m
+    6400000: //RootNode
   materials:
     importMaterials: 1
     materialName: 0
@@ -36,7 +37,7 @@ ModelImporter:
     lODScreenPercentages: []
     globalScale: 1
     meshCompression: 0
-    addColliders: 0
+    addColliders: 1
     importBlendShapes: 1
     swapUVChannels: 0
     generateSecondaryUV: 0
