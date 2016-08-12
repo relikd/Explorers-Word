@@ -26,6 +26,10 @@ public class VictorianLight : MonoBehaviour, Interactable
 		}
 	}
 
+	public bool shouldDisplayInteraction () {
+		return true;
+	}
+
 	public void EnableGUI(bool enable) {
 		GameObject player = GameObject.Find ("FirstPersonCharacter");
 		if (player) {

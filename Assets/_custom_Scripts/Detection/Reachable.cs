@@ -16,7 +16,7 @@ public class Reachable : MonoBehaviour
 	[HideInInspector] public bool InReach;
 	[HideInInspector] public RaycastHit RaycastHit;
 
-	void LateUpdate()
+	void Update()
 	{
 		// Set origin of ray to 'center of screen' and direction of ray to 'cameraview'.
 		Ray ray = Camera.main.ViewportPointToRay (new Vector3 (0.5F, 0.5F, 0F));
@@ -45,9 +45,11 @@ public class Reachable : MonoBehaviour
 
 			Interactable[] goInteraction = go.GetComponentsInChildren<Interactable> ();
 			foreach (Interactable i in goInteraction) {
-				i.EnableGUI (true);
-				activateCrosshair (true);
-				i.HandleRaycastCollission();
+				if (i.shouldDisplayInteraction ()) {
+					i.EnableGUI (true);
+					activateCrosshair (true);
+					i.HandleRaycastCollission();
+				}
 			}
 		} else {
 			deactiveGUI ();
