@@ -53,7 +53,6 @@ public class GUIManager : MonoBehaviour
 
 	void OnGUI() {
 		float newYPossition = startingPosition.y;
-		Debug.Log (registeredText.Count);
 		foreach (string reg in registeredText) {
 			GUI.color = Color.white;
 			GUI.Box(new Rect(startingPosition.x, newYPossition, 200, 25), reg);

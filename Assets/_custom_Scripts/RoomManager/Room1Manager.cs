@@ -3,11 +3,12 @@ using System.Collections;
 
 public class Room1Manager : MonoBehaviour {
 
+	public static bool puzzleSolved = false;
+
 	private GameObject globe;
 	private Transform plate_v, plate_h, crystal_small, crystal_large;
 	private int correct_angle_plate_v, correct_angle_plate_h;
 	private string lastPuzzleState;
-	private bool puzzleSolved = false;
 	private ArrayList activeLights;
 
 	private const string LIGHT_IDENT = "lichtstrahl";
@@ -26,9 +27,9 @@ public class Room1Manager : MonoBehaviour {
 
 	void LateUpdate () {
 		
-		if (Input.GetKeyUp (KeyCode.Alpha5)) {
-			crystal_small.eulerAngles = new Vector3 (0,270,0);
-		}
+//		if (Input.GetKeyUp (KeyCode.Alpha5)) {
+//			crystal_small.eulerAngles = new Vector3 (0,270,0);
+//		}
 		reEvaluatePuzzle ();
 	}
 
@@ -118,7 +119,6 @@ public class Room1Manager : MonoBehaviour {
 			RaycastHit hit;
 			Ray ray = new Ray (t.position, t.up);
 			if (Physics.Raycast (ray, out hit, 100)) {
-				// TODO: adjust distance for specific objects
 				float dist = hit.distance;
 
 				if (hit.transform == crystal_large) dist += 0.2f;

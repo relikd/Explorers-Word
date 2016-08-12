@@ -18,7 +18,7 @@ namespace Interaction
 		}
 
 		public void HandleRaycastCollission(){
-		if (stepAngle ? Input.GetKeyUp(KeyCode.R) : Input.GetKey(KeyCode.R)) {
+		if (stepAngle ? Input.GetKeyUp(KeyCode.E) : Input.GetKey(KeyCode.E)) {
 				gameObject.transform.Rotate(rotateXAxisBy,rotateYAxisBy,rotateZAxisBy);
 
 				if (rl_script) {
@@ -41,7 +41,7 @@ namespace Interaction
 		public void EnableGUI(bool enable) {
 			GameObject player = GameObject.Find ("FirstPersonCharacter");
 			if (player) {
-				player.GetComponent<GUIManager> ().register ("Press 'R' to rotate", enable);
+				player.GetComponent<GUIManager> ().register ("Press 'E' to rotate", enable);
 			}
 		}
 			
