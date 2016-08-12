@@ -7,14 +7,16 @@ using Interaction;
 public class BookInTheShelve : MonoBehaviour, Interactable 
 {	
 	
-	
 	private bool shouldDisplayText;
 
 	public void HandleRaycastCollission() {
 		if (Input.GetKeyUp (KeyCode.E)) {
-			//DO STUFF
-			playAnimation ();
-
+			if (Room1Manager.puzzleSolved) {
+				//DO STUFF
+				playAnimation ();
+			} else {
+				// display message: "This book cannot be moved. It is fixed in the shelf somehow."
+			}
 		}
 	}
 
@@ -27,7 +29,7 @@ public class BookInTheShelve : MonoBehaviour, Interactable
 	}
 
 	public void EnableGUI(bool enable) {
-		shouldDisplayText = enable;
+		shouldDisplayText = enable && Room1Manager.puzzleSolved;
 	}
 
 	void OnGUI() {
