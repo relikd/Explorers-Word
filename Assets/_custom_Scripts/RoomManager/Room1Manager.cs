@@ -7,6 +7,7 @@ public class Room1Manager : MonoBehaviour {
 	private Transform plate_v, plate_h, crystal_small, crystal_large;
 	private int correct_angle_plate_v, correct_angle_plate_h;
 	private string lastPuzzleState;
+	private bool puzzleSolved = false;
 	private ArrayList activeLights;
 
 	private const string LIGHT_IDENT = "lichtstrahl";
@@ -37,10 +38,10 @@ public class Room1Manager : MonoBehaviour {
 		correct_angle_plate_h = (int)plate_h.rotation.eulerAngles.y;
 
 		// change starting position
-		plate_v.Rotate (new Vector3(-21,0,0)); // x -21 to 14 step 7
-		plate_h.Rotate (new Vector3(0,60,0)); // y -40 to 60 step 20
-		crystal_small.Rotate (new Vector3(0,60,0)); // step 30
-		crystal_large.Rotate (new Vector3(0,90,0)); // step 45
+//		plate_v.Rotate (new Vector3(-21,0,0)); // x -21 to 14 step 7
+//		plate_h.Rotate (new Vector3(0,60,0)); // y -40 to 60 step 20
+//		crystal_small.Rotate (new Vector3(0,60,0)); // step 30
+//		crystal_large.Rotate (new Vector3(0,90,0)); // step 45
 
 		// disable initial beams of light
 		plate_v.FindChild (LIGHT_IDENT).gameObject.SetActive (false);
@@ -51,6 +52,16 @@ public class Room1Manager : MonoBehaviour {
 	}
 
 	void reEvaluatePuzzle () {
+
+		if (puzzleSolved) {
+			float emission = 0.01f + Mathf.PingPong (Time.time, 0.7f)/2.0f;
+			Color baseColor = Color.yellow;
+			Color finalColor = baseColor * Mathf.LinearToGammaSpace (emission);
+
+			Renderer renderer = GameObject.Find ("maya_book").GetComponent<Renderer> ();
+			Material mat = renderer.material;
+			mat.SetColor ("_EmissionColor", finalColor);
+		}
 
 		if (currentPuzzleState ().Equals (lastPuzzleState))
 			return;
@@ -69,12 +80,17 @@ public class Room1Manager : MonoBehaviour {
 
 
 		// check if light is on (in activeLights) and angle is correct
-		if (correctAngle (plate_v) && correctAngle (plate_h) && 
-			activeLights.Contains (plate_v.FindChild (LIGHT_IDENT)) &&
-			activeLights.Contains (plate_h.FindChild (LIGHT_IDENT)))
-		{
+		if (correctAngle (plate_v) && correctAngle (plate_h) &&
+		    activeLights.Contains (plate_v.FindChild (LIGHT_IDENT)) &&
+		    activeLights.Contains (plate_h.FindChild (LIGHT_IDENT))) {
 			// activate book
 			Debug.Log ("You solved it");
+			puzzleSolved = true;
+		} else {
+			puzzleSolved = false;
+			Renderer renderer = GameObject.Find ("maya_book").GetComponent<Renderer> ();
+			Material mat = renderer.material;
+			mat.SetColor ("_EmissionColor", Color.black);
 		}
 	}
 
