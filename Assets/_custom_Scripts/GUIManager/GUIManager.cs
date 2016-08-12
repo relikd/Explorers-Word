@@ -4,14 +4,7 @@ using System.Collections.Generic;
 
 public class GUIManager : MonoBehaviour
 	{
-	class Registered {
-		public string textToDisplay;
-		bool shuldbeSet;
-
-		public Registered(string text, bool shouldBeSet) {}
-
-
-	}
+	
 
 	List<string> registeredText  = new List<string> ();
 	private float yOffset = 30f;
