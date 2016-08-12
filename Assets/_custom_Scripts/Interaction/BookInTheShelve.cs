@@ -24,12 +24,15 @@ public class BookInTheShelve : MonoBehaviour, Interactable
 		Animator anim = gameObject.GetComponent<Animator> ();
 		if (anim) {
 			anim.SetBool ("Trigger", true);
-
 		}
 	}
 
+	public bool shouldDisplayInteraction () {
+		return true; // Room1Manager.puzzleSolved; // could be done like that, but I want the message above
+	}
+
 	public void EnableGUI(bool enable) {
-		shouldDisplayText = enable && Room1Manager.puzzleSolved;
+		shouldDisplayText = enable;
 	}
 
 	void OnGUI() {

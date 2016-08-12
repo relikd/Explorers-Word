@@ -26,7 +26,11 @@ public class DeactivateGO : MonoBehaviour, Interactable {
 			this.gameObject.SetActive(false);
 		}
 	}
-	
+
+	public bool shouldDisplayInteraction () {
+		return true;
+	}
+
 	public void EnableGUI(bool enable) {
 		shouldDepictText = enable;
 	}
