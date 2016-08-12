@@ -6,6 +6,7 @@ using Interaction;
 public class Reachable : MonoBehaviour
 {
 	GameObject currentGameObject;
+
 	bool initial = true;
 	public float Reach = 0F;
 	//[Tooltip("The tag that triggers the object to be openable")]
@@ -38,17 +39,24 @@ public class Reachable : MonoBehaviour
 				currentGameObject = go;
 			} else {
 				deactiveGUI();
+				activateCrosshair (false);
 				currentGameObject = go;
 			}
 
 			Interactable[] goInteraction = go.GetComponentsInChildren<Interactable> ();
 			foreach (Interactable i in goInteraction) {
 				i.EnableGUI (true);
+				activateCrosshair (true);
 				i.HandleRaycastCollission();
 			}
 		} else {
 			deactiveGUI ();
+			activateCrosshair (false);
 		}
+	}
+
+	private void activateCrosshair(bool enable) {
+		gameObject.GetComponent<MouseCrosshair> ().activateCrosshair(enable);
 	}
 
 	private void deactiveGUI() {
