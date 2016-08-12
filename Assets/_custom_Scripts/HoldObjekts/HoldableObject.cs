@@ -51,9 +51,12 @@ public class HoldableObject : MonoBehaviour, Interactable
 	}
 
 	public void EnableGUI(bool enable) {
+			
 			GameObject player = GameObject.Find ("FirstPersonCharacter");
-			player.GetComponent<GUIManager> ().register ("Press 'E' to h / d", enable);
-	}
+			if (player) {
+				player.GetComponent<GUIManager> ().register ("Press 'E' to h / d", enable);
+			}
+		}
 
 	void OnGUI ()
 	{
