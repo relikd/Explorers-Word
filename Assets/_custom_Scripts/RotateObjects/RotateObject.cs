@@ -12,7 +12,6 @@ namespace Interaction
 		public float rotateYAxisBy = 10;
 		public float rotateZAxisBy = 0;
 		public bool stepAngle = false;
-		private bool shouldDepictText;
 
 		void LateUpdate() {
 			
@@ -36,13 +35,12 @@ namespace Interaction
 							gameObject.transform.Rotate(rotateXAxisBy,rotateYAxisBy,rotateZAxisBy);
 					}
 				}
-				shouldDepictText = false;
 		}
 		}
 
 		public void EnableGUI(bool enable) {
-			shouldDepictText = enable;
-
+			GameObject player = GameObject.Find ("FirstPersonCharacter");
+			player.GetComponent<GUIManager> ().register ("Press 'R' to rotate", enable);
 		}
 			
 		void Start () {
@@ -51,11 +49,7 @@ namespace Interaction
 
 		void OnGUI ()
 		{
-			if (shouldDepictText)
-			{
-				GUI.color = Color.white;
-				GUI.Box(new Rect(Screen.width / 2, (Screen.height / 2) + 10, 200, 25), "Press 'R' to rotate");
-			}
+
 		}
 	}
 }

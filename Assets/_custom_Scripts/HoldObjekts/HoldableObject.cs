@@ -8,7 +8,6 @@ namespace Interaction {
 public class HoldableObject : MonoBehaviour, Interactable
 {
 	public GameObject target;
-	[HideInInspector]public bool shouldDepictText;
 
 	void Update() {
 
@@ -52,17 +51,12 @@ public class HoldableObject : MonoBehaviour, Interactable
 	}
 
 	public void EnableGUI(bool enable) {
-			shouldDepictText = enable;
+			GameObject player = GameObject.Find ("FirstPersonCharacter");
+			player.GetComponent<GUIManager> ().register ("Press 'E' to h / d", enable);
 	}
 
 	void OnGUI ()
 	{
-		if (shouldDepictText)
-		{
-			GUI.color = Color.white;
-			GUI.Box(new Rect(Screen.width / 2, (Screen.height / 2) + 10, 200, 25), "Press 'E' to h / d");
-					
-		}
 	}
 }
 }

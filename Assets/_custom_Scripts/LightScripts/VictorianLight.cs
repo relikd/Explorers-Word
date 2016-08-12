@@ -9,8 +9,6 @@ public class VictorianLight : MonoBehaviour, Interactable
 	public Material LightsOn;
 	public Material LightsOff;
 
-	[HideInInspector] private bool shouldDisplayText = false;
-
 	void Update() {
 	}
 
@@ -29,15 +27,12 @@ public class VictorianLight : MonoBehaviour, Interactable
 	}
 
 	public void EnableGUI(bool enable) {
-		shouldDisplayText = enable;
+		GameObject player = GameObject.Find ("FirstPersonCharacter");
+		player.GetComponent<GUIManager> ().register ("Press 'E' to turn on / off", enable);
 	}
 
 	void OnGUI ()
 	{
-		if (shouldDisplayText)
-		{
-			GUI.color = Color.white;
-			GUI.Box(new Rect(Screen.width / 2, Screen.height / 2, 200, 25), "Press 'E' to turn on / off");
-		}
+
 	}
 }
