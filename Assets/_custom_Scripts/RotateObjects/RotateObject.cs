@@ -40,7 +40,9 @@ namespace Interaction
 
 		public void EnableGUI(bool enable) {
 			GameObject player = GameObject.Find ("FirstPersonCharacter");
-			player.GetComponent<GUIManager> ().register ("Press 'R' to rotate", enable);
+			if (player) {
+				player.GetComponent<GUIManager> ().register ("Press 'R' to rotate", enable);
+			}
 		}
 			
 		void Start () {

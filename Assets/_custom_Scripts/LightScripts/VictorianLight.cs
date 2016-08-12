@@ -28,7 +28,9 @@ public class VictorianLight : MonoBehaviour, Interactable
 
 	public void EnableGUI(bool enable) {
 		GameObject player = GameObject.Find ("FirstPersonCharacter");
-		player.GetComponent<GUIManager> ().register ("Press 'E' to turn on / off", enable);
+		if (player) {
+			player.GetComponent<GUIManager> ().register ("Press 'E' to turn on / off", enable);
+		}
 	}
 
 	void OnGUI ()
