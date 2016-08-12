@@ -1,8 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
-using Interaction;
 
-public class MouseCrosshair : MonoBehaviour, Interactable {
+public class MouseCrosshair : MonoBehaviour {
 	public Texture2D CrosshairDot;
 	public Texture2D CrosshairCircle;
 	private Rect positionDot;
@@ -23,14 +22,9 @@ public class MouseCrosshair : MonoBehaviour, Interactable {
 		
 	}
 
-	public void HandleRaycastCollission() {
-		
-	}
-
-	public void EnableGUI(bool enable) {
+	public void activateCrosshair(bool enable) {
 		shouldChangeTexture = enable;
 	}
-
 	void OnGUI ()
 	{
 		GUI.DrawTexture (positionDot, CrosshairDot);
