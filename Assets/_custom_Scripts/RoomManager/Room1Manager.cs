@@ -3,6 +3,7 @@ using System.Collections;
 
 public class Room1Manager : MonoBehaviour {
 
+	private GameObject globe;
 	private Transform plate_v, plate_h, crystal_small, crystal_large;
 	private int correct_angle_plate_v, correct_angle_plate_h;
 	private string lastPuzzleState;
@@ -11,27 +12,33 @@ public class Room1Manager : MonoBehaviour {
 	private const string LIGHT_IDENT = "lichtstrahl";
 
 	void Start () {
-		saveInitialPuzzleState ();
-		activeLights = new ArrayList ();
-	}
-
-	void LateUpdate () {
-		reEvaluatePuzzle ();
-	}
-
-	void saveInitialPuzzleState () {
 		plate_v = GameObject.Find ("plate_grp_v").transform;
 		plate_h = GameObject.Find ("gold_plate_h").transform;
 		crystal_small = GameObject.Find ("SM_Cristall_15").transform;
 		crystal_large = GameObject.Find ("SM_Cristall_39").transform;
+		globe = GameObject.Find ("globe");
 
+		activeLights = new ArrayList ();
+
+		saveInitialPuzzleState ();
+	}
+
+	void LateUpdate () {
+		
+		if (Input.GetKeyUp (KeyCode.Alpha5)) {
+			crystal_small.eulerAngles = new Vector3 (0,270,0);
+		}
+		reEvaluatePuzzle ();
+	}
+
+	void saveInitialPuzzleState () {
 		// save correct angle first
 		correct_angle_plate_v = (int)plate_v.rotation.eulerAngles.x;
 		correct_angle_plate_h = (int)plate_h.rotation.eulerAngles.y;
 
 		// change starting position
 		plate_v.Rotate (new Vector3(-21,0,0)); // x -21 to 14 step 7
-		plate_h.Rotate (new Vector3(0,60,0)); // y -80 to 60 step 20
+		plate_h.Rotate (new Vector3(0,60,0)); // y -40 to 60 step 20
 		crystal_small.Rotate (new Vector3(0,60,0)); // step 30
 		crystal_large.Rotate (new Vector3(0,90,0)); // step 45
 
@@ -55,6 +62,7 @@ public class Room1Manager : MonoBehaviour {
 			light.gameObject.SetActive (false);
 		}
 		activeLights.Clear ();
+		activateGlobe (false);
 
 		// begin all ray casting from first small crystal
 		lightHitObject (crystal_small);
@@ -79,6 +87,9 @@ public class Room1Manager : MonoBehaviour {
 	}
 
 	void lightHitObject(Transform t) {
+		if (t == globe.transform)
+			activateGlobe (true);
+		
 		// go through all children
 		for (int i = 0; i < t.childCount; i++) {
 			Transform child = t.GetChild (i);
@@ -94,7 +105,14 @@ public class Room1Manager : MonoBehaviour {
 			Ray ray = new Ray (t.position, t.up);
 			if (Physics.Raycast (ray, out hit, 100)) {
 				// TODO: adjust distance for specific objects
-				t.localScale = new Vector3 (1, hit.distance, 1);
+				float dist = hit.distance;
+
+				if (hit.transform == crystal_large) dist += 0.2f;
+				else if (hit.transform == plate_v) dist += 0.12f;
+				else if (hit.transform == plate_h) dist += 0.13f;
+				else if (hit.transform == crystal_small) dist += 0.08f;
+
+				t.localScale = new Vector3 (1, dist, 1);
 				lightHitObject (hit.transform);
 			} else {
 				t.localScale = new Vector3 (1, 100, 1);
@@ -107,5 +125,12 @@ public class Room1Manager : MonoBehaviour {
 		if (go == plate_v) return (int)r.x == correct_angle_plate_v;
 		if (go == plate_h) return (int)r.y == correct_angle_plate_h;
 		return false;
+	}
+
+	void activateGlobe(bool flag) {
+		Renderer renderer = globe.GetComponent <Renderer>();
+		Color emissisonColor = ( flag ? Color.white : Color.black );
+		if (flag) emissisonColor.a = 0.5f;
+		renderer.material.SetColor ("_EmissionColor", emissisonColor);
 	}
 }
