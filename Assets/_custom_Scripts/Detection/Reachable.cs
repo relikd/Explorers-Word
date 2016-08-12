@@ -60,9 +60,11 @@ public class Reachable : MonoBehaviour
 	}
 
 	private void deactiveGUI() {
-		Interactable[] goInteraction = currentGameObject.GetComponents<Interactable> ();
-		foreach (Interactable i in goInteraction) {
-			i.EnableGUI (false);
+		if (currentGameObject) {
+			Interactable[] goInteraction = currentGameObject.GetComponents<Interactable> ();
+			foreach (Interactable i in goInteraction) {
+				i.EnableGUI (false);
+			}
 		}
 	}
 
