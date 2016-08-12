@@ -15,8 +15,8 @@ public class Room1Manager : MonoBehaviour {
 	void Start () {
 		plate_v = GameObject.Find ("plate_grp_v").transform;
 		plate_h = GameObject.Find ("gold_plate_h").transform;
-		crystal_small = GameObject.Find ("SM_Cristall_15").transform;
-		crystal_large = GameObject.Find ("SM_Cristall_39").transform;
+		crystal_small = GameObject.Find ("crystal_small").transform;
+		crystal_large = GameObject.Find ("crystal_large").transform;
 		globe = GameObject.Find ("globe");
 
 		activeLights = new ArrayList ();
@@ -38,16 +38,14 @@ public class Room1Manager : MonoBehaviour {
 		correct_angle_plate_h = (int)plate_h.rotation.eulerAngles.y;
 
 		// change starting position
-//		plate_v.Rotate (new Vector3(-21,0,0)); // x -21 to 14 step 7
-//		plate_h.Rotate (new Vector3(0,60,0)); // y -40 to 60 step 20
-//		crystal_small.Rotate (new Vector3(0,60,0)); // step 30
-//		crystal_large.Rotate (new Vector3(0,90,0)); // step 45
+		plate_v.Rotate (new Vector3(7,0,0)); // x -21 to 14 step 7
+		plate_h.Rotate (new Vector3(0,60,0)); // y -40 to 60 step 20
+		crystal_small.Rotate (new Vector3(0,60,0)); // step 30
+		crystal_large.Rotate (new Vector3(0,90,0)); // step 45
 
-		// disable initial beams of light
-		plate_v.FindChild (LIGHT_IDENT).gameObject.SetActive (false);
-		plate_h.FindChild (LIGHT_IDENT).gameObject.SetActive (false);
-		foreach (Transform light in crystal_large) {
-			light.gameObject.SetActive (false);
+		// initially disable all lightbeams
+		foreach(GameObject light in GameObject.FindGameObjectsWithTag("lightbeam")) {
+			light.SetActive (false);
 		}
 	}
 
