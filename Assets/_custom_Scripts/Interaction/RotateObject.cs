@@ -1,62 +1,41 @@
 ﻿using UnityEngine;
-using UnityEditor;
 using System.Collections;
+using Interaction;
 
-namespace Interaction
+public class RotateObject : Interactable
 {
-	public class RotateObject : MonoBehaviour, Interactable
-	{
-		private RotationLimiter rl_script;
+	public float rotateXAxisBy = 0;
+	public float rotateYAxisBy = 10;
+	public float rotateZAxisBy = 0;
+	public bool stepAngle = false;
 
-		public float rotateXAxisBy = 0;
-		public float rotateYAxisBy = 10;
-		public float rotateZAxisBy = 0;
-		public bool stepAngle = false;
+	override public string interactMessage() {
+		return "rotate";
+	}
 
-		void LateUpdate() {
-			
+	override public void HandleRaycastCollission(){
+		if (stepAngle ? Input.GetKeyUp(theKeyCode()) : Input.GetKey(theKeyCode())) {
+			gameObject.transform.Rotate(rotateXAxisBy,rotateYAxisBy,rotateZAxisBy);
+			checkForRotationLimit ();
 		}
+	}
 
-		public void HandleRaycastCollission(){
-		if (stepAngle ? Input.GetKeyUp(KeyCode.E) : Input.GetKey(KeyCode.E)) {
-				gameObject.transform.Rotate(rotateXAxisBy,rotateYAxisBy,rotateZAxisBy);
+	// Rotation Limiter Script Extension
+	void checkForRotationLimit() {
+		RotationLimiter rl_script = gameObject.GetComponent<RotationLimiter>();
+		if (rl_script) {
+			int ool = rl_script.outOfLimit ();
+			int dol = rl_script.directlyOnLimit ();
+			int edge = ool | dol;
+			if ((edge & 1)!=0) rotateXAxisBy *= -1;
+			if ((edge & 2)!=0) rotateYAxisBy *= -1;
+			if ((edge & 4)!=0) rotateZAxisBy *= -1;
 
-				if (rl_script) {
-					int ool = rl_script.outOfLimit ();
-					int dol = rl_script.directlyOnLimit ();
-					int edge = ool | dol;
-					if ((edge & 1)!=0) rotateXAxisBy *= -1;
-					if ((edge & 2)!=0) rotateYAxisBy *= -1;
-					if ((edge & 4)!=0) rotateZAxisBy *= -1;
-
-					if (ool > 0) {
-						gameObject.transform.Rotate (rotateXAxisBy, rotateYAxisBy, rotateZAxisBy);
-						if (rl_script.directlyOnLimit () > 0)
-							gameObject.transform.Rotate(rotateXAxisBy,rotateYAxisBy,rotateZAxisBy);
-					}
-				}
-		}
-		}
-
-		public bool shouldDisplayInteraction () {
-			return true;
-		}
-
-		public void EnableGUI(bool enable) {
-			GameObject player = GameObject.Find ("FirstPersonCharacter");
-			if (player) {
-				player.GetComponent<GUIManager> ().register ("Press 'E' to rotate", enable);
+			if (ool > 0) {
+				gameObject.transform.Rotate (rotateXAxisBy, rotateYAxisBy, rotateZAxisBy);
+				if (rl_script.directlyOnLimit () > 0)
+					gameObject.transform.Rotate(rotateXAxisBy,rotateYAxisBy,rotateZAxisBy);
 			}
-		}
-			
-		void Start () {
-			rl_script = gameObject.GetComponent<RotationLimiter>();
-		}
-
-		void OnGUI ()
-		{
-
 		}
 	}
 }
-

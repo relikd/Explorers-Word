@@ -1,44 +1,23 @@
-﻿
-using UnityEngine;
-using UnityEditor;
+﻿using UnityEngine;
 using System.Collections;
 using Interaction;
 
-public class VictorianLight : MonoBehaviour, Interactable 
+public class VictorianLight : Interactable 
 {
 	public Material LightsOn;
 	public Material LightsOff;
 
-	void Update() {
+	override public string interactMessage() {
+		return "turn on / off";
 	}
 
-	void Start() {
-		enabled = true;
-	}
-
-	public void HandleRaycastCollission() {
-		if (Input.GetKeyUp (KeyCode.E)) {
+	override public void HandleRaycastCollission() {
+		if (Input.GetKeyUp (theKeyCode())) {
 			if (GetComponent<Renderer> ().material.name.Contains ("Streetlight_Off")) {
 				GetComponent<Renderer> ().material = LightsOn;
 			} else {
 				GetComponent<Renderer> ().material = LightsOff;
 			}
 		}
-	}
-
-	public bool shouldDisplayInteraction () {
-		return true;
-	}
-
-	public void EnableGUI(bool enable) {
-		GameObject player = GameObject.Find ("FirstPersonCharacter");
-		if (player) {
-			player.GetComponent<GUIManager> ().register ("Press 'E' to turn on / off", enable);
-		}
-	}
-
-	void OnGUI ()
-	{
-
 	}
 }
