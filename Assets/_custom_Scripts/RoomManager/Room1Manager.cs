@@ -4,12 +4,15 @@ using System.Collections;
 public class Room1Manager : MonoBehaviour {
 
 	public static bool puzzleSolved = false;
+	public static bool shelfOpen = false;
 
 	private GameObject globe;
 	private Transform plate_v, plate_h, crystal_small, crystal_large;
 	private int correct_angle_plate_v, correct_angle_plate_h;
 	private string lastPuzzleState;
 	private ArrayList activeLights;
+
+	private float shelfRotationAngle = 0.0f;
 
 	private const string LIGHT_IDENT = "lichtstrahl";
 
@@ -25,12 +28,19 @@ public class Room1Manager : MonoBehaviour {
 		saveInitialPuzzleState ();
 	}
 
-	void LateUpdate () {
-		
+	void Update () {
 //		if (Input.GetKeyUp (KeyCode.Alpha5)) {
 //			crystal_small.eulerAngles = new Vector3 (0,270,0);
 //		}
 		reEvaluatePuzzle ();
+
+		if (shelfOpen && shelfRotationAngle > -17.0f) {
+			GameObject bsrc = GameObject.Find ("BookShelfRotationContainer");
+			if (bsrc) {
+				shelfRotationAngle -= 10.0f * Time.deltaTime;
+				bsrc.transform.eulerAngles = new Vector3 (0,shelfRotationAngle,0);
+			}
+		}
 	}
 
 	void saveInitialPuzzleState () {
