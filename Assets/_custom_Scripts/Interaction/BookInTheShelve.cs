@@ -1,16 +1,15 @@
-﻿using System;
+﻿using UnityEngine;
 using System.Collections;
-using UnityEngine;
 using Interaction;
 
-
-public class BookInTheShelve : MonoBehaviour, Interactable 
+public class BookInTheShelve : Interactable 
 {	
-	
-	private bool shouldDisplayText;
+	override public string interactMessage() {
+		return "pull";
+	}
 
-	public void HandleRaycastCollission() {
-		if (Input.GetKeyUp (KeyCode.E)) {
+	override public void HandleRaycastCollission() {
+		if (Input.GetKeyUp (theKeyCode())) {
 			if (Room1Manager.puzzleSolved) {
 				//DO STUFF
 				playAnimation ();
@@ -27,20 +26,7 @@ public class BookInTheShelve : MonoBehaviour, Interactable
 		}
 	}
 
-	public bool shouldDisplayInteraction () {
+	override public bool shouldDisplayInteraction () {
 		return true; // Room1Manager.puzzleSolved; // could be done like that, but I want the message above
 	}
-
-	public void EnableGUI(bool enable) {
-		shouldDisplayText = enable;
-	}
-
-	void OnGUI() {
-		if (shouldDisplayText)
-		{
-			GUI.color = Color.white;
-			GUI.Box(new Rect(Screen.width / 2, Screen.height / 2, 200, 25), "Press 'E' to pull");
-		}
-	}
 }
-

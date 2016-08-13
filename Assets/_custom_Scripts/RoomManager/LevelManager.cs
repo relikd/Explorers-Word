@@ -17,9 +17,9 @@ public class LevelManager : MonoBehaviour {
 
 	void Update () {
 		if (Input.GetKeyUp (KeyCode.Alpha1)) {
-			SceneManager.LoadScene ("room_0");
-		} else if (Input.GetKeyUp (KeyCode.Alpha2)) {
 			SceneManager.LoadScene ("room_1");
+		} else if (Input.GetKeyUp (KeyCode.Alpha2)) {
+			SceneManager.LoadScene ("room_2");
 		}
 	}
 }

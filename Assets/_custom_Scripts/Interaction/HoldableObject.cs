@@ -1,69 +1,43 @@
-﻿
-using UnityEngine;
-using UnityEditor;
+﻿using UnityEngine;
 using System.Collections;
+using Interaction;
 
+public class HoldableObject : Interactable
+{
+	public GameObject target;
 
-namespace Interaction {
-	public class HoldableObject : MonoBehaviour, Interactable
-	{
-		public GameObject target;
+	override public string interactMessage() {
+		return "hold";
+	}
 
-		void Update() {
-
+	override public void HandleRaycastCollission() {
+		if (Input.GetKeyUp (theKeyCode())) {
+			HandleRigidBody (true);		
+			Pickup ();
 		}
+	}
 
-		void Start() {
-			enabled = true;
+	void Update() {
+		if (Input.GetKeyDown (theKeyCode())) {
+			Drop ();
+			HandleRigidBody (false);
 		}
+	}
 
-		void LateUpdate() {
-			if (Input.GetKeyDown (KeyCode.E)) {
-				Drop ();
-				HandleRigidBody (false);
-			}
-		}
+	void Pickup() {
+		this.transform.position = this.target.transform.position;
+//		this.transform.parent = GameObject.Find ("FPSController").transform;
+		this.transform.parent = GameObject.Find ("FirstPersonCharacter").transform;
+	}
 
-		public void HandleRaycastCollission() {
-			if (Input.GetKeyUp (KeyCode.E)) {
-				HandleRigidBody (true);		
-				Pickup ();
-			}
-		}
+	void Drop() {
+//		this.transform.parent = GameObject.Find ("FPSController").transform;
+		this.transform.parent = null;
+	}
 
-		void Pickup() {
-			this.transform.position = this.target.transform.position;
-			this.transform.parent = GameObject.Find ("FPSController").transform;
-			this.transform.parent = GameObject.Find ("FirstPersonCharacter").transform;
-
-		}
-
-		void Drop() {
-			this.transform.parent = GameObject.Find ("FPSController").transform;
-			this.transform.parent = null;
-
-		}
-
-		private void HandleRigidBody(bool isKinematic) {
-			if (gameObject.GetComponent<Rigidbody> ()) {
-				gameObject.GetComponent<Rigidbody> ().isKinematic = isKinematic;
-			}
-		}
-
-		public bool shouldDisplayInteraction () {
-			return true;
-		}
-
-		public void EnableGUI(bool enable) {
-
-			GameObject player = GameObject.Find ("FirstPersonCharacter");
-			if (player) {
-				player.GetComponent<GUIManager> ().register ("Press 'E' to h / d", enable);
-			}
-		}
-
-		void OnGUI ()
-		{
+	private void HandleRigidBody(bool isKinematic) {
+		if (gameObject.GetComponent<Rigidbody> ()) {
+			gameObject.GetComponent<Rigidbody> ().isKinematic = isKinematic;
 		}
 	}
 }
