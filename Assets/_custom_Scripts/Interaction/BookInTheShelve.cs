@@ -3,7 +3,7 @@ using System.Collections;
 using Interaction;
 
 public class BookInTheShelve : Interactable 
-{	
+{
 	override public string interactMessage() {
 		return "pull";
 	}
@@ -13,14 +13,14 @@ public class BookInTheShelve : Interactable
 			if (Room1Manager.puzzleSolved) {
 				//DO STUFF
 				playAnimation ();
+				// TODO: wait till animation finished
+				Room1Manager.shelfOpen = true;
 			} else {
 				GUIManager gm = GameObject.FindObjectOfType<GUIManager> ();
 				if (gm) gm.centeredMessage ("This book cannot be moved.\nIt is fixed in the shelf somehow.");
 			}
 		}
 	}
-
-
 
 	private void playAnimation() {
 		Animator anim = gameObject.GetComponent<Animator> ();
