@@ -14,10 +14,13 @@ public class BookInTheShelve : Interactable
 				//DO STUFF
 				playAnimation ();
 			} else {
-				// display message: "This book cannot be moved. It is fixed in the shelf somehow."
+				GUIManager gm = GameObject.FindObjectOfType<GUIManager> ();
+				if (gm) gm.centeredMessage ("This book cannot be moved.\nIt is fixed in the shelf somehow.");
 			}
 		}
 	}
+
+
 
 	private void playAnimation() {
 		Animator anim = gameObject.GetComponent<Animator> ();

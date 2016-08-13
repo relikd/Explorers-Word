@@ -25,10 +25,8 @@ namespace Interaction {
 
 		// used to display text on screen
 		public void EnableGUI (bool enable) {
-			GameObject player = GameObject.Find ("FirstPersonCharacter");
-			if (player) {
-				player.GetComponent<GUIManager> ().register ("Press '"+interactKey.ToString ().ToUpper ()+"' to "+interactMessage(), enable);
-			}
+			GUIManager gm = GameObject.FindObjectOfType<GUIManager> ();
+			if (gm) gm.register ("Press '"+interactKey.ToString ().ToUpper ()+"' to "+interactMessage(), enable);
 		}
 	}
 }

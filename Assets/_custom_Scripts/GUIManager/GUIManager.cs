@@ -1,34 +1,27 @@
-﻿using System;
-using UnityEngine;
+﻿using UnityEngine;
+using System.Collections;
 using System.Collections.Generic;
 
 public class GUIManager : MonoBehaviour
-	{
-	
-
-	List<string> registeredText  = new List<string> ();
+{
 	private float yOffset = 30f;
 	Vector2 startingPosition = new Vector2 (Screen.width - Screen.width / 4, Screen.height / 4);
+	List<string> messageList  = new List<string> ();
+	private string centeredText;
 
-
-	void OnStart() {
-		
-	}
-
-	public void register(string textToDisplay, bool shouldBeSet) {
+	public void register (string textToDisplay, bool shouldBeSet) {
 		if (shouldBeSet) {
-			
-			if (!registeredText.Contains(textToDisplay)) {
-				registeredText.Add (textToDisplay);
+			if (!messageList.Contains (textToDisplay)) {
+				messageList.Add (textToDisplay);
 			}
 		} else {
-			removeText (textToDisplay);	
+			messageList.Remove (textToDisplay);
 		}
 	}
 
-	 bool alreadyRegistered(string reg) {
+	bool alreadyRegistered (string reg) {
 		bool result = false;
-		foreach(string regi in registeredText) {
+		foreach(string regi in messageList) {
 			if (reg == regi) {
 				result = true;
 			}
@@ -36,22 +29,26 @@ public class GUIManager : MonoBehaviour
 		return result;
 	}
 
-	 void removeText(string text) {
-		foreach(string reg in registeredText) {
-			if (reg == text) {
-				registeredText.Remove (reg);
-			}
-		}
-	}
-
 	void OnGUI() {
 		float newYPossition = startingPosition.y;
-		foreach (string reg in registeredText) {
+		foreach (string reg in messageList) {
 			GUI.color = Color.white;
-			GUI.Box(new Rect(startingPosition.x, newYPossition, 200, 25), reg);
+			GUI.Box (new Rect (startingPosition.x, newYPossition, 200, 25), reg);
 			newYPossition += yOffset;
 		}
+		if (centeredText != null) {
+			GUI.color = Color.white;
+			GUI.Box(new Rect(Screen.width/2-150, Screen.height/2+10, 300, 50), centeredText);
+		}
+	}
+
+	public void centeredMessage (string msg) {
+		StartCoroutine(showTemporaryMessage(msg));
+	}
+
+	IEnumerator showTemporaryMessage(string msg) {
+		centeredText = msg;
+		yield return new WaitForSeconds(3);
+		centeredText = null;
 	}
 }
-
-
