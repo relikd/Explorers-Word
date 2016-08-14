@@ -2,7 +2,7 @@
 using System.Collections;
 using Interaction;
 
-public class RotateObject : Interactable
+public class RotateInteraction : Interactable
 {
 	public float rotateXAxisBy = 0;
 	public float rotateYAxisBy = 10;

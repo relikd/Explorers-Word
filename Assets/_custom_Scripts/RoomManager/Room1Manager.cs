@@ -96,7 +96,7 @@ public class Room1Manager : MonoBehaviour {
 		Material mat = renderer.material;
 		mat.SetColor ("_EmissionColor", finalColor);
 
-		TriggerInteractable script = maya_book.GetComponent<TriggerInteractable> ();
+		TriggerInteraction script = maya_book.GetComponent<TriggerInteraction> ();
 		script.triggerActive = flag;
 	}
 

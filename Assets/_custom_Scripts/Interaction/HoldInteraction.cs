@@ -2,7 +2,7 @@
 using System.Collections;
 using Interaction;
 
-public class HoldableObject : Interactable
+public class HoldInteraction : Interactable
 {
 	public GameObject target;
 
@@ -12,7 +12,7 @@ public class HoldableObject : Interactable
 
 	override public void HandleRaycastCollission() {
 		if (Input.GetKeyUp (theKeyCode())) {
-			HandleRigidBody (true);		
+			HandleRigidBody (true);
 			Pickup ();
 		}
 	}
@@ -26,12 +26,10 @@ public class HoldableObject : Interactable
 
 	void Pickup() {
 		this.transform.position = this.target.transform.position;
-//		this.transform.parent = GameObject.Find ("FPSController").transform;
 		this.transform.parent = GameObject.Find ("FirstPersonCharacter").transform;
 	}
 
 	void Drop() {
-//		this.transform.parent = GameObject.Find ("FPSController").transform;
 		this.transform.parent = null;
 	}
 
