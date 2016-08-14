@@ -2,7 +2,7 @@
 using System.Collections;
 using Interaction;
 
-public class CollectObject : Interactable
+public class CollectInteraction : Interactable
 {
 	public bool shouldPickUpStatic = false;
 

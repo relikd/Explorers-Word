@@ -1,12 +1,12 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class Puzzle1BookHandler : InteractionTrigger
+public class Puzzle1BookHandler : TriggerInteractionCallback
 {
 	private bool shelfOpen = false;
 	private float shelfRotationAngle = 0.0f;
 	
-	override public void OnTriggerInteraction (TriggerInteractable sender) {
+	override public void OnTriggerInteraction (TriggerInteraction sender) {
 		if (sender.triggerActive) {
 			playAnimation ();
 			// TODO: wait till animation finished

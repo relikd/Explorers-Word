@@ -3,7 +3,7 @@ using System.Collections;
 using Interaction;
 using UnityEditor;
 
-public class NonInteractable : Interactable
+public class PlainInteraction : Interactable
 {
 	[Tooltip("Press 'E' to [message]")]
 	public string actionMessage = "interact";
