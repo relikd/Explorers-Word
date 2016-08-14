@@ -36,7 +36,7 @@ public class GUIManager : MonoBehaviour
 			GUI.Box (new Rect (startingPosition.x, newYPossition, 200, 25), reg);
 			newYPossition += yOffset;
 		}
-		if (centeredText != null) {
+		if (centeredText != null && centeredText != "") {
 			GUI.color = Color.white;
 			float height = 16.0f * centeredText.Split ('\n').Length + 7.0f;
 			GUI.Box(new Rect(Screen.width/2-150, Screen.height/2+20, 300, height), centeredText);
