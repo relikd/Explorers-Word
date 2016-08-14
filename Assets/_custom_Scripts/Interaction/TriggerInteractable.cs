@@ -8,7 +8,6 @@ public abstract class InteractionTrigger : MonoBehaviour {
 
 public class TriggerInteractable : NonInteractable
 {
-	public bool displayInteraction = true;
 	public bool triggerActive = false;
 	public InteractionTrigger triggerScript;
 
@@ -19,13 +18,7 @@ public class TriggerInteractable : NonInteractable
 	override public void HandleRaycastCollission() {
 		if (Input.GetKeyUp (theKeyCode())) {
 			triggerScript.OnTriggerInteraction (this);
-			GUIManager gm = GameObject.FindObjectOfType<GUIManager> ();
-			if (gm) gm.centeredMessage (responseMessage);
+			centeredMessage (responseMessage);
 		}
-	}
-
-	public override bool shouldDisplayInteraction ()
-	{
-		return displayInteraction && base.shouldDisplayInteraction ();
 	}
 }

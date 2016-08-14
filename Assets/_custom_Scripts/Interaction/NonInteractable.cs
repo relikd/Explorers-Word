@@ -16,8 +16,7 @@ public class NonInteractable : Interactable
 
 	override public void HandleRaycastCollission() {
 		if (Input.GetKeyUp (theKeyCode())) {
-			GUIManager gm = GameObject.FindObjectOfType<GUIManager> ();
-			if (gm) gm.centeredMessage (responseMessage);
+			centeredMessage (responseMessage);
 		}
 	}
 }
