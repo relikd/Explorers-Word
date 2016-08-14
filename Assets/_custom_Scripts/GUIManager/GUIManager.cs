@@ -43,13 +43,13 @@ public class GUIManager : MonoBehaviour
 		}
 	}
 
-	public void centeredMessage (string msg) {
-		StartCoroutine(showTemporaryMessage(msg));
+	public void centeredMessage (string msg, float timeout) {
+		StartCoroutine(showTemporaryMessage(msg, timeout));
 	}
 
-	IEnumerator showTemporaryMessage(string msg) {
+	IEnumerator showTemporaryMessage(string msg, float t) {
 		centeredText = msg;
-		yield return new WaitForSeconds(3);
+		yield return new WaitForSeconds(t);
 		centeredText = null;
 	}
 }
