@@ -4,15 +4,12 @@ using System.Collections;
 public class Room1Manager : MonoBehaviour {
 
 	public static bool puzzleSolved = false;
-	public static bool shelfOpen = false;
 
 	private GameObject globe;
 	private Transform plate_v, plate_h, crystal_small, crystal_large;
 	private int correct_angle_plate_v, correct_angle_plate_h;
 	private string lastPuzzleState;
 	private ArrayList activeLights;
-
-	private float shelfRotationAngle = 0.0f;
 
 	private const string LIGHT_IDENT = "lichtstrahl";
 
@@ -33,14 +30,6 @@ public class Room1Manager : MonoBehaviour {
 //			crystal_small.eulerAngles = new Vector3 (0,270,0);
 //		}
 		reEvaluatePuzzle ();
-
-		if (shelfOpen && shelfRotationAngle > -17.0f) {
-			GameObject bsrc = GameObject.Find ("BookShelfRotationContainer");
-			if (bsrc) {
-				shelfRotationAngle -= 10.0f * Time.deltaTime;
-				bsrc.transform.eulerAngles = new Vector3 (0,shelfRotationAngle,0);
-			}
-		}
 	}
 
 	void saveInitialPuzzleState () {
@@ -62,15 +51,8 @@ public class Room1Manager : MonoBehaviour {
 
 	void reEvaluatePuzzle () {
 
-		if (puzzleSolved) {
-			float emission = 0.01f + Mathf.PingPong (Time.time, 0.7f)/2.0f;
-			Color baseColor = Color.yellow;
-			Color finalColor = baseColor * Mathf.LinearToGammaSpace (emission);
-
-			Renderer renderer = GameObject.Find ("maya_book").GetComponent<Renderer> ();
-			Material mat = renderer.material;
-			mat.SetColor ("_EmissionColor", finalColor);
-		}
+		if (puzzleSolved)
+			activateMayaBook (true); // will be called continuously for glow effect
 
 		if (currentPuzzleState ().Equals (lastPuzzleState))
 			return;
@@ -97,10 +79,25 @@ public class Room1Manager : MonoBehaviour {
 			puzzleSolved = true;
 		} else {
 			puzzleSolved = false;
-			Renderer renderer = GameObject.Find ("maya_book").GetComponent<Renderer> ();
-			Material mat = renderer.material;
-			mat.SetColor ("_EmissionColor", Color.black);
+			activateMayaBook (false);
 		}
+	}
+
+	void activateMayaBook (bool flag) {
+		Color finalColor = Color.black;
+		if (flag) {
+			float emission = 0.01f + Mathf.PingPong (Time.time, 0.7f)/2.0f;
+			Color baseColor = Color.yellow;
+			finalColor = baseColor * Mathf.LinearToGammaSpace (emission);
+		}
+
+		GameObject maya_book = GameObject.Find ("maya_book");
+		Renderer renderer =	maya_book.GetComponent<Renderer> ();
+		Material mat = renderer.material;
+		mat.SetColor ("_EmissionColor", finalColor);
+
+		TriggerInteractable script = maya_book.GetComponent<TriggerInteractable> ();
+		script.triggerActive = flag;
 	}
 
 	string currentPuzzleState() {
