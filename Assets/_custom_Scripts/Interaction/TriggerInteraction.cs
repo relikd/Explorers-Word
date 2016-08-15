@@ -17,9 +17,20 @@ public class TriggerInteraction : PlainInteraction
 
 	override public void HandleRaycastCollission() {
 		if (Input.GetKeyUp (theKeyCode())) {
-			triggerScript.OnTriggerInteraction (this);
+			if (triggerScript)
+				triggerScript.OnTriggerInteraction (this);
+			scriptedActionExecuter (responseMessage);
 			centeredMessage (responseMessage);
 			playInteractionSound ();
 		}
+	}
+
+	bool scriptedActionExecuter (string src) {
+		if (src.Contains ("[leave_room]")) {
+			LevelManager.LoadNextRoom ();
+			responseMessage = responseMessage.Replace ("[leave_room]", "");
+			return true;
+		}
+		return false;
 	}
 }
