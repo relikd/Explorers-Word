@@ -27,7 +27,6 @@ public class Puzzle1BookHandler : TriggerInteractionCallback
 
 	void Update() {
 		if (shelfOpen && shelfRotationAngle > -17.0f) {
-			// TODO: play sound 'stone on stone scrape'
 			GameObject bsrc = GameObject.Find ("BookShelfRotationContainer");
 			if (bsrc) {
 				shelfRotationAngle -= 15.0f * Time.deltaTime;

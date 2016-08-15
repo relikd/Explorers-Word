@@ -15,14 +15,11 @@ public class TriggerInteraction : PlainInteraction
 		return actionMessage;
 	}
 
-	override public void HandleRaycastCollission() {
-		if (Input.GetKeyUp (theKeyCode())) {
-			if (triggerScript)
-				triggerScript.OnTriggerInteraction (this);
-			scriptedActionExecuter (responseMessage);
-			centeredMessage (responseMessage);
-			playInteractionSound ();
-		}
+	override public void interactionKeyPressed() {
+		if (triggerScript)
+			triggerScript.OnTriggerInteraction (this);
+		scriptedActionExecuter (responseMessage);
+		centeredMessage (responseMessage);
 	}
 
 	bool scriptedActionExecuter (string src) {
