@@ -13,12 +13,17 @@ public class RotateInteraction : Interactable
 		return "rotate";
 	}
 
-	override public void HandleRaycastCollission(){
-		if (stepAngle ? Input.GetKeyUp(theKeyCode()) : Input.GetKey(theKeyCode())) {
-			gameObject.transform.Rotate(rotateXAxisBy,rotateYAxisBy,rotateZAxisBy);
-			checkForRotationLimit ();
-			playInteractionSound ();
-		}
+	override public void interactionKeyPressed() {
+		if (stepAngle) rotate ();
+	}
+
+	override public void interactionKeyHold() {
+		if (!stepAngle) rotate ();
+	}
+
+	void rotate() {
+		gameObject.transform.Rotate(rotateXAxisBy,rotateYAxisBy,rotateZAxisBy);
+		checkForRotationLimit ();
 	}
 
 	// Rotation Limiter Script Extension

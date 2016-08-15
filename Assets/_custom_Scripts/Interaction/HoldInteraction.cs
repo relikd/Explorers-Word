@@ -10,11 +10,9 @@ public class HoldInteraction : Interactable
 		return "hold";
 	}
 
-	override public void HandleRaycastCollission() {
-		if (Input.GetKeyUp (theKeyCode())) {
-			HandleRigidBody (true);
-			Pickup ();
-		}
+	override public void interactionKeyPressed() {
+		HandleRigidBody (true);
+		Pickup ();
 	}
 
 	void Update() {

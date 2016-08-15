@@ -14,9 +14,7 @@ public class PlainInteraction : Interactable
 		return actionMessage;
 	}
 
-	override public void HandleRaycastCollission() {
-		if (Input.GetKeyUp (theKeyCode())) {
-			centeredMessage (responseMessage);
-		}
+	override public void interactionKeyPressed() {
+		centeredMessage (responseMessage);
 	}
 }

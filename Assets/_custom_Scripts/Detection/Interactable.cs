@@ -1,6 +1,5 @@
 ﻿using System.Collections;
 using UnityEngine;
-using UnityEditor.VersionControl;
 using System;
 
 namespace Interaction {
@@ -9,21 +8,29 @@ namespace Interaction {
 		public bool interactionEnabled = true;
 		[Tooltip("The KeyCode needed to trigger the action")]
 		public char interactionKey = 'E';
-
-		abstract public void HandleRaycastCollission ();
-		abstract public string interactMessage();
-
 		[SerializeField] private AudioClip[] m_Sounds; 
 		private AudioSource m_AudioSource;
 
-		// use this function to get the current KeyCode mapping
-		protected KeyCode theKeyCode() {
-			return (KeyCode) System.Enum.Parse(typeof(KeyCode), interactionKey.ToString ().ToUpper ());
-		}
+		abstract public string interactMessage ();
+		abstract public void interactionKeyPressed ();
+		virtual public void interactionKeyHold () {} // @overwrite
+
+		//
+		// Raycasting methods
+		//
 
 		// ask object if it wants to interact with Player
 		virtual public bool shouldDisplayInteraction () {
 			return interactionEnabled; // override this in your custom class
+		}
+
+		public void HandleRaycastCollission () {
+			if (Input.GetKeyUp (theKeyCode ())) {
+				playInteractionSound ();
+				interactionKeyPressed ();
+			}
+			if (Input.GetKey (theKeyCode ()))
+				interactionKeyHold ();
 		}
 
 		// used to display text on screen
@@ -33,6 +40,15 @@ namespace Interaction {
 				GUIManager gm = GameObject.FindObjectOfType<GUIManager> ();
 				if (gm) gm.register ("Press '"+interactionKey.ToString ().ToUpper ()+"' to "+msg, enable);
 			}
+		}
+
+		//
+		// Methods
+		//
+
+		// use this function to get the current KeyCode mapping
+		protected KeyCode theKeyCode() {
+			return (KeyCode) System.Enum.Parse(typeof(KeyCode), interactionKey.ToString ().ToUpper ());
 		}
 
 		// Display message in the middle of the screen
@@ -45,7 +61,7 @@ namespace Interaction {
 			if (gm) gm.centeredMessage (message, timeout);
 		}
 
-		protected void playInteractionSound(){
+		private void playInteractionSound(){
 			try{
 				m_AudioSource = gameObject.GetComponent<AudioSource>();
 				if(m_Sounds.Length != 1){
@@ -60,13 +76,10 @@ namespace Interaction {
 					m_AudioSource.clip = m_Sounds[0];
 					m_AudioSource.Play();
 				}
-
 			}
 			catch(Exception e) {
 				Debug.LogException (e);
 			}
-
-
 		}
 	}
 }

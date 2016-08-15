@@ -11,13 +11,11 @@ public class VictorianLight : Interactable
 		return "turn on / off";
 	}
 
-	override public void HandleRaycastCollission() {
-		if (Input.GetKeyUp (theKeyCode())) {
-			if (GetComponent<Renderer> ().material.name.Contains ("Streetlight_Off")) {
-				GetComponent<Renderer> ().material = LightsOn;
-			} else {
-				GetComponent<Renderer> ().material = LightsOff;
-			}
+	override public void interactionKeyPressed() {
+		if (GetComponent<Renderer> ().material.name.Contains ("Streetlight_Off")) {
+			GetComponent<Renderer> ().material = LightsOn;
+		} else {
+			GetComponent<Renderer> ().material = LightsOff;
 		}
 	}
 }
