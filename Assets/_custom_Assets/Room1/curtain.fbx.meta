@@ -1,37 +1,32 @@
 fileFormatVersion: 2
-guid: 38ee86e34821f41ea97b3bf6e03b014e
-timeCreated: 1471265344
+guid: ace1b97e9547b440f9cfec8c2ae4acbf
+timeCreated: 1471262563
 licenseType: Free
 ModelImporter:
   serializedVersion: 19
   fileIDToRecycleName:
-    100000: frame
-    100002: grid
-    100004: horizontal_bottom
-    100006: horizontal_top
-    100008: vertical
-    100010: //RootNode
-    400000: frame
-    400002: grid
-    400004: horizontal_bottom
-    400006: horizontal_top
-    400008: vertical
-    400010: //RootNode
-    2300000: frame
-    2300002: horizontal_bottom
-    2300004: horizontal_top
-    2300006: vertical
-    2300008: //RootNode
-    3300000: frame
-    3300002: horizontal_bottom
-    3300004: horizontal_top
-    3300006: vertical
-    3300008: //RootNode
-    4300000: window
-    4300002: vertical
-    4300004: horizontal_top
-    4300006: horizontal_bottom
-    4300008: frame
+    100000: bar
+    100002: //RootNode
+    100004: curtain 1
+    100006: holder_left
+    100008: holder_right
+    400000: bar
+    400002: //RootNode
+    400004: curtain 1
+    400006: holder_left
+    400008: holder_right
+    2300000: bar
+    2300002: curtain 1
+    2300004: holder_left
+    2300006: holder_right
+    3300000: bar
+    3300002: curtain 1
+    3300004: holder_left
+    3300006: holder_right
+    4300000: curtain
+    4300002: bar
+    4300004: holder_left
+    4300006: holder_right
   materials:
     importMaterials: 1
     materialName: 0
