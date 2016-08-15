@@ -13,7 +13,6 @@ public class Reachable : MonoBehaviour
 	//public string TriggerTag = "asdfs";
 
 	// PRIVATE SETTINGS
-	[HideInInspector] public bool InReach;
 	[HideInInspector] public RaycastHit RaycastHit;
 
 	void Update()
@@ -24,11 +23,10 @@ public class Reachable : MonoBehaviour
 
 		// Cast a ray from the center of screen towards where the player is looking.
 		if (Physics.Raycast (ray, out hit, Reach)) {
-			RaycastHit = hit;	
+			RaycastHit = hit;
 
 
 			GameObject go = hit.transform.gameObject;
-			//			Debug.Log (go);
 
 			if (initial) {
 				currentGameObject = go;
@@ -58,7 +56,8 @@ public class Reachable : MonoBehaviour
 	}
 
 	private void activateCrosshair(bool enable) {
-		gameObject.GetComponent<MouseCrosshair> ().activateCrosshair(enable);
+		MouseCrosshair ch = gameObject.GetComponent<MouseCrosshair> ();
+		if (ch) ch.activateCrosshair(enable);
 	}
 
 	private void deactiveGUI() {
