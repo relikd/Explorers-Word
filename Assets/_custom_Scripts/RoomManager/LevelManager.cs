@@ -22,4 +22,19 @@ public class LevelManager : MonoBehaviour {
 			SceneManager.LoadScene ("room_2");
 		}
 	}
+
+	static public void LoadNextRoom() {
+		MonoBehaviour[] allScripts = GameObject.FindObjectsOfType<MonoBehaviour> ();
+		for (int i = allScripts.Length; i > 0; i--) {
+			if (allScripts[i-1] != Instance) {
+				Destroy (allScripts[i-1]);
+			}
+		}
+
+		string levelName = SceneManager.GetActiveScene ().name.Substring (5);
+		int levelNumber = 0;
+		int.TryParse (levelName, out levelNumber);
+		levelNumber++;
+		SceneManager.LoadScene ("room_"+levelNumber, LoadSceneMode.Single);
+	}
 }
