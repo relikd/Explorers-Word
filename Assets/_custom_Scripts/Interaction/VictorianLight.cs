@@ -11,7 +11,7 @@ public class VictorianLight : Interactable
 		return "turn on / off";
 	}
 
-	override public void interactionKeyPressed() {
+	override public void OnInteractionKeyPressed() {
 		if (GetComponent<Renderer> ().material.name.Contains ("Streetlight_Off")) {
 			GetComponent<Renderer> ().material = LightsOn;
 		} else {

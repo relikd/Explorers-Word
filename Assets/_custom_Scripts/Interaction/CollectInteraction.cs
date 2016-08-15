@@ -8,7 +8,7 @@ public class CollectInteraction : Interactable
 		return "take";
 	}
 
-	override public void interactionKeyPressed () {
+	override public void OnInteractionKeyPressed () {
 		this.gameObject.SetActive(false);
 	}
 }

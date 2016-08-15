@@ -10,7 +10,7 @@ public class HoldInteraction : Interactable
 		return "hold";
 	}
 
-	override public void interactionKeyPressed() {
+	override public void OnInteractionKeyPressed() {
 		HandleRigidBody (true);
 		Pickup ();
 	}

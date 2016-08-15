@@ -15,7 +15,7 @@ public class TriggerInteraction : PlainInteraction
 		return actionMessage;
 	}
 
-	override public void interactionKeyPressed() {
+	override public void OnInteractionKeyPressed() {
 		if (triggerScript)
 			triggerScript.OnTriggerInteraction (this);
 		scriptedActionExecuter (responseMessage);
