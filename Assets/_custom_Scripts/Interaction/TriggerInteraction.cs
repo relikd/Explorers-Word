@@ -19,6 +19,7 @@ public class TriggerInteraction : PlainInteraction
 		if (Input.GetKeyUp (theKeyCode())) {
 			triggerScript.OnTriggerInteraction (this);
 			centeredMessage (responseMessage);
+			playInteractionSound ();
 		}
 	}
 }

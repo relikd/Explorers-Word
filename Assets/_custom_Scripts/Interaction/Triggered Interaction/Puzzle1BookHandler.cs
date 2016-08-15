@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+﻿	using UnityEngine;
 using System.Collections;
 
 public class Puzzle1BookHandler : TriggerInteractionCallback
@@ -15,10 +15,12 @@ public class Puzzle1BookHandler : TriggerInteractionCallback
 
 	IEnumerator playAnimation() {
 		Animator anim = gameObject.GetComponent<Animator> ();
+		GameObject shelf = GameObject.Find ("Bookshelf");
 		if (anim) {
 			anim.SetBool ("Trigger", true);
 			yield return new WaitForSeconds (getAnimationDuration (anim, "BookInTheShelveAnimation"));
 			//anim.SetBool ("Trigger", false); // dont reset. should be animated once
+			shelf.GetComponent<AudioSource> ().Play ();
 		}
 		shelfOpen = true;
 	}
