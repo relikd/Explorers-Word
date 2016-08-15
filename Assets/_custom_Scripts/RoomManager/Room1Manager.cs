@@ -159,7 +159,8 @@ public class Room1Manager : MonoBehaviour {
 
 	void startBackgroundMusic(){
 		SceneSound2D sceneSoundManager = gameObject.GetComponent<SceneSound2D> ();
+		Debug.Log (sceneSoundManager);
 		sceneSoundManager.startSound (0);
-		sceneSoundManager.toggleLoop ();
+		sceneSoundManager.toggleLoop (0);
 	}
 }

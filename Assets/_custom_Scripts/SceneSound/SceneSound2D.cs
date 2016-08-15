@@ -20,7 +20,7 @@ public class SceneSound2D : MonoBehaviour {
 
     
 
-    void Start()
+    void Awake()
     {
         for (int i = 0; i < m_Sounds.Length; i++) 
         {
