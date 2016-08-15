@@ -1,6 +1,6 @@
 fileFormatVersion: 2
 guid: 38ee86e34821f41ea97b3bf6e03b014e
-timeCreated: 1471265344
+timeCreated: 1471267633
 licenseType: Free
 ModelImporter:
   serializedVersion: 19
@@ -32,6 +32,11 @@ ModelImporter:
     4300004: horizontal_top
     4300006: horizontal_bottom
     4300008: frame
+    6400000: frame
+    6400002: horizontal_bottom
+    6400004: horizontal_top
+    6400006: vertical
+    6400008: //RootNode
   materials:
     importMaterials: 1
     materialName: 0
@@ -58,7 +63,7 @@ ModelImporter:
     lODScreenPercentages: []
     globalScale: 1
     meshCompression: 0
-    addColliders: 0
+    addColliders: 1
     importBlendShapes: 1
     swapUVChannels: 0
     generateSecondaryUV: 0
