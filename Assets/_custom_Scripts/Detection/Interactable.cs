@@ -12,8 +12,8 @@ namespace Interaction {
 		private AudioSource m_AudioSource;
 
 		abstract public string interactMessage ();
-		abstract public void interactionKeyPressed ();
-		virtual public void interactionKeyHold () {} // @overwrite
+		abstract public void OnInteractionKeyPressed ();
+		virtual public void OnInteractionKeyHold () {} // @overwrite
 
 		//
 		// Raycasting methods
@@ -27,10 +27,10 @@ namespace Interaction {
 		public void HandleRaycastCollission () {
 			if (Input.GetKeyUp (theKeyCode ())) {
 				playInteractionSound ();
-				interactionKeyPressed ();
+				OnInteractionKeyPressed ();
 			}
 			if (Input.GetKey (theKeyCode ()))
-				interactionKeyHold ();
+				OnInteractionKeyHold ();
 		}
 
 		// used to display text on screen

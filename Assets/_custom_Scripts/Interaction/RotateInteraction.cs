@@ -13,11 +13,11 @@ public class RotateInteraction : Interactable
 		return "rotate";
 	}
 
-	override public void interactionKeyPressed() {
+	override public void OnInteractionKeyPressed() {
 		if (stepAngle) rotate ();
 	}
 
-	override public void interactionKeyHold() {
+	override public void OnInteractionKeyHold() {
 		if (!stepAngle) rotate ();
 	}
 

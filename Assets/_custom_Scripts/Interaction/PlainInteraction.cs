@@ -14,7 +14,7 @@ public class PlainInteraction : Interactable
 		return actionMessage;
 	}
 
-	override public void interactionKeyPressed() {
+	override public void OnInteractionKeyPressed() {
 		centeredMessage (responseMessage);
 	}
 }
