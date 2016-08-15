@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
+[RequireComponent(typeof(RotateInteraction))]
 public class RotationLimiter : MonoBehaviour {
 
 	public float minAngle = -60;
