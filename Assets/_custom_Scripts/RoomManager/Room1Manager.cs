@@ -23,6 +23,8 @@ public class Room1Manager : MonoBehaviour {
 		activeLights = new ArrayList ();
 
 		saveInitialPuzzleState ();
+
+		startBackgroundMusic ();
 	}
 
 	void Update () {
@@ -153,5 +155,11 @@ public class Room1Manager : MonoBehaviour {
 		Color emissisonColor = ( flag ? Color.white : Color.black );
 		if (flag) emissisonColor.a = 0.5f;
 		renderer.material.SetColor ("_EmissionColor", emissisonColor);
+	}
+
+	void startBackgroundMusic(){
+		SceneSound2D sceneSoundManager = gameObject.GetComponent<SceneSound2D> ();
+		sceneSoundManager.startSound (0);
+		sceneSoundManager.toggleLoop ();
 	}
 }

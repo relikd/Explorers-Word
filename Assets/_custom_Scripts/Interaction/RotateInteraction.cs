@@ -17,6 +17,7 @@ public class RotateInteraction : Interactable
 		if (stepAngle ? Input.GetKeyUp(theKeyCode()) : Input.GetKey(theKeyCode())) {
 			gameObject.transform.Rotate(rotateXAxisBy,rotateYAxisBy,rotateZAxisBy);
 			checkForRotationLimit ();
+			playInteractionSound ();
 		}
 	}
 
