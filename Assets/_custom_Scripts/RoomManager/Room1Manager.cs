@@ -129,6 +129,7 @@ public class Room1Manager : MonoBehaviour {
 			Ray ray = new Ray (t.position, t.up);
 			if (Physics.Raycast (ray, out hit, 100)) {
 				float dist = hit.distance;
+				Debug.DrawRay (ray.origin, ray.direction*dist, Color.green, 10.0f);
 
 				if (hit.transform == crystal_large) dist += 0.2f;
 				else if (hit.transform == plate_v) dist += 0.12f;
