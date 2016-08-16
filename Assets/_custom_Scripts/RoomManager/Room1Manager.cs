@@ -77,7 +77,6 @@ public class Room1Manager : MonoBehaviour {
 		    activeLights.Contains (plate_v.FindChild (LIGHT_IDENT)) &&
 		    activeLights.Contains (plate_h.FindChild (LIGHT_IDENT))) {
 			// activate book
-			Debug.Log ("You solved it");
 			puzzleSolved = true;
 		} else {
 			puzzleSolved = false;
@@ -160,7 +159,6 @@ public class Room1Manager : MonoBehaviour {
 
 	void startBackgroundMusic(){
 		SceneSound2D sceneSoundManager = gameObject.GetComponent<SceneSound2D> ();
-		Debug.Log (sceneSoundManager);
 		sceneSoundManager.startSound (0);
 		sceneSoundManager.toggleLoop (0);
 	}
