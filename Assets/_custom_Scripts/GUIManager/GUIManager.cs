@@ -19,16 +19,6 @@ public class GUIManager : MonoBehaviour
 		}
 	}
 
-	bool alreadyRegistered (string reg) {
-		bool result = false;
-		foreach(string regi in messageList) {
-			if (reg == regi) {
-				result = true;
-			}
-		}
-		return result;
-	}
-
 	void OnGUI() {
 		float newYPossition = startingPosition.y;
 		foreach (string reg in messageList) {
