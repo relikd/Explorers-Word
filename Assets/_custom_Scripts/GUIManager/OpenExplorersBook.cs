@@ -6,68 +6,71 @@ namespace ExplorersBook
 {
 	public class OpenExplorersBook : MonoBehaviour
 	{
-		public GameObject explBook;
-		public GameObject inputField;
+		private GameObject explBook;
+		private GameObject inputField;
+		private CharacterController CharacterController;
+		private UnityStandardAssets.Characters.FirstPerson.FirstPersonController FPSControllerScript;
+		private MouseCrosshair MouseCrosshair;
+		private bool bookIsOpen = false;
 
-		private bool isActive = false;
-		private bool rotated = false;
+		void Start () {
+			explBook = GameObject.Find ("Explorers Book");
+			inputField = GameObject.Find ("ExplorersWord");
+			MouseCrosshair = GameObject.Find ("FirstPersonCharacter").GetComponent<MouseCrosshair> ();
+			CharacterController = GameObject.Find ("FPSController").GetComponent<CharacterController> ();
+			FPSControllerScript = GameObject.Find ("FPSController").GetComponent<UnityStandardAssets.Characters.FirstPerson.FirstPersonController> ();
+			if (explBook) {
+				explBook.SetActive (false);
+			}
+			if (inputField) {
+				inputField.SetActive (false);
+			}
+		}
 
 		void LateUpdate() {
+			if ((Input.GetKeyUp(KeyCode.B) && !bookIsOpen) || (Input.GetKeyUp(KeyCode.Escape) && bookIsOpen) ) {
+				openExplorersBook ();
+			}
+		}
 
-			if (Input.GetKeyUp(KeyCode.B)) {
-				
-				isActive = !isActive;
-				explBook.SetActive (isActive);
-				DisablePlayerMovement ();
-				UnlockMouseMovement ();
-				ActivateUserInputField ();
+		private void openExplorersBook() { 
+			bookIsOpen = !bookIsOpen;
+			ActivateExplorersBook ();
+			DisablePlayerMovement ();
+			UnlockMouseMovement ();
+			ActivateUserInputField ();
+		}
+
+		private void ActivateExplorersBook() {
+			if (explBook) {
+				explBook.SetActive (bookIsOpen);
 			}
 		}
 
 		private void ActivateUserInputField() {
-			inputField.SetActive(isActive);
+			if (inputField) {
+				inputField.SetActive(bookIsOpen);
+			}
 		}
 
 		private void DisablePlayerMovement() {
-			GameObject player = GameObject.Find ("FPSController");
-			player.GetComponent<CharacterController>().enabled = !isActive;
-			player.GetComponent<UnityStandardAssets.Characters.FirstPerson.FirstPersonController> ().enabled = !isActive;
+			if (FPSControllerScript) {
+				FPSControllerScript.enabled = !bookIsOpen;
+			}
+			if (CharacterController) {
+				CharacterController.enabled = !bookIsOpen;
+			}
 		}
 
 		private void UnlockMouseMovement() {
-			GameObject FirstPersonCharacter = GameObject.Find ("FirstPersonCharacter");
-			MouseLock mouseLock = FirstPersonCharacter.GetComponent<MouseLock>();
-			mouseLock.enabled = !isActive;
-			Cursor.visible = isActive;
+			Cursor.visible = bookIsOpen;
 			Cursor.lockState = CursorLockMode.Confined;
-			FirstPersonCharacter.GetComponent<MouseCrosshair> ().enabled = !isActive;
-		}
-
-		void OnGUI() {
-			//GUI.Label (new Rect (0, 0, Screen.width, Screen.height), "Here is a block of text\nlalalala\nanother line\nI could do this all day!");
-			if (!rotated) { 
-//				Vector3 explorersBookRotation = explBook.transform.rotation.eulerAngles;
-////				Vector3 explorersBookTranslation = explBook.transform.position;
-////				TextPanel.transform.position = explorersBookTranslation;
-////				TextPanel.transform.Rotate (explorersBookRotation);
-//				UI_Element.transform.Rotate(explorersBookRotation);
-//				RectTransform CanvasRect = canvas.GetComponent<RectTransform> ();
-//
-//				Vector2 ViewportPosition = cammera.WorldToViewportPoint (explBook.transform.position);
-//				Vector2 WorldObject_ScreenPosition = new Vector2 (
-//					((ViewportPosition.x * canvas.sizeDelta.x) - (CanvasRect.sizeDelta.x * 0.5f)),
-//					((ViewportPosition.x * canvas.sizeDelta.y) - (CanvasRect.sizeDelta.y * 0.5f)));
-//
-//
-//				Vector2 BookScreenCoord = RectTransformUtility.WorldToScreenPoint (cammera, explBook.transform.position);
-//
-//
-//				UI_Element.anchoredPosition3D = WorldObject_ScreenPosition;
-//				 
-//
-//				//UI_Element.transform.SetParent(explBook.transform);
-//				rotated = true;
+			if (MouseCrosshair) {
+				MouseCrosshair.enabled = !bookIsOpen;
 			}
+		}
+			
+		void OnGUI() {
 		}
 
 	}
