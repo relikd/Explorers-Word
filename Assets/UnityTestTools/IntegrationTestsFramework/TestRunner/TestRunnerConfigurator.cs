@@ -61,6 +61,7 @@ namespace UnityTest
                     }
                     catch (System.Xml.XmlException e)
                     {
+						Debug.LogException (e);
                         return null;
                     }
                 }

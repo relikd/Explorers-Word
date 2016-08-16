@@ -4,10 +4,10 @@ using Interaction;
 
 public class RotateInteraction : Interactable
 {
-	public float rotateXAxisBy = 0;
-	public float rotateYAxisBy = 10;
-	public float rotateZAxisBy = 0;
-	public bool stepAngle = false;
+	[SerializeField]
+	private Vector3 rotateBy = new Vector3(0,10,0);
+	[SerializeField]
+	private bool stepAngle = false;
 
 	override public string interactMessage() {
 		return "rotate";
@@ -22,7 +22,7 @@ public class RotateInteraction : Interactable
 	}
 
 	void rotate() {
-		gameObject.transform.Rotate(rotateXAxisBy,rotateYAxisBy,rotateZAxisBy);
+		gameObject.transform.Rotate (rotateBy);
 		checkForRotationLimit ();
 	}
 
@@ -33,14 +33,14 @@ public class RotateInteraction : Interactable
 			int ool = rl_script.outOfLimit ();
 			int dol = rl_script.directlyOnLimit ();
 			int edge = ool | dol;
-			if ((edge & 1)!=0) rotateXAxisBy *= -1;
-			if ((edge & 2)!=0) rotateYAxisBy *= -1;
-			if ((edge & 4)!=0) rotateZAxisBy *= -1;
+			if ((edge & 1)!=0) rotateBy.x *= -1;
+			if ((edge & 2)!=0) rotateBy.y *= -1;
+			if ((edge & 4)!=0) rotateBy.z *= -1;
 
 			if (ool > 0) {
-				gameObject.transform.Rotate (rotateXAxisBy, rotateYAxisBy, rotateZAxisBy);
+				gameObject.transform.Rotate (rotateBy);
 				if (rl_script.directlyOnLimit () > 0)
-					gameObject.transform.Rotate(rotateXAxisBy,rotateYAxisBy,rotateZAxisBy);
+					gameObject.transform.Rotate(rotateBy);
 			}
 		}
 	}
