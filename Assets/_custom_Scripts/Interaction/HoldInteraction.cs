@@ -23,7 +23,8 @@ public class HoldInteraction : Interactable
 	}
 
 	void Pickup() {
-		this.transform.position = this.target.transform.position;
+		if (target)
+			this.transform.position = this.target.transform.position;
 		this.transform.parent = GameObject.Find ("FirstPersonCharacter").transform;
 	}
 

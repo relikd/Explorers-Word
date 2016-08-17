@@ -7,12 +7,12 @@ public class LevelManager : MonoBehaviour {
 	static LevelManager Instance;
 
 	void Start () {
-		if (Instance != null)
-			GameObject.Destroy (gameObject);
-		else {
-			GameObject.DontDestroyOnLoad (gameObject);
-			Instance = this;
-		}
+//		if (Instance != null)
+//			GameObject.Destroy (gameObject);
+//		else {
+//			GameObject.DontDestroyOnLoad (gameObject);
+//			Instance = this;
+//		}
 	}
 
 	void Update () {
@@ -24,12 +24,12 @@ public class LevelManager : MonoBehaviour {
 	}
 
 	static public void LoadNextRoom() {
-		MonoBehaviour[] allScripts = GameObject.FindObjectsOfType<MonoBehaviour> ();
-		for (int i = allScripts.Length; i > 0; i--) {
-			if (allScripts[i-1] != Instance) {
-				Destroy (allScripts[i-1]);
-			}
-		}
+//		MonoBehaviour[] allScripts = GameObject.FindObjectsOfType<MonoBehaviour> ();
+//		for (int i = allScripts.Length; i > 0; i--) {
+//			if (allScripts[i-1] != Instance) {
+//				Destroy (allScripts[i-1]);
+//			}
+//		}
 
 		string levelName = SceneManager.GetActiveScene ().name.Substring (5);
 		int levelNumber = 0;
