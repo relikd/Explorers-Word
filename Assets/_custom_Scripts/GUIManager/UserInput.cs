@@ -24,14 +24,15 @@ using System.IO;
 //			deactivateObject (gameObject);
 //		}
 		disableGameObjectViaTag (UserInput);
-
 		ResetInputField();
 	}
 
 	private void ResetInputField() {
 		InputField inputFieldComponent = GameObject.Find("ExplorersWord").GetComponent<InputField> ();
-		inputFieldComponent.ActivateInputField ();
-		inputFieldComponent.text = "" ;
+		if (inputFieldComponent) {
+			inputFieldComponent.ActivateInputField ();
+			inputFieldComponent.text = "" ;
+		}
 	}
 
 	private void deactivateObject(GameObject go) {
