@@ -11,13 +11,22 @@ namespace ExplorersBook
 		private GameObject inputField;
 		private CharacterController CharacterController;
 		private MouseCrosshair MouseCrosshair;
+		private UnityStandardAssets.Characters.FirstPerson.CustomFirstPersonController FPSControllerScript;
+		//private StoryManager StoryManager;
+		//GameObject RoomDescription; 
 		private bool bookIsOpen = false;
+		private float lastWalkingSpeed;
+		private float lastRunningSpeed;
 
 		void Start () {
 			explBook = GameObject.Find ("Explorers Book");
 			inputField = GameObject.Find ("ExplorersWord");
 			MouseCrosshair = GameObject.Find ("FirstPersonCharacter").GetComponent<MouseCrosshair> ();
-			CharacterController = GameObject.Find ("FPSController").GetComponent<CharacterController> ();
+			CharacterController = gameObject.GetComponentInParent<CharacterController> ();
+			FPSControllerScript = GameObject.Find ("FPSController").GetComponent<UnityStandardAssets.Characters.FirstPerson.CustomFirstPersonController> ();
+			//StoryManager = gameObject.GetComponent<StoryManager> ();
+			//RoomDescription = GameObject.Find("RoomDescription");
+
 			if (explBook) {
 				explBook.SetActive (false);
 			}
@@ -38,6 +47,13 @@ namespace ExplorersBook
 			DisablePlayerMovement ();
 			UnlockMouseMovement ();
 			ActivateUserInputField ();
+			//ActivateStoryManager ();
+
+		}
+
+		private void ActivateStoryManager() {
+			//StoryManager.enabled = bookIsOpen;
+			//RoomDescription.SetActive (bookIsOpen);
 		}
 
 		private void ActivateExplorersBook() {
@@ -60,6 +76,14 @@ namespace ExplorersBook
 		private void DisablePlayerMovement() {
 			if (CharacterController) {
 				CharacterController.enabled = !bookIsOpen;
+			}
+
+			if (FPSControllerScript) {
+				lastRunningSpeed = FPSControllerScript.m_RunSpeed;
+				lastWalkingSpeed = FPSControllerScript.m_WalkSpeed;
+
+				FPSControllerScript.m_RunSpeed = 0;
+				FPSControllerScript.m_WalkSpeed = 0;
 			}
 		}
 
