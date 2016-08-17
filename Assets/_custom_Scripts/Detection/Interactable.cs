@@ -64,17 +64,19 @@ namespace Interaction {
 		private void playInteractionSound(){
 			try{
 				m_AudioSource = gameObject.GetComponent<AudioSource>();
-				if(m_Sounds.Length != 1){
-					int n = UnityEngine.Random.Range(1, m_Sounds.Length);			
-					m_AudioSource.clip = m_Sounds[n];
-					m_AudioSource.Play();
-					// move picked sound to index 0 so it's not picked next time
-					m_Sounds[n] = m_Sounds[0];
-					m_Sounds[0] = m_AudioSource.clip;
-				}
-				else{
-					m_AudioSource.clip = m_Sounds[0];
-					m_AudioSource.Play();
+				if (m_AudioSource) {
+					if(m_Sounds.Length != 1){
+						int n = UnityEngine.Random.Range(1, m_Sounds.Length);			
+						m_AudioSource.clip = m_Sounds[n];
+						m_AudioSource.Play();
+						// move picked sound to index 0 so it's not picked next time
+						m_Sounds[n] = m_Sounds[0];
+						m_Sounds[0] = m_AudioSource.clip;
+					}
+					else{
+						m_AudioSource.clip = m_Sounds[0];
+						m_AudioSource.Play();
+					}
 				}
 			}
 			catch(Exception e) {
