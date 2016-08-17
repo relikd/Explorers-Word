@@ -36,6 +36,7 @@ namespace ExplorersBook
 		private void openExplorersBook() { 
 			bookIsOpen = !bookIsOpen;
 			ActivateExplorersBook ();
+			StartCoroutine (playAnimation ());
 			DisablePlayerMovement ();
 			UnlockMouseMovement ();
 			ActivateUserInputField ();
@@ -70,6 +71,21 @@ namespace ExplorersBook
 			}
 		}
 			
+		IEnumerator playAnimation() {
+			Animator anim = explBook.GetComponent<Animator> ();
+			if (anim) {
+				anim.SetBool ("open", bookIsOpen);
+				yield return new WaitForSeconds (getAnimationDuration (anim, "BookInTheShelveAnimation"));
+
+			}
+		}
+
+		private float getAnimationDuration(Animator a, string n) {
+			foreach (AnimationClip clip in a.runtimeAnimatorController.animationClips)
+				if (clip.name == n) return clip.length;
+			return 0;
+		}
+
 		void OnGUI() {
 		}
 
