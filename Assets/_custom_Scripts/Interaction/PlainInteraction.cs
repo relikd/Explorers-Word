@@ -1,7 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
 using Interaction;
-using UnityEditor;
 
 public class PlainInteraction : Interactable
 {
