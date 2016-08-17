@@ -3,85 +3,89 @@ using System.Collections;
 
 public class Room1Manager : MonoBehaviour {
 
-	public static bool puzzleSolved = false;
+	[SerializeField] private GameObject startingLightbeam;
+	[SerializeField] private GameObject finishCrystal;
+	[SerializeField] private int lightsRequiredToFinish = 2;
+	[SerializeField] private GameObject[] rotatableObjects;
 
+	private int currentLightsOnFinish = 0;
 	private GameObject globe;
-	private Transform plate_v, plate_h, crystal_small, crystal_large;
-	private int correct_angle_plate_v, correct_angle_plate_h;
-	private string lastPuzzleState;
-	private ArrayList activeLights;
-
-	private const string LIGHT_IDENT = "lichtstrahl";
 
 	void Start () {
-		plate_v = GameObject.Find ("plate_grp_v").transform;
-		plate_h = GameObject.Find ("gold_plate_h").transform;
-		crystal_small = GameObject.Find ("crystal_small").transform;
-		crystal_large = GameObject.Find ("crystal_large").transform;
 		globe = GameObject.Find ("globe");
-
-		activeLights = new ArrayList ();
-
-		saveInitialPuzzleState ();
-
+		initialPuzzleTwist ();
 		startBackgroundMusic ();
+	}
+
+	void initialPuzzleTwist () {
+		foreach (GameObject item in rotatableObjects) {
+			RotateInteraction ri_script = item.GetComponent<RotateInteraction> ();
+			if (ri_script) {
+				item.transform.Rotate (ri_script.rotateBy*2);
+			}
+		}
 	}
 
 	void Update () {
 //		if (Input.GetKeyUp (KeyCode.Alpha5)) {
 //			crystal_small.eulerAngles = new Vector3 (0,270,0);
 //		}
-		reEvaluatePuzzle ();
-	}
 
-	void saveInitialPuzzleState () {
-		// save correct angle first
-		correct_angle_plate_v = (int)plate_v.rotation.eulerAngles.x;
-		correct_angle_plate_h = (int)plate_h.rotation.eulerAngles.y;
-
-		// change starting position
-		plate_v.Rotate (new Vector3(7,0,0)); // x -21 to 14 step 7
-		plate_h.Rotate (new Vector3(0,60,0)); // y -40 to 60 step 20
-		crystal_small.Rotate (new Vector3(0,60,0)); // step 30
-		crystal_large.Rotate (new Vector3(0,90,0)); // step 45
-
-		// initially disable all lightbeams
-		foreach(GameObject light in GameObject.FindGameObjectsWithTag("lightbeam")) {
-			light.SetActive (false);
-		}
-	}
-
-	void reEvaluatePuzzle () {
-
-		if (puzzleSolved)
+		if (currentLightsOnFinish >= lightsRequiredToFinish)
 			activateMayaBook (true); // will be called continuously for glow effect
 
-		if (currentPuzzleState ().Equals (lastPuzzleState))
-			return;
-		lastPuzzleState = currentPuzzleState ();
+		bool shouldRecalculate = false;
+		foreach (GameObject item in rotatableObjects)
+			shouldRecalculate |= item.transform.hasChanged;
 
+		if (shouldRecalculate)
+		{
+			clearAllLights ();
+			lightHitObject (startingLightbeam.transform);
 
-		// clear previous
-		foreach (Transform light in activeLights) {
-			light.gameObject.SetActive (false);
+			foreach (GameObject item in rotatableObjects)
+				item.transform.hasChanged = false;
 		}
-		activeLights.Clear ();
+	}
+
+	void clearAllLights() {
+		// initially disable all lightbeams
+		GameObject[] lights = GameObject.FindGameObjectsWithTag("lightbeam");
+		foreach(GameObject light in lights) {
+			light.SetActive (false);
+		}
+		currentLightsOnFinish = 0;
 		activateGlobe (false);
+		activateMayaBook (false);
+	}
 
-		// begin all ray casting from first small crystal
-		lightHitObject (crystal_small);
-
-
-		// check if light is on (in activeLights) and angle is correct
-		if (correctAngle (plate_v) && correctAngle (plate_h) &&
-		    activeLights.Contains (plate_v.FindChild (LIGHT_IDENT)) &&
-		    activeLights.Contains (plate_h.FindChild (LIGHT_IDENT))) {
-			// activate book
-			puzzleSolved = true;
-		} else {
-			puzzleSolved = false;
-			activateMayaBook (false);
+	void lightHitObject(Transform t) {
+		// check for special objects
+		if (t == null)
+			return;
+		else if (t == finishCrystal.transform)
+			currentLightsOnFinish++;
+		else if (t == globe.transform)
+			activateGlobe (true);
+		
+		// go recursively through all children
+		for (int i = 0; i < t.childCount; i++) {
+			Transform child = t.GetChild (i);
+			lightHitObject (child);
 		}
+		// if light beam then recast
+		LightbeamExpansion lbe_script = t.GetComponent<LightbeamExpansion> ();
+		if (lbe_script && !t.gameObject.activeSelf) {
+			t.gameObject.SetActive (true);
+			lightHitObject (lbe_script.Expand ());
+		}
+	}
+
+	void activateGlobe(bool flag) {
+		Renderer renderer = globe.GetComponent <Renderer>();
+		Color emissisonColor = ( flag ? Color.white : Color.black );
+		if (flag) emissisonColor.a = 0.5f;
+		renderer.material.SetColor ("_EmissionColor", emissisonColor);
 	}
 
 	void activateMayaBook (bool flag) {
@@ -99,62 +103,6 @@ public class Room1Manager : MonoBehaviour {
 
 		TriggerInteraction script = maya_book.GetComponent<TriggerInteraction> ();
 		script.triggerActive = flag;
-	}
-
-	string currentPuzzleState() {
-		string state = "s:" + crystal_small.rotation.eulerAngles.y;
-		state += ",l:" + crystal_large.rotation.eulerAngles.y;
-		state += ",v:" + plate_v.rotation.eulerAngles.x;
-		state += ",h:"+plate_h.rotation.eulerAngles.y;
-		return state;
-	}
-
-	void lightHitObject(Transform t) {
-		if (t == globe.transform)
-			activateGlobe (true);
-		
-		// go through all children
-		for (int i = 0; i < t.childCount; i++) {
-			Transform child = t.GetChild (i);
-			lightHitObject (child);
-		}
-		// if light beam found recast
-		if (t.name.Contains (LIGHT_IDENT) && !activeLights.Contains (t))
-		{
-			activeLights.Add (t);
-			t.gameObject.SetActive (true);
-			// set length of light beam
-			RaycastHit hit;
-			Ray ray = new Ray (t.position, t.up);
-			if (Physics.Raycast (ray, out hit, 100)) {
-				float dist = hit.distance;
-				Debug.DrawRay (ray.origin, ray.direction*dist, Color.green, 10.0f);
-
-				if (hit.transform == crystal_large) dist += 0.2f;
-				else if (hit.transform == plate_v) dist += 0.12f;
-				else if (hit.transform == plate_h) dist += 0.13f;
-				else if (hit.transform == crystal_small) dist += 0.08f;
-
-				t.localScale = new Vector3 (1, dist, 1);
-				lightHitObject (hit.transform);
-			} else {
-				t.localScale = new Vector3 (1, 100, 1);
-			}
-		}
-	}
-
-	bool correctAngle(Transform go) {
-		Vector3 r = go.rotation.eulerAngles;
-		if (go == plate_v) return (int)r.x == correct_angle_plate_v;
-		if (go == plate_h) return (int)r.y == correct_angle_plate_h;
-		return false;
-	}
-
-	void activateGlobe(bool flag) {
-		Renderer renderer = globe.GetComponent <Renderer>();
-		Color emissisonColor = ( flag ? Color.white : Color.black );
-		if (flag) emissisonColor.a = 0.5f;
-		renderer.material.SetColor ("_EmissionColor", emissisonColor);
 	}
 
 	void startBackgroundMusic(){
