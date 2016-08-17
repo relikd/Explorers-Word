@@ -19,11 +19,12 @@ using System.IO;
 			deactivateAllGameObjects ();
 		}
 
-		GameObject gameObject = GameObject.Find (UserInput);
-		if (gameObject) {
-			deactivateObject (gameObject);
-		}
-			
+//		GameObject gameObject = GameObject.Find (UserInput);
+//		if (gameObject) {
+//			deactivateObject (gameObject);
+//		}
+		disableGameObjectViaTag (UserInput);
+
 		ResetInputField();
 	}
 
@@ -59,4 +60,15 @@ using System.IO;
 			}
 		}
 	}
+
+	private void disableGameObjectViaTag(string text) {
+		GameObject[] gameObjects = GameObject.FindGameObjectsWithTag (TriggerTag);
+		Debug.Log (gameObjects.Length);
+		foreach (GameObject go in gameObjects) {
+			if (go.activeInHierarchy && go.name == text) {
+				deactivateObject (go);
+			}
+		}
+	}
+		
 }
