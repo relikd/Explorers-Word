@@ -10,6 +10,10 @@ using System.IO;
 
 	public string TriggerTag;
 
+	void Start() {
+		
+	}
+
 	public void handleUserInput(string UserInput) {
 		if (UserInput == "all") {
 			deactivateAllGameObjects ();
@@ -19,6 +23,14 @@ using System.IO;
 		if (gameObject) {
 			deactivateObject (gameObject);
 		}
+			
+		ResetInputField();
+	}
+
+	private void ResetInputField() {
+		InputField inputFieldComponent = GameObject.Find("ExplorersWord").GetComponent<InputField> ();
+		inputFieldComponent.ActivateInputField ();
+		inputFieldComponent.text = "" ;
 	}
 
 	private void deactivateObject(GameObject go) {

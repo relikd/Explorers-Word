@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 using UnityEngine.UI;
+using UnityEngine.EventSystems;
 
 namespace ExplorersBook
 {
@@ -9,7 +10,6 @@ namespace ExplorersBook
 		private GameObject explBook;
 		private GameObject inputField;
 		private CharacterController CharacterController;
-		private UnityStandardAssets.Characters.FirstPerson.FirstPersonController FPSControllerScript;
 		private MouseCrosshair MouseCrosshair;
 		private bool bookIsOpen = false;
 
@@ -18,7 +18,6 @@ namespace ExplorersBook
 			inputField = GameObject.Find ("ExplorersWord");
 			MouseCrosshair = GameObject.Find ("FirstPersonCharacter").GetComponent<MouseCrosshair> ();
 			CharacterController = GameObject.Find ("FPSController").GetComponent<CharacterController> ();
-			FPSControllerScript = GameObject.Find ("FPSController").GetComponent<UnityStandardAssets.Characters.FirstPerson.FirstPersonController> ();
 			if (explBook) {
 				explBook.SetActive (false);
 			}
@@ -53,13 +52,12 @@ namespace ExplorersBook
 		private void ActivateUserInputField() {
 			if (inputField) {
 				inputField.SetActive(bookIsOpen);
+				InputField inputFieldComponent = inputField.GetComponent<InputField> ();
+				inputFieldComponent.ActivateInputField ();
 			}
 		}
 
 		private void DisablePlayerMovement() {
-			if (FPSControllerScript) {
-				FPSControllerScript.enabled = !bookIsOpen;
-			}
 			if (CharacterController) {
 				CharacterController.enabled = !bookIsOpen;
 			}
