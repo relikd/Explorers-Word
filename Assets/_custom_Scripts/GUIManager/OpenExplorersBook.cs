@@ -2,6 +2,7 @@
 using System.Collections;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
+using UnityEngine.Audio;
 
 namespace ExplorersBook
 {
@@ -12,6 +13,7 @@ namespace ExplorersBook
 		private CharacterController CharacterController;
 		private MouseCrosshair MouseCrosshair;
 		private UnityStandardAssets.Characters.FirstPerson.CustomFirstPersonController FPSControllerScript;
+		private AudioSource PlayerSound;
 		//private StoryManager StoryManager;
 		//GameObject RoomDescription; 
 		private bool bookIsOpen = false;
@@ -24,6 +26,7 @@ namespace ExplorersBook
 			MouseCrosshair = GameObject.Find ("FirstPersonCharacter").GetComponent<MouseCrosshair> ();
 			CharacterController = gameObject.GetComponentInParent<CharacterController> ();
 			FPSControllerScript = GameObject.Find ("FPSController").GetComponent<UnityStandardAssets.Characters.FirstPerson.CustomFirstPersonController> ();
+			PlayerSound = gameObject.GetComponentInParent<AudioSource> ();
 			//StoryManager = gameObject.GetComponent<StoryManager> ();
 			//RoomDescription = GameObject.Find("RoomDescription");
 
@@ -44,6 +47,7 @@ namespace ExplorersBook
 		private void openExplorersBook() { 
 			bookIsOpen = !bookIsOpen;
 			ActivateExplorersBook ();
+			DisablePlayerSound();
 			DisablePlayerMovement ();
 			UnlockMouseMovement ();
 			ActivateUserInputField ();
@@ -73,18 +77,28 @@ namespace ExplorersBook
 			}
 		}
 
+		private void DisablePlayerSound() {
+			if (PlayerSound) {
+				PlayerSound.mute = bookIsOpen;
+			}
+		}
+
 		private void DisablePlayerMovement() {
 			if (CharacterController) {
 				CharacterController.enabled = !bookIsOpen;
 			}
-
-			if (FPSControllerScript) {
+			if (FPSControllerScript && bookIsOpen) {
 				lastRunningSpeed = FPSControllerScript.m_RunSpeed;
 				lastWalkingSpeed = FPSControllerScript.m_WalkSpeed;
-
-				FPSControllerScript.m_RunSpeed = 0;
-				FPSControllerScript.m_WalkSpeed = 0;
+				changeWalkingAndRunningSpeed (0, 0);
+			} else {
+				changeWalkingAndRunningSpeed (lastWalkingSpeed, lastRunningSpeed);		
 			}
+		}
+
+		private void changeWalkingAndRunningSpeed(float walkingSpeed, float runningSpeed) {
+			FPSControllerScript.m_RunSpeed = runningSpeed;
+			FPSControllerScript.m_WalkSpeed = walkingSpeed;		
 		}
 
 		private void UnlockMouseMovement() {
