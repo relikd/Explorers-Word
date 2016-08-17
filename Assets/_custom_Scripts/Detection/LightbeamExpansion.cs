@@ -3,6 +3,10 @@ using System.Collections;
 
 public class LightbeamExpansion : MonoBehaviour
 {
+	void Start() {
+		Expand ();
+	}
+
 	public Transform Expand() {
 		RaycastHit hit;
 		Ray ray = new Ray (transform.position, transform.up);
