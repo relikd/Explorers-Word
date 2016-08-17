@@ -4,8 +4,7 @@ using Interaction;
 
 public class RotateInteraction : Interactable
 {
-	[SerializeField]
-	private Vector3 rotateBy = new Vector3(0,10,0);
+	public Vector3 rotateBy = new Vector3(0,10,0);
 	[SerializeField]
 	private bool stepAngle = false;
 
