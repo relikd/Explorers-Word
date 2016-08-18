@@ -20,7 +20,7 @@ namespace ExplorersBook
 		private float lastWalkingSpeed;
 		private float lastRunningSpeed;
 		private List<string> ExplorersStory = new List<string>();
-		private int currentStoryIndex = 0;
+		private int currentStoryIndex = -1;
 		private bool subtract = false;
 
 		void Start () {
@@ -31,8 +31,6 @@ namespace ExplorersBook
 			FPSControllerScript = GameObject.Find ("FPSController").GetComponent<UnityStandardAssets.Characters.FirstPerson.CustomFirstPersonController> ();
 			PlayerSound = gameObject.GetComponentInParent<AudioSource> ();
 			StoryText = GameObject.Find ("Text").GetComponent<Text> ();
-			//StoryManager = gameObject.GetComponent<StoryManager> ();
-			//RoomDescription = GameObject.Find("RoomDescription");
 
 			if (explBook) {
 				explBook.SetActive (false);
@@ -50,12 +48,12 @@ namespace ExplorersBook
 			if ((Input.GetKeyUp(KeyCode.B) && !bookIsOpen) || (Input.GetKeyUp(KeyCode.Escape) && bookIsOpen) ) {
 				openExplorersBook ();
 			}
-			if (Input.GetKeyDown (KeyCode.RightArrow)) {
-				subtract = false;
+			if (Input.GetKeyDown (KeyCode.RightArrow) && currentStoryIndex >= 0 && currentStoryIndex < ExplorersStory.Count-1) {
+				currentStoryIndex++;
 				depictExplorersStory ();
 			}
-			if (Input.GetKeyDown (KeyCode.LeftArrow)) {
-				subtract = true;
+			if (Input.GetKeyDown (KeyCode.LeftArrow) && currentStoryIndex > 0 && currentStoryIndex <= ExplorersStory.Count-1) {
+				currentStoryIndex--;
 				depictExplorersStory();
 			}
 		}
@@ -67,14 +65,8 @@ namespace ExplorersBook
 			DisablePlayerMovement ();
 			UnlockMouseMovement ();
 			ActivateUserInputField ();
+			currentStoryIndex++;
 			depictExplorersStory ();
-			//ActivateStoryManager ();
-
-		}
-
-		private void ActivateStoryManager() {
-			//StoryManager.enabled = bookIsOpen;
-			//RoomDescription.SetActive (bookIsOpen);
 		}
 
 		private void ActivateExplorersBook() {
@@ -143,31 +135,17 @@ namespace ExplorersBook
 
 		private void depictExplorersStory() {
 			LevelManager lvlManager = GameObject.Find("LevelManager").GetComponent<LevelManager> ();
+			if (!bookIsOpen) {
+				currentStoryIndex = 0;
+			}
+
 			if (lvlManager) {
-				ExplorersStory = lvlManager.getParagraphs();
+				ExplorersStory = lvlManager.getParagraphs ();
 			}
 			if (StoryText) {
 				StoryText.enabled = bookIsOpen;
-				Debug.Log (StoryText);
-				Debug.Log (ExplorersStory.Count);
-				StoryText.text = GetCorrectParagraph ();
-
+				StoryText.text = ExplorersStory[currentStoryIndex];
 			}
-		}
-
-		private string GetCorrectParagraph() {
-			string result = "";
-			if (currentStoryIndex > 0 || currentStoryIndex < ExplorersStory.Count) {
-				if (subtract) {
-					currentStoryIndex--;
-				} else {
-					currentStoryIndex++;
-				}
-			}
-			if (ExplorersStory.Count > 0) {
-				result = ExplorersStory [currentStoryIndex];
-			}
-			return result;
 		}
 
 		void OnGUI() {
