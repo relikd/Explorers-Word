@@ -38,7 +38,7 @@ using System.IO;
 	}
 
 	private void updateQueueWithGameObject(GameObject go) {
-		if (visibleObjects2.Count == QueueLength - 1) {
+		if (visibleObjects2.Count == QueueLength) {
 			
 			deactivateObject (visibleObjects2.First.Value, false);
 			visibleObjects2.RemoveFirst();
