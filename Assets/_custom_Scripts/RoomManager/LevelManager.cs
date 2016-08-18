@@ -2,14 +2,13 @@
 using System.Collections;
 using UnityEngine.SceneManagement;
 using System.Text;
-using System.IO; 
-using System.Collections;
+using System.IO;
 using System.Collections.Generic;
 
 public class LevelManager : MonoBehaviour {
 
 	static LevelManager Instance;
-	List<string> Paragraphs = new List<string>();
+	public List<string> Paragraphs = new List<string>();
 	string Path = "/Users/mr.nignag/projektarbeit-explorers-word/Andere Files/StoryChapters/";
 	string CurrentStoryChapterName="StoryChapter0"; 
 
@@ -55,6 +54,10 @@ public class LevelManager : MonoBehaviour {
 		levelNumber++;
 
 		SceneManager.LoadScene ("room_"+levelNumber, LoadSceneMode.Single);
+	}
+
+	public List<string> getParagraphs() {
+		return this.Paragraphs;
 	}
 
 	private int getCurrentLevelNumber() {
