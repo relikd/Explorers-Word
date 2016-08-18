@@ -11,7 +11,7 @@ using System.Diagnostics;
 public static class LogWriter  {
     static string dir = @"Logs";
     private static string path = @"Logs/GameLog "+ DateTime.Now.ToString("yyyy-MM-dd")+" "+ DateTime.Now.ToString("HH-mm-ss") + ".txt";
-    private static bool newgame = true;
+ 
     
     
     static LogWriter()
@@ -23,17 +23,9 @@ public static class LogWriter  {
     // schreibt eine Zeile ins Logfile, erstellt falls nötig das File und das directory
     {
 
-    #if (LOG)
-        if (newgame)
-        {
-            if (!Directory.Exists(path))
-            {
-                Directory.CreateDirectory(dir);
-            }
-            //Fügt eine Zeile mit der Startuhrzeit ein
-            using (StreamWriter sw = File.CreateText(path)) sw.WriteLine(DateTime.Now.ToString("HH:mm:ss") + ":");
-            newgame = false;
-        }
+#if (LOG)
+        if (!Directory.Exists(path)) Directory.CreateDirectory(dir);
+       
         using (StreamWriter sw = File.AppendText(path))
         {
             StackTrace stackTrace = new StackTrace();
@@ -43,7 +35,7 @@ public static class LogWriter  {
             string typeName = methodBase.DeclaringType.Name;
             sw.WriteLine(DateTime.Now.ToString("HH:mm:ss: ") + " ; " + CallingObjName + " ; " + typeName + " ; " + methodName + " ; " + line);
         }
-     #endif
+#endif
 
     }
     public static void WriteLog(String line)
@@ -51,16 +43,8 @@ public static class LogWriter  {
     {
 
 #if (LOG)
-        if (newgame)
-        {
-            if (!Directory.Exists(path))
-            {
-                Directory.CreateDirectory(dir);
-            }
-            //Fügt eine Zeile mit der Startuhrzeit ein
-            using (StreamWriter sw = File.CreateText(path)) sw.WriteLine(DateTime.Now.ToString("HH:mm:ss") + ":");
-            newgame = false;
-        }
+        if (!Directory.Exists(path)) Directory.CreateDirectory(dir);
+         
         using (StreamWriter sw = File.AppendText(path))
         {
             StackTrace stackTrace = new StackTrace();
