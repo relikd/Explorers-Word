@@ -21,7 +21,6 @@ namespace ExplorersBook
 		private float lastRunningSpeed;
 		private List<string> ExplorersStory = new List<string>();
 		private int currentStoryIndex = -1;
-		private bool subtract = false;
 
 		void Start () {
 			explBook = GameObject.Find ("Explorers Book");
@@ -30,7 +29,7 @@ namespace ExplorersBook
 			CharacterController = gameObject.GetComponentInParent<CharacterController> ();
 			FPSControllerScript = GameObject.Find ("FPSController").GetComponent<UnityStandardAssets.Characters.FirstPerson.CustomFirstPersonController> ();
 			PlayerSound = gameObject.GetComponentInParent<AudioSource> ();
-			StoryText = GameObject.Find ("Text").GetComponent<Text> ();
+			StoryText = GameObject.Find ("Story").GetComponent<Text> ();
 
 			if (explBook) {
 				explBook.SetActive (false);
@@ -40,7 +39,6 @@ namespace ExplorersBook
 			}
 			if (StoryText) {
 				StoryText.enabled = false;	
-				Debug.Log (StoryText);
 			}
 		}
 
