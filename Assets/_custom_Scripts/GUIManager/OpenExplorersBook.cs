@@ -3,6 +3,7 @@ using System.Collections;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
 using UnityEngine.Audio;
+using System.Collections.Generic;
 
 namespace ExplorersBook
 {
@@ -14,11 +15,13 @@ namespace ExplorersBook
 		private MouseCrosshair MouseCrosshair;
 		private UnityStandardAssets.Characters.FirstPerson.CustomFirstPersonController FPSControllerScript;
 		private AudioSource PlayerSound;
-		//private StoryManager StoryManager;
-		//GameObject RoomDescription; 
+		private Text StoryText;
 		private bool bookIsOpen = false;
 		private float lastWalkingSpeed;
 		private float lastRunningSpeed;
+		private List<string> ExplorersStory = new List<string>();
+		private int currentStoryIndex = 0;
+		private bool subtract = false;
 
 		void Start () {
 			explBook = GameObject.Find ("Explorers Book");
@@ -27,6 +30,7 @@ namespace ExplorersBook
 			CharacterController = gameObject.GetComponentInParent<CharacterController> ();
 			FPSControllerScript = GameObject.Find ("FPSController").GetComponent<UnityStandardAssets.Characters.FirstPerson.CustomFirstPersonController> ();
 			PlayerSound = gameObject.GetComponentInParent<AudioSource> ();
+			StoryText = GameObject.Find ("Text").GetComponent<Text> ();
 			//StoryManager = gameObject.GetComponent<StoryManager> ();
 			//RoomDescription = GameObject.Find("RoomDescription");
 
@@ -36,11 +40,23 @@ namespace ExplorersBook
 			if (inputField) {
 				inputField.SetActive (false);
 			}
+			if (StoryText) {
+				StoryText.enabled = false;	
+				Debug.Log (StoryText);
+			}
 		}
 
 		void LateUpdate() {
 			if ((Input.GetKeyUp(KeyCode.B) && !bookIsOpen) || (Input.GetKeyUp(KeyCode.Escape) && bookIsOpen) ) {
 				openExplorersBook ();
+			}
+			if (Input.GetKeyDown (KeyCode.RightArrow)) {
+				subtract = false;
+				depictExplorersStory ();
+			}
+			if (Input.GetKeyDown (KeyCode.LeftArrow)) {
+				subtract = true;
+				depictExplorersStory();
 			}
 		}
 
@@ -51,6 +67,7 @@ namespace ExplorersBook
 			DisablePlayerMovement ();
 			UnlockMouseMovement ();
 			ActivateUserInputField ();
+			depictExplorersStory ();
 			//ActivateStoryManager ();
 
 		}
@@ -123,7 +140,36 @@ namespace ExplorersBook
 				if (clip.name == n) return clip.length;
 			return 0;
 		}
-			
+
+		private void depictExplorersStory() {
+			LevelManager lvlManager = GameObject.Find("LevelManager").GetComponent<LevelManager> ();
+			if (lvlManager) {
+				ExplorersStory = lvlManager.getParagraphs();
+			}
+			if (StoryText) {
+				StoryText.enabled = bookIsOpen;
+				Debug.Log (StoryText);
+				Debug.Log (ExplorersStory.Count);
+				StoryText.text = GetCorrectParagraph ();
+
+			}
+		}
+
+		private string GetCorrectParagraph() {
+			string result = "";
+			if (currentStoryIndex > 0 || currentStoryIndex < ExplorersStory.Count) {
+				if (subtract) {
+					currentStoryIndex--;
+				} else {
+					currentStoryIndex++;
+				}
+			}
+			if (ExplorersStory.Count > 0) {
+				result = ExplorersStory [currentStoryIndex];
+			}
+			return result;
+		}
+
 		void OnGUI() {
 		}
 

@@ -53,7 +53,6 @@ using System.IO;
 
 	public void deactivateAllGameObjects() {
 		GameObject[] gameObjects = GameObject.FindGameObjectsWithTag(TriggerTag);
-		Debug.Log (gameObjects.Length);
 
 		foreach (GameObject go in gameObjects) {
 			if (go.activeInHierarchy) {
@@ -64,7 +63,6 @@ using System.IO;
 
 	private void disableGameObjectViaTag(string text) {
 		GameObject[] gameObjects = GameObject.FindGameObjectsWithTag (TriggerTag);
-		Debug.Log (gameObjects.Length);
 		foreach (GameObject go in gameObjects) {
 			if (go.activeInHierarchy && go.name == text) {
 				deactivateObject (go);
