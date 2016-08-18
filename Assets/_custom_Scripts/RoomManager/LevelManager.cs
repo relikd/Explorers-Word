@@ -20,17 +20,16 @@ public class LevelManager : MonoBehaviour {
 //			GameObject.DontDestroyOnLoad (gameObject);
 //			Instance = this;
 //		}
+		this.LoadParagraphs (this.Path + this.CurrentStoryChapterName + getCurrentLevelNumber()+ ".txt");
+		printParagraphs ();
+		Debug.Log ("Number of Paragraphs" + Paragraphs.Count);
 	}
 
 	void Update () {
 		if (Input.GetKeyUp (KeyCode.Alpha1)) {
 			SceneManager.LoadScene ("room_1");
-			this.LoadParagraphs (this.Path + this.CurrentStoryChapterName + getCurrentLevelNumber()+ ".txt");
-			printParagraphs ();
 		} else if (Input.GetKeyUp (KeyCode.Alpha2)) {
 			SceneManager.LoadScene ("room_2");
-//			this.LoadParagraphs (this.Path + this.CurrentStoryChapterName + getCurrentLevelNumber() + ".txt");
-//			printParagraphs ();
 		}
 	}
 
@@ -57,14 +56,14 @@ public class LevelManager : MonoBehaviour {
 	}
 
 	public List<string> getParagraphs() {
-		return this.Paragraphs;
+		return Paragraphs;
 	}
 
 	private int getCurrentLevelNumber() {
 		string levelName = SceneManager.GetActiveScene ().name.Substring (5);
 		int levelNumber = 0;
 		int.TryParse (levelName, out levelNumber);
-		Debug.Log ("LVL" + levelNumber);
+		Debug.Log (levelNumber);
 		return levelNumber;
 	}
 
