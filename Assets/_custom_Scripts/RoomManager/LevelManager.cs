@@ -70,8 +70,8 @@ public class LevelManager : MonoBehaviour {
 		try
 		{
 			string paragraph = "";
-			string line;
-			StreamReader theReader = new StreamReader(fileName, Encoding.Default);
+			string line = "";
+			StreamReader theReader = new StreamReader(fileName, Encoding.UTF8);
 
 			using (theReader)
 			{
