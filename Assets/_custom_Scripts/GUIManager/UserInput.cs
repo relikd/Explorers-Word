@@ -23,6 +23,7 @@ using System.IO;
 //		if (gameObject) {
 //			deactivateObject (gameObject);
 //		}
+
 		disableGameObjectViaTag (UserInput);
 		ResetInputField();
 	}
@@ -57,6 +58,7 @@ using System.IO;
 		foreach (GameObject go in gameObjects) {
 			if (go.activeInHierarchy) {
 				deactivateObject (go);
+				go.transform.hasChanged = !go.transform.hasChanged;
 			}
 		}
 	}
@@ -66,6 +68,7 @@ using System.IO;
 		foreach (GameObject go in gameObjects) {
 			if (go.activeInHierarchy && go.name == text) {
 				deactivateObject (go);
+				go.transform.hasChanged = !go.transform.hasChanged;
 			}
 		}
 	}
