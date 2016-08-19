@@ -20,7 +20,7 @@ namespace ExplorersBook
 		private float lastWalkingSpeed;
 		private float lastRunningSpeed;
 		private List<string> ExplorersStory = new List<string>();
-		private int currentStoryIndex = -1;
+		private int currentStoryIndex = 0;
 
 		void Start () {
 			explBook = GameObject.Find ("Explorers Book");
@@ -30,7 +30,6 @@ namespace ExplorersBook
 			FPSControllerScript = GameObject.Find ("FPSController").GetComponent<UnityStandardAssets.Characters.FirstPerson.CustomFirstPersonController> ();
 			PlayerSound = gameObject.GetComponentInParent<AudioSource> ();
 			StoryText = GameObject.Find ("Story").GetComponent<Text> ();
-
 			if (explBook) {
 				explBook.SetActive (false);
 			}
@@ -63,7 +62,6 @@ namespace ExplorersBook
 			DisablePlayerMovement ();
 			UnlockMouseMovement ();
 			ActivateUserInputField ();
-			currentStoryIndex++;
 			depictExplorersStory ();
 		}
 
@@ -136,11 +134,11 @@ namespace ExplorersBook
 			if (!bookIsOpen) {
 				currentStoryIndex = 0;
 			}
-
 			if (lvlManager) {
+				lvlManager.loadText ();
 				ExplorersStory = lvlManager.getParagraphs ();
 			}
-			if (StoryText) {
+			if (StoryText && ExplorersStory != null) {
 				StoryText.enabled = bookIsOpen;
 				StoryText.text = ExplorersStory[currentStoryIndex];
 			}
