@@ -8,13 +8,17 @@ public class Room1Manager : MonoBehaviour {
 	[SerializeField] private int lightsRequiredToFinish = 2;
 	[SerializeField] private GameObject[] rotatableObjects;
 
+	private GlobalSoundPlayer m_globalSoundPlayer;
+
 	private int currentLightsOnFinish = 0;
 	private GameObject globe;
 
 	void Start () {
+		m_globalSoundPlayer = gameObject.GetComponent<GlobalSoundPlayer> ();
 		globe = GameObject.Find ("globe");
 		initialPuzzleTwist ();
-		startBackgroundMusic ();
+		m_globalSoundPlayer.StartAudio ();
+		m_globalSoundPlayer.PlayOtherSceneSound (0, true, 1.0f, true);
 	}
 
 	void initialPuzzleTwist () {
@@ -88,10 +92,11 @@ public class Room1Manager : MonoBehaviour {
 		renderer.material.SetColor ("_EmissionColor", emissisonColor);
 	}
 
-	void activateMayaBook (bool flag) {
+	void activateMayaBook (bool flag)
+	{
 		Color finalColor = Color.black;
 		if (flag) {
-			float emission = 0.01f + Mathf.PingPong (Time.time, 0.7f)/2.0f;
+			float emission = 0.01f + Mathf.PingPong (Time.time, 0.7f) / 2.0f;
 			Color baseColor = Color.yellow;
 			finalColor = baseColor * Mathf.LinearToGammaSpace (emission);
 		}
@@ -103,11 +108,5 @@ public class Room1Manager : MonoBehaviour {
 
 		TriggerInteraction script = maya_book.GetComponent<TriggerInteraction> ();
 		script.triggerActive = flag;
-	}
-
-	void startBackgroundMusic(){
-		SceneSound2D sceneSoundManager = gameObject.GetComponent<SceneSound2D> ();
-		sceneSoundManager.startSound (0);
-		sceneSoundManager.toggleLoop (0);
 	}
 }
