@@ -29,16 +29,8 @@ using System.IO;
 		if (visibleObjects.Count == QueueLength) {
 			deactivateObject (visibleObjects.First.Value, false);
 			visibleObjects.RemoveFirst();
-			visibleObjects.AddLast (go);
-		} else {
-			visibleObjects.AddLast (go);
 		}
-	}
-
-	private void deactiveQueueObjects() {
-		foreach (GameObject go in visibleObjects) {
-			deactivateObject (go, true);
-		}
+			visibleObjects.AddLast (go);
 	}
 
 	private void ResetInputField() {
@@ -62,6 +54,7 @@ using System.IO;
 		if (rigidbody) {
 			rigidbody.useGravity = !deactivate;
 		}
+		go.transform.hasChanged = true;
 	}
 
 	public void deactivateAllGameObjects() {
@@ -69,19 +62,23 @@ using System.IO;
 		foreach (GameObject go in gameObjects) {
 			if (go.activeInHierarchy) {
 				deactivateObject (go, true);
-				go.transform.hasChanged = !go.transform.hasChanged;
+				go.transform.hasChanged = true;
 			}
 		}
 	}
 
 	private bool handleGameObjectInQueue(string text) {
 		bool result = false;
+		GameObject goToRemove = new GameObject();
 		foreach (GameObject go in visibleObjects) {
 			if (go.name == text) {
 				deactivateObject (go, false);
-				visibleObjects.Remove (go);
+				goToRemove = go;
 				result = true;
 			}
+		}
+		if (goToRemove) {
+			visibleObjects.Remove (goToRemove);
 		}
 		return result;
 	}
@@ -91,8 +88,7 @@ using System.IO;
 		foreach (GameObject go in gameObjects) {
 			if (go.activeInHierarchy && go.name == text) {
 				updateQueueWithGameObject (go);
-				deactiveQueueObjects();
-				go.transform.hasChanged = !go.transform.hasChanged;
+				deactivateObject (go, true);
 			}
 		}
 	}
