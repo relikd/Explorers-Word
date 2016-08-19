@@ -21,8 +21,6 @@ public class LevelManager : MonoBehaviour {
 //			Instance = this;
 //		}
 		this.LoadParagraphs (this.Path + this.CurrentStoryChapterName + getCurrentLevelNumber()+ ".txt");
-		printParagraphs ();
-		Debug.Log ("Number of Paragraphs" + Paragraphs.Count);
 	}
 
 	void Update () {
@@ -30,12 +28,6 @@ public class LevelManager : MonoBehaviour {
 			SceneManager.LoadScene ("room_1");
 		} else if (Input.GetKeyUp (KeyCode.Alpha2)) {
 			SceneManager.LoadScene ("room_2");
-		}
-	}
-
-	void printParagraphs() {
-		foreach (string str in Paragraphs) {
-			Debug.Log (str + "\n" + "\n");
 		}
 	}
 
@@ -63,7 +55,6 @@ public class LevelManager : MonoBehaviour {
 		string levelName = SceneManager.GetActiveScene ().name.Substring (5);
 		int levelNumber = 0;
 		int.TryParse (levelName, out levelNumber);
-		Debug.Log (levelNumber);
 		return levelNumber;
 	}
 

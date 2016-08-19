@@ -10,46 +10,33 @@ using System.IO;
  public class UserInput : MonoBehaviour {
 
 	public string TriggerTag;
-	Queue visibleObjects = new Queue();
 	private int QueueLength = 3;
-
-	LinkedList<GameObject> visibleObjects2 = new LinkedList<GameObject>();
-
-	void Start() {
-		
-	}
-
-
+	LinkedList<GameObject> visibleObjects = new LinkedList<GameObject>();
 
 	public void handleUserInput(string UserInput) {
 		if (UserInput == "all") {
 			deactivateAllGameObjects ();
 		}
-
-//		GameObject gameObject = GameObject.Find (UserInput);
-//		if (gameObject) {
-//			deactivateObject (gameObject);
-//		}
 	
 		if (!handleGameObjectInQueue (UserInput)) {
 			disableGameObjectViaTag (UserInput);
 		}
+
 		ResetInputField();
 	}
 
 	private void updateQueueWithGameObject(GameObject go) {
-		if (visibleObjects2.Count == QueueLength) {
-			
-			deactivateObject (visibleObjects2.First.Value, false);
-			visibleObjects2.RemoveFirst();
-			visibleObjects2.AddLast (go);
+		if (visibleObjects.Count == QueueLength) {
+			deactivateObject (visibleObjects.First.Value, false);
+			visibleObjects.RemoveFirst();
+			visibleObjects.AddLast (go);
 		} else {
-			visibleObjects2.AddLast (go);
+			visibleObjects.AddLast (go);
 		}
 	}
 
 	private void deactiveQueueObjects() {
-		foreach (GameObject go in visibleObjects2) {
+		foreach (GameObject go in visibleObjects) {
 			deactivateObject (go, true);
 		}
 	}
@@ -75,7 +62,6 @@ using System.IO;
 		if (rigidbody) {
 			rigidbody.useGravity = !deactivate;
 		}
-
 	}
 
 	public void deactivateAllGameObjects() {
@@ -88,13 +74,12 @@ using System.IO;
 		}
 	}
 
-	private bool handleGameObjectInQueue(string text)
-	{
+	private bool handleGameObjectInQueue(string text) {
 		bool result = false;
-		foreach (GameObject go in visibleObjects2) {
+		foreach (GameObject go in visibleObjects) {
 			if (go.name == text) {
 				deactivateObject (go, false);
-				visibleObjects2.Remove (go);
+				visibleObjects.Remove (go);
 				result = true;
 			}
 		}
