@@ -135,7 +135,6 @@ namespace ExplorersBook
 				currentStoryIndex = 0;
 			}
 			if (lvlManager) {
-				lvlManager.loadText ();
 				ExplorersStory = lvlManager.getParagraphs ();
 			}
 			if (StoryText && ExplorersStory != null) {
