@@ -4,23 +4,23 @@ using System.Collections;
 public class GlobalSoundPlayer : MonoBehaviour {
 
 	[SerializeField]private AudioClip storytellerAudio;
-	[SerializeField][Range(0,1.0f)]private float storytellerVolume = 1.0f;
+	[SerializeField][Range(0,1.0f)]private float storytellerVolume;
 	[SerializeField]private AudioClip backgroundmusic;
-	[SerializeField][Range(0,1.0f)]private float backgroundmusicVolume = 1.0f;
+	[SerializeField][Range(0,1.0f)]private float backgroundmusicVolume;
 	[SerializeField]private AudioClip[] otherScenesounds;
-	[SerializeField][Range(0,1.0f)]private float otherSoundsVolume = 1.0f;
+	[SerializeField][Range(0,1.0f)]private float otherSoundsVolume;
 
 
 	private AudioSource audioSource;
 	private AudioSource alternateAudioSource;
 
 	// Use this for initialization
-	void Start () {
+	void Awake () {
 		audioSource = gameObject.AddComponent<AudioSource> ();
 		audioSource.playOnAwake = false;
-		storytellerVolume = 1.0f;
-		backgroundmusicVolume = 1.0f;
-		otherSoundsVolume = 1.0f;
+		//storytellerVolume = 1.0f;
+		//backgroundmusicVolume = 1.0f;
+		//otherSoundsVolume = 1.0f;
 	}
 	
 	// Update is called once per frame
