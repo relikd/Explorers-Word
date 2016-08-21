@@ -28,6 +28,7 @@ namespace UnityStandardAssets.Characters.FirstPerson
         [SerializeField] private AudioClip m_JumpSound;           // the sound played when character leaves the ground.
         [SerializeField] private AudioClip m_LandSound;           // the sound played when character touches back on ground.
 
+        private bool m_Mouserotate = true;
         private Camera m_Camera;
         private bool m_Jump;
         private float m_YRotation;
@@ -61,6 +62,7 @@ namespace UnityStandardAssets.Characters.FirstPerson
         // Update is called once per frame
         private void Update()
         {
+            if(m_Mouserotate)
             RotateView();
             // the jump state needs to read here to make sure it is not missed
             if (!m_Jump)
@@ -128,9 +130,12 @@ namespace UnityStandardAssets.Characters.FirstPerson
             m_CollisionFlags = m_CharacterController.Move(m_MoveDir*Time.fixedDeltaTime);
 
             ProgressStepCycle(speed);
-            UpdateCameraPosition(speed);
+            if (m_Mouserotate)
+            {
+                UpdateCameraPosition(speed);
 
-            m_MouseLook.UpdateCursorLock();
+                m_MouseLook.UpdateCursorLock();
+            }
         }
 
 
@@ -254,6 +259,9 @@ namespace UnityStandardAssets.Characters.FirstPerson
                 return;
             }
             body.AddForceAtPosition(m_CharacterController.velocity*0.1f, hit.point, ForceMode.Impulse);
+        }
+        public void toggleRotate(){
+            m_Mouserotate = !m_Mouserotate;
         }
     }
 }

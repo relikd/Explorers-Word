@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['victorianlight',['VictorianLight',['../class_victorian_light.html',1,'']]]
+  ['userinput',['UserInput',['../class_user_input.html',1,'']]]
 ];

@@ -5,5 +5,7 @@ var searchData=
   ['collectinteraction_2ecs',['CollectInteraction.cs',['../_collect_interaction_8cs.html',1,'']]],
   ['crosshaircircle',['CrosshairCircle',['../class_mouse_crosshair.html#a20415ed2132bd17015d0dc0a50e5548d',1,'MouseCrosshair']]],
   ['crosshairdot',['CrosshairDot',['../class_mouse_crosshair.html#acb58a6bdd99107ef3f9cbfc6d27ac785',1,'MouseCrosshair']]],
-  ['customdebug',['CustomDebug',['../class_custom_debug.html',1,'']]]
+  ['customdebug',['CustomDebug',['../class_custom_debug.html',1,'']]],
+  ['cutinteraction',['CutInteraction',['../class_cut_interaction.html',1,'']]],
+  ['cutinteraction_2ecs',['CutInteraction.cs',['../_cut_interaction_8cs.html',1,'']]]
 ];

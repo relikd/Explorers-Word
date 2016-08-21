@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['interactable',['Interactable',['../class_interaction_1_1_interactable.html',1,'Interaction']]]
+  ['holdinteraction',['HoldInteraction',['../class_hold_interaction.html',1,'']]]
 ];

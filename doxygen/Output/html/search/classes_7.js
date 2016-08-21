@@ -1,4 +1,5 @@
 var searchData=
 [
-  ['openexplorersbook',['OpenExplorersBook',['../class_explorers_book_1_1_open_explorers_book.html',1,'ExplorersBook']]]
+  ['mousecrosshair',['MouseCrosshair',['../class_mouse_crosshair.html',1,'']]],
+  ['mouselock',['MouseLock',['../class_mouse_lock.html',1,'']]]
 ];

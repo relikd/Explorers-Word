@@ -24,6 +24,7 @@ public class CutInteraction : Interactable
      */
     override public void OnInteractionKeyPressed()
     {
+        LogWriter.WriteLog("Bild aufgeschnitten", gameObject);
         gameObject.GetComponent<MeshRenderer>().material = newMaterial;
         Destroy(gameObject.GetComponent<BoxCollider>());
         this.enabled = false;
