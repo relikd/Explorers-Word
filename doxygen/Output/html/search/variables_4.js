@@ -1,4 +1,5 @@
 var searchData=
 [
-  ['paragraphs',['Paragraphs',['../class_level_manager.html#ac2d1177fff9194db4416522f7ea85312',1,'LevelManager']]]
+  ['maximum',['maximum',['../class_fire_script.html#aac830d511d014cf872fc1b9818953a49',1,'FireScript']]],
+  ['minimum',['minimum',['../class_fire_script.html#ab6c13683498154a9c3e95570249b100a',1,'FireScript']]]
 ];

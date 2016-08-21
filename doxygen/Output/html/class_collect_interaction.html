@@ -90,6 +90,9 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="title">CollectInteraction Class Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
+
+<p>Ein Skript, das es erlaubt GameObjects einzusammeln.  
+ <a href="class_collect_interaction.html#details">More...</a></p>
 <div class="dynheader">
 Inheritance diagram for CollectInteraction:</div>
 <div class="dyncontent">
@@ -103,8 +106,10 @@ Inheritance diagram for CollectInteraction:</div>
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
 <tr class="memitem:af35504916278c0d6c5f5d51521916aad"><td class="memItemLeft" align="right" valign="top">override string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_collect_interaction.html#af35504916278c0d6c5f5d51521916aad">interactMessage</a> ()</td></tr>
+<tr class="memdesc:af35504916278c0d6c5f5d51521916aad"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gibt den Text zurueck, der dem Spieler angezeigt wird, wenn er mit der Maus über das interagierbare Objekt faehrt.  <a href="#af35504916278c0d6c5f5d51521916aad">More...</a><br /></td></tr>
 <tr class="separator:af35504916278c0d6c5f5d51521916aad"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a56c4b979c29508b97fa61c5211f3564c"><td class="memItemLeft" align="right" valign="top">override void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_collect_interaction.html#a56c4b979c29508b97fa61c5211f3564c">OnInteractionKeyPressed</a> ()</td></tr>
+<tr class="memdesc:a56c4b979c29508b97fa61c5211f3564c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Ruft attachScript auf und deaktiviert das eingesammelte GameObject.  <a href="#a56c4b979c29508b97fa61c5211f3564c">More...</a><br /></td></tr>
 <tr class="separator:a56c4b979c29508b97fa61c5211f3564c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="inherit_header pub_methods_class_interaction_1_1_interactable"><td colspan="2" onclick="javascript:toggleInherit('pub_methods_class_interaction_1_1_interactable')"><img src="closed.png" alt="-"/>&#160;Public Member Functions inherited from <a class="el" href="class_interaction_1_1_interactable.html">Interaction.Interactable</a></td></tr>
 <tr class="memitem:a2a299c32aefe10a5ab3813f71dc045e0 inherit pub_methods_class_interaction_1_1_interactable"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_interaction_1_1_interactable.html#a2a299c32aefe10a5ab3813f71dc045e0">OnInteractionKeyHold</a> ()</td></tr>
@@ -131,7 +136,10 @@ Additional Inherited Members</h2></td></tr>
 <tr class="memitem:aa43f5d5765009607c2405e917a57106e inherit pro_methods_class_interaction_1_1_interactable"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_interaction_1_1_interactable.html#aa43f5d5765009607c2405e917a57106e">centeredMessage</a> (string message, float timeout)</td></tr>
 <tr class="separator:aa43f5d5765009607c2405e917a57106e inherit pro_methods_class_interaction_1_1_interactable"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
-<h2 class="groupheader">Member Function Documentation</h2>
+<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
+<div class="textblock"><p>Ein Skript, das es erlaubt GameObjects einzusammeln. </p>
+<p>Da es kein Inventar gibt wird das GO nicht eingesammelt, sondern deaktiviert. Zusaetlich wir ein beliebiges Skript an ein anderes GO angehaengt um die Funktionalitaet zur Vefuegung zu stellen, die durch das Einsammeln möglich wird. </p>
+</div><h2 class="groupheader">Member Function Documentation</h2>
 <a class="anchor" id="af35504916278c0d6c5f5d51521916aad"></a>
 <div class="memitem">
 <div class="memproto">
@@ -152,6 +160,8 @@ Additional Inherited Members</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
+
+<p>Gibt den Text zurueck, der dem Spieler angezeigt wird, wenn er mit der Maus über das interagierbare Objekt faehrt. </p>
 
 <p>Implements <a class="el" href="class_interaction_1_1_interactable.html#aa53d7ef967accc64e81d17b59d98fc20">Interaction.Interactable</a>.</p>
 
@@ -178,6 +188,8 @@ Additional Inherited Members</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
+<p>Ruft attachScript auf und deaktiviert das eingesammelte GameObject. </p>
+
 <p>Implements <a class="el" href="class_interaction_1_1_interactable.html#a2795c3c322c50337807b17d75c65de28">Interaction.Interactable</a>.</p>
 
 </div>
@@ -188,7 +200,7 @@ Additional Inherited Members</h2></td></tr>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Fri Aug 19 2016 19:48:45 for Explorers Word by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Sun Aug 21 2016 05:09:12 for Explorers Word by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.11
 </small></address>

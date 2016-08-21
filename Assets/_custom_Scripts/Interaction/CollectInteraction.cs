@@ -28,6 +28,8 @@ public class CollectInteraction : Interactable
      * Ruft attachScript auf und deaktiviert das eingesammelte GameObject.
      */
     override public void OnInteractionKeyPressed () {
+
+        LogWriter.WriteLog( NameOfItem + " eingesammelt", gameObject);
         if (TargetGameObject)  attachScript();
 		this.gameObject.SetActive(false);
 	}

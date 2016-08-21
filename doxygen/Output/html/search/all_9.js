@@ -1,9 +1,10 @@
 var searchData=
 [
-  ['oninteractionkeyhold',['OnInteractionKeyHold',['../class_interaction_1_1_interactable.html#a2a299c32aefe10a5ab3813f71dc045e0',1,'Interaction.Interactable.OnInteractionKeyHold()'],['../class_rotate_interaction.html#ac11b5cb56fefee57ef13889bfc3ba5e6',1,'RotateInteraction.OnInteractionKeyHold()']]],
-  ['oninteractionkeypressed',['OnInteractionKeyPressed',['../class_interaction_1_1_interactable.html#a2795c3c322c50337807b17d75c65de28',1,'Interaction.Interactable.OnInteractionKeyPressed()'],['../class_collect_interaction.html#a56c4b979c29508b97fa61c5211f3564c',1,'CollectInteraction.OnInteractionKeyPressed()'],['../class_hold_interaction.html#afd150be4eff8c20e0131f8adddc538f2',1,'HoldInteraction.OnInteractionKeyPressed()'],['../class_plain_interaction.html#ad02b367819d34a0e44bfa9cd3236e12f',1,'PlainInteraction.OnInteractionKeyPressed()'],['../class_rotate_interaction.html#a0823f01bb27c8f331088302e9b9bce21',1,'RotateInteraction.OnInteractionKeyPressed()'],['../class_trigger_interaction.html#a5ca36f50e751fe2a8370f9fe31f37e3e',1,'TriggerInteraction.OnInteractionKeyPressed()'],['../class_victorian_light.html#a872adfd79ce3f573da8e1598362aa2b0',1,'VictorianLight.OnInteractionKeyPressed()']]],
-  ['ontriggerinteraction',['OnTriggerInteraction',['../class_puzzle1_book_handler.html#a82e72584eb5e7e1ef24fed9aa5271f34',1,'Puzzle1BookHandler.OnTriggerInteraction()'],['../class_trigger_interaction_callback.html#a37e4b4167df88f2561cb1a66787375fb',1,'TriggerInteractionCallback.OnTriggerInteraction()']]],
-  ['openexplorersbook',['OpenExplorersBook',['../class_explorers_book_1_1_open_explorers_book.html',1,'ExplorersBook']]],
-  ['openexplorersbook_2ecs',['OpenExplorersBook.cs',['../_open_explorers_book_8cs.html',1,'']]],
-  ['outoflimit',['outOfLimit',['../class_rotation_limiter.html#a1272df5ecfcee48ef942d175ad078e2e',1,'RotationLimiter']]]
+  ['maximum',['maximum',['../class_fire_script.html#aac830d511d014cf872fc1b9818953a49',1,'FireScript']]],
+  ['menu_20extension_2ecs',['Menu Extension.cs',['../_menu_01_extension_8cs.html',1,'']]],
+  ['minimum',['minimum',['../class_fire_script.html#ab6c13683498154a9c3e95570249b100a',1,'FireScript']]],
+  ['mousecrosshair',['MouseCrosshair',['../class_mouse_crosshair.html',1,'']]],
+  ['mousecrosshair_2ecs',['MouseCrosshair.cs',['../_mouse_crosshair_8cs.html',1,'']]],
+  ['mouselock',['MouseLock',['../class_mouse_lock.html',1,'']]],
+  ['mouselock_2ecs',['MouseLock.cs',['../_mouse_lock_8cs.html',1,'']]]
 ];

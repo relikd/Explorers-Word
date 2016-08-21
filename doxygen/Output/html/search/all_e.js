@@ -1,6 +1,13 @@
 var searchData=
 [
-  ['unpausesound',['unpauseSound',['../class_scene_sound2_d.html#a9b7ffd0367ae85cb079dc4280a1eea55',1,'SceneSound2D.unpauseSound(int index)'],['../class_scene_sound2_d.html#a8af57284dc643d5e4a7b74e165808fa6',1,'SceneSound2D.unpauseSound()']]],
-  ['userinput',['UserInput',['../class_user_input.html',1,'']]],
-  ['userinput_2ecs',['UserInput.cs',['../_user_input_8cs.html',1,'']]]
+  ['target',['target',['../class_hold_interaction.html#a850e855b033e141f91b1ce706724c7dc',1,'HoldInteraction']]],
+  ['thekeycode',['theKeyCode',['../class_interaction_1_1_interactable.html#a5e37f3676375a911cb907202182c644e',1,'Interaction::Interactable']]],
+  ['toggleloop',['toggleLoop',['../class_scene_sound2_d.html#aa2c9728f211c06d2bbbd8a678867ee09',1,'SceneSound2D.toggleLoop(int index)'],['../class_scene_sound2_d.html#abfe2e724a7e4f721a86f6b1f0d930103',1,'SceneSound2D.toggleLoop()']]],
+  ['togglepauseaudio',['TogglePauseAudio',['../class_global_sound_player.html#a1749ab3ab23eb2a50a23a94e0386ba12',1,'GlobalSoundPlayer']]],
+  ['triggeractive',['triggerActive',['../class_trigger_interaction.html#afb7e4f7e12f3027ec093f2c480fdbe6b',1,'TriggerInteraction']]],
+  ['triggerinteraction',['TriggerInteraction',['../class_trigger_interaction.html',1,'']]],
+  ['triggerinteraction_2ecs',['TriggerInteraction.cs',['../_trigger_interaction_8cs.html',1,'']]],
+  ['triggerinteractioncallback',['TriggerInteractionCallback',['../class_trigger_interaction_callback.html',1,'']]],
+  ['triggerscript',['triggerScript',['../class_trigger_interaction.html#ad57e28a8f3013ad36eb84ab20a322e13',1,'TriggerInteraction']]],
+  ['triggertag',['TriggerTag',['../class_user_input.html#ad1382395953ea43769803c48a1b3ee84',1,'UserInput']]]
 ];
