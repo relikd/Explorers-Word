@@ -10,9 +10,8 @@ public class LevelManager : MonoBehaviour {
 	static LevelManager Instance;
 	string text = "";
 	public List<string> Paragraphs = new List<string>();
-	string Path = "/Users/mr.nignag/projektarbeit-explorers-word/Andere Files/StoryChapters/";
+	string Path = "";
 	string CurrentStoryChapterName="StoryChapter0"; 
-
 
 	void Start () {
 //		if (Instance != null)
@@ -21,10 +20,8 @@ public class LevelManager : MonoBehaviour {
 //			GameObject.DontDestroyOnLoad (gameObject);
 //			Instance = this;
 //		}
-		this.LoadParagraphs (this.Path + this.CurrentStoryChapterName + getCurrentLevelNumber()+ ".txt");
-		Paragraphs = GetSplitParagraphs (text);
-		Debug.Log (Paragraphs.Count);
-		Debug.Log (Paragraphs[60]);
+		this.Path = "" + Application.dataPath + "/StoryChapters/";
+		Paragraphs = GetSplitParagraphs (LoadParagraphs (this.Path + this.CurrentStoryChapterName + getCurrentLevelNumber()+ ".txt"));
 	}
 
 	void Update () {
@@ -98,34 +95,8 @@ public class LevelManager : MonoBehaviour {
 		return levelNumber;
 	}
 
-	private bool LoadParagraphs(string fileName)
+	private string LoadParagraphs(string fileName)
 	{
-		try
-		{
-			string paragraph = "";
-			string line = "";
-			StreamReader theReader = new StreamReader(fileName, Encoding.UTF8);
-
-			using (theReader)
-			{
-				// While there's lines left in the text file, do this:
-				do
-				{
-					line = theReader.ReadLine();
-					Debug.Log(line);
-					text += line;
-				}
-				while (line != null);
-				theReader.Close();
-				return true;
-			}
-		}
-
-		catch (IOException e)
-		{
-			Debug.Log(e.Message);
-			return false;
-		}
+		return text = File.ReadAllText (fileName);
 	}
 }
-	
