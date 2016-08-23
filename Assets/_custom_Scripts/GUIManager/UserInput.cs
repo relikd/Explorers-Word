@@ -4,14 +4,21 @@ using System.Collections.Generic;
 using UnityEngine.UI;
 using System.Text;
 using System.IO; 
+using System;
 
-
+[Serializable]
+public class NamedObject {
+	public GameObject thing;
+	public string[] names;
+}
 
  public class UserInput : MonoBehaviour {
 
 	public string TriggerTag;
 	private int QueueLength = 3;
 	LinkedList<GameObject> visibleObjects = new LinkedList<GameObject>();
+
+	public NamedObject[] objects;
 
 	public void handleUserInput(string UserInput) {
 		if (UserInput == "all") {

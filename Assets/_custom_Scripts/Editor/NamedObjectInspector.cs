@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 using UnityEditor;
-/*
+
 [CustomPropertyDrawer(typeof(NamedObject))]
 public class NamedObjectInspector : PropertyDrawer
 {
@@ -80,4 +80,3 @@ public class NamedObjectInspector : PropertyDrawer
 		return (array.GetArrayElementAtIndex (index).stringValue.Length == 0);
 	}
 }
-*/
