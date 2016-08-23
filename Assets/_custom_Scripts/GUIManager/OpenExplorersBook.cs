@@ -45,12 +45,12 @@ namespace ExplorersBook
 			if ((Input.GetKeyUp(KeyCode.B) && !bookIsOpen) || (Input.GetKeyUp(KeyCode.Escape) && bookIsOpen) ) {
 				openExplorersBook ();
 			}
-			if (Input.GetKeyDown (KeyCode.RightArrow) && currentStoryIndex >= 0 && currentStoryIndex < ExplorersStory.Count-1) {
-				currentStoryIndex++;
+			if (Input.GetKeyDown (KeyCode.RightArrow) && currentStoryIndex >= 0 && currentStoryIndex <= ExplorersStory.Count-10) {
+				currentStoryIndex += 10;
 				depictExplorersStory ();
 			}
-			if (Input.GetKeyDown (KeyCode.LeftArrow) && currentStoryIndex > 0 && currentStoryIndex <= ExplorersStory.Count-1) {
-				currentStoryIndex--;
+			if (Input.GetKeyDown (KeyCode.LeftArrow) && currentStoryIndex > 0) {
+				currentStoryIndex += -10;
 				depictExplorersStory();
 			}
 		}
@@ -139,8 +139,28 @@ namespace ExplorersBook
 			}
 			if (StoryText && ExplorersStory != null) {
 				StoryText.enabled = bookIsOpen;
-				StoryText.text = ExplorersStory[currentStoryIndex];
+				TextMesh tt = GameObject.Find ("MeshGO").GetComponent<TextMesh> ();
+				tt.text = getNextPage(currentStoryIndex);
+				//StoryText.text = ExplorersStory[currentStoryIndex];
 			}
+		}
+
+		private string appendLines(List<string> lines) {
+			string result = "";
+			foreach (string line in lines) { 
+				result += line;
+			}
+			return result;
+		}
+
+		private string getNextPage(int currentIndex) {
+			string result = "";
+			if (ExplorersStory.Count - currentIndex >= 10) {
+				result = appendLines (ExplorersStory.GetRange (currentIndex, 10));
+			} else {
+				result = appendLines ( ExplorersStory.GetRange(currentIndex, ExplorersStory.Count - currentIndex));
+			} 
+			return result;
 		}
 
 		void OnGUI() {

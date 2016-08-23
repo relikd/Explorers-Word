@@ -8,6 +8,7 @@ using System.Collections.Generic;
 public class LevelManager : MonoBehaviour {
 
 	static LevelManager Instance;
+	string text = "";
 	public List<string> Paragraphs = new List<string>();
 	string Path = "/Users/mr.nignag/projektarbeit-explorers-word/Andere Files/StoryChapters/";
 	string CurrentStoryChapterName="StoryChapter0"; 
@@ -21,6 +22,38 @@ public class LevelManager : MonoBehaviour {
 //			Instance = this;
 //		}
 		this.LoadParagraphs (this.Path + this.CurrentStoryChapterName + getCurrentLevelNumber()+ ".txt");
+		Paragraphs = GetSplitParagraphs (text);
+		Debug.Log (Paragraphs.Count);
+		Debug.Log (Paragraphs[60]);
+	}
+
+	private List<string> GetSplitParagraphs(string text) {
+		List<string> result = new List<string> ();
+		result.AddRange(createLinesForParagraph (text));
+		return result;
+	}
+
+	private List<string> createLinesForParagraph(string text) {
+		List<string> Lines = new List<string>();
+		int LineThreshhold = 20;
+		string oldLine = ""; 
+		string currentLine = "";
+
+		foreach (char c in text.ToCharArray()) {
+			if (c == ' ') {
+				if (currentLine.Length >= LineThreshhold) {
+					Lines.Add (oldLine + "\n");
+					currentLine = "";
+					oldLine = "" + oldLine.ToCharArray()[(oldLine.Length-1)];
+				}
+			} 
+			if (c  == '#') {
+				Lines.Add (oldLine);
+			}
+			currentLine += c;
+			oldLine = currentLine;
+		}
+		return Lines;
 	}
 
 	void Update () {
@@ -38,7 +71,6 @@ public class LevelManager : MonoBehaviour {
 //				Destroy (allScripts[i-1]);
 //			}
 //		}
-
 		string levelName = SceneManager.GetActiveScene ().name.Substring (5);
 		int levelNumber = 0;
 		int.TryParse (levelName, out levelNumber);
@@ -72,16 +104,9 @@ public class LevelManager : MonoBehaviour {
 				do
 				{
 					line = theReader.ReadLine();
-
-					if (line == " ")
-					{
-						Paragraphs.Add(paragraph);
-						paragraph = "";
-
-					} else {
-						paragraph += line;
-					}
-
+					Debug.Log(line);
+					text += line;
+				
 				}
 				while (line != null);
 				theReader.Close();
