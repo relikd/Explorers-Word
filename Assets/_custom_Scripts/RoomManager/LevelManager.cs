@@ -37,6 +37,9 @@ public class LevelManager : MonoBehaviour {
 
 	public void toggelExplorersBook() {
 		ExplorersBook.OpenExplorersBook explorersBook = GameObject.Find ("FirstPersonCharacter").GetComponent<ExplorersBook.OpenExplorersBook> ();
+		if (explorersBook.isBookOpen ()) {
+			explorersBook.openExplorersBook ();		
+		}
 		explorersBook.enabled = !explorersBook.enabled;
 	}
 

@@ -55,7 +55,9 @@ namespace ExplorersBook
 			}
 		}
 
-		private void openExplorersBook() { 
+
+
+		public void openExplorersBook() { 
 			bookIsOpen = !bookIsOpen;
 			ActivateExplorersBook ();
 			DisablePlayerSound();
