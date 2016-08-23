@@ -27,6 +27,19 @@ public class LevelManager : MonoBehaviour {
 		Debug.Log (Paragraphs[60]);
 	}
 
+	void Update () {
+		if (Input.GetKeyUp (KeyCode.Alpha1)) {
+			SceneManager.LoadScene ("room_1");
+		} else if (Input.GetKeyUp (KeyCode.Alpha2)) {
+			SceneManager.LoadScene ("room_2");
+		}
+	}
+
+	public void toggelExplorersBook() {
+		ExplorersBook.OpenExplorersBook explorersBook = GameObject.Find ("FirstPersonCharacter").GetComponent<ExplorersBook.OpenExplorersBook> ();
+		explorersBook.enabled = !explorersBook.enabled;
+	}
+
 	private List<string> GetSplitParagraphs(string text) {
 		List<string> result = new List<string> ();
 		result.AddRange(createLinesForParagraph (text));
@@ -54,14 +67,6 @@ public class LevelManager : MonoBehaviour {
 			oldLine = currentLine;
 		}
 		return Lines;
-	}
-
-	void Update () {
-		if (Input.GetKeyUp (KeyCode.Alpha1)) {
-			SceneManager.LoadScene ("room_1");
-		} else if (Input.GetKeyUp (KeyCode.Alpha2)) {
-			SceneManager.LoadScene ("room_2");
-		}
 	}
 
 	static public void LoadNextRoom() {
@@ -106,7 +111,6 @@ public class LevelManager : MonoBehaviour {
 					line = theReader.ReadLine();
 					Debug.Log(line);
 					text += line;
-				
 				}
 				while (line != null);
 				theReader.Close();
