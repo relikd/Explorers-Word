@@ -166,6 +166,10 @@ namespace ExplorersBook
 		void OnGUI() {
 		}
 
+        public bool isBookOpen()
+        {
+            return bookIsOpen;
+        }
 	}
 }
 
