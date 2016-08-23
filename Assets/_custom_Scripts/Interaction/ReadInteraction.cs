@@ -38,7 +38,7 @@ public class ReadInteraction : Interactable
      * Da die Sprungfunktion nicht ausgeschlaten werden kann, muss Springen das lesen des Spielers abbrechen. 
      */
     void LateUpdate() {
-        if(reading && Input.GetKeyDown(KeyCode.Space)) {
+        if(reading && (Input.GetKeyDown(KeyCode.Space) || Input.GetKeyDown(KeyCode.B))) {
             OnInteractionKeyPressed();
         }
     }
@@ -70,7 +70,7 @@ public class ReadInteraction : Interactable
         else
         {
             reading = !reading;
-
+            
             toggleCanvas();
             toggleMouseCrosshair();
             toggleGUIMessage();
