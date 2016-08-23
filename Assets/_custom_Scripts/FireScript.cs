@@ -7,7 +7,9 @@ public class FireScript : MonoBehaviour {
 	private float currentValue;
 	private Light lightsource;
 	private int updater;
+	private float timedifference = 0;
 	[SerializeField]public float minimum;
+	[SerializeField]public bool randomValue;
 	[SerializeField]public float stepSize;
 	[SerializeField]public float maximum;
 
@@ -21,24 +23,10 @@ public class FireScript : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		if (isGettingBrighter) 
-		{
-			if (currentValue > maximum) {
-				isGettingBrighter = false;
-			}else
-			{
-				lightsource.intensity = currentValue;
-				currentValue = currentValue + stepSize;
-			}
-		}
-		if (!isGettingBrighter) {
-			if (currentValue < minimum) {
-				isGettingBrighter = true;
-			}else
-			{
-				lightsource.intensity = currentValue;
-				currentValue = currentValue - stepSize;
-			}
+		if (randomValue) {
+			lightsource.intensity = Random.Range (minimum, maximum);
+		} else {
+			ChangeLightIntensity ();
 		}
 	}
 

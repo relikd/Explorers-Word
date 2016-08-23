@@ -1,0 +1,227 @@
+fileFormatVersion: 2
+guid: b9e58399af60648df93b921c15c5a6bc
+timeCreated: 1471798144
+licenseType: Free
+ModelImporter:
+  serializedVersion: 19
+  fileIDToRecycleName:
+    100000: Boxes
+    100002: Cube
+    100004: Inner Box
+    100006: Match
+    100008: Match.1
+    100010: Match.10
+    100012: Match.11
+    100014: Match.12
+    100016: Match.13
+    100018: Match.14
+    100020: Match.15
+    100022: Match.16
+    100024: Match.17
+    100026: Match.18
+    100028: Match.19
+    100030: Match.2
+    100032: Match.20
+    100034: Match.21
+    100036: Match.22
+    100038: Match.23
+    100040: Match.24
+    100042: Match.25
+    100044: Match.26
+    100046: Match.3
+    100048: Match.4
+    100050: Match.5
+    100052: Match.6
+    100054: Match.7
+    100056: Match.8
+    100058: Match.9
+    100060: Matchbox
+    100062: //RootNode
+    100064: Matches
+    100066: Null
+    400000: Boxes
+    400002: Cube
+    400004: Inner Box
+    400006: Match
+    400008: Match.1
+    400010: Match.10
+    400012: Match.11
+    400014: Match.12
+    400016: Match.13
+    400018: Match.14
+    400020: Match.15
+    400022: Match.16
+    400024: Match.17
+    400026: Match.18
+    400028: Match.19
+    400030: Match.2
+    400032: Match.20
+    400034: Match.21
+    400036: Match.22
+    400038: Match.23
+    400040: Match.24
+    400042: Match.25
+    400044: Match.26
+    400046: Match.3
+    400048: Match.4
+    400050: Match.5
+    400052: Match.6
+    400054: Match.7
+    400056: Match.8
+    400058: Match.9
+    400060: Matchbox
+    400062: //RootNode
+    400064: Matches
+    400066: Null
+    2300000: Cube
+    2300002: Inner Box
+    2300004: Match
+    2300006: Match.1
+    2300008: Match.10
+    2300010: Match.11
+    2300012: Match.12
+    2300014: Match.13
+    2300016: Match.14
+    2300018: Match.15
+    2300020: Match.16
+    2300022: Match.17
+    2300024: Match.18
+    2300026: Match.19
+    2300028: Match.2
+    2300030: Match.20
+    2300032: Match.21
+    2300034: Match.22
+    2300036: Match.23
+    2300038: Match.24
+    2300040: Match.25
+    2300042: Match.26
+    2300044: Match.3
+    2300046: Match.4
+    2300048: Match.5
+    2300050: Match.6
+    2300052: Match.7
+    2300054: Match.8
+    2300056: Match.9
+    3300000: Cube
+    3300002: Inner Box
+    3300004: Match
+    3300006: Match.1
+    3300008: Match.10
+    3300010: Match.11
+    3300012: Match.12
+    3300014: Match.13
+    3300016: Match.14
+    3300018: Match.15
+    3300020: Match.16
+    3300022: Match.17
+    3300024: Match.18
+    3300026: Match.19
+    3300028: Match.2
+    3300030: Match.20
+    3300032: Match.21
+    3300034: Match.22
+    3300036: Match.23
+    3300038: Match.24
+    3300040: Match.25
+    3300042: Match.26
+    3300044: Match.3
+    3300046: Match.4
+    3300048: Match.5
+    3300050: Match.6
+    3300052: Match.7
+    3300054: Match.8
+    3300056: Match.9
+    4300000: Cube
+    4300002: Inner Box
+    4300004: Match.26
+    4300006: Match.25
+    4300008: Match.24
+    4300010: Match.23
+    4300012: Match.22
+    4300014: Match.21
+    4300016: Match.20
+    4300018: Match.19
+    4300020: Match.18
+    4300022: Match.17
+    4300024: Match.16
+    4300026: Match.15
+    4300028: Match.14
+    4300030: Match.13
+    4300032: Match.12
+    4300034: Match.11
+    4300036: Match.10
+    4300038: Match.9
+    4300040: Match.8
+    4300042: Match.7
+    4300044: Match.6
+    4300046: Match.5
+    4300048: Match.4
+    4300050: Match.3
+    4300052: Match.2
+    4300054: Match.1
+    4300056: Match
+    9500000: //RootNode
+  materials:
+    importMaterials: 1
+    materialName: 0
+    materialSearch: 1
+  animations:
+    legacyGenerateAnimations: 4
+    bakeSimulation: 0
+    resampleRotations: 1
+    optimizeGameObjects: 0
+    motionNodeName: 
+    animationImportErrors: 
+    animationImportWarnings: 
+    animationRetargetingWarnings: 
+    animationDoRetargetingWarnings: 0
+    animationCompression: 1
+    animationRotationError: 0.5
+    animationPositionError: 0.5
+    animationScaleError: 0.5
+    animationWrapMode: 0
+    extraExposedTransformPaths: []
+    clipAnimations: []
+    isReadable: 1
+  meshes:
+    lODScreenPercentages: []
+    globalScale: 1
+    meshCompression: 0
+    addColliders: 0
+    importBlendShapes: 1
+    swapUVChannels: 0
+    generateSecondaryUV: 0
+    useFileUnits: 1
+    optimizeMeshForGPU: 1
+    keepQuads: 0
+    weldVertices: 1
+    secondaryUVAngleDistortion: 8
+    secondaryUVAreaDistortion: 15.000001
+    secondaryUVHardAngle: 88
+    secondaryUVPackMargin: 4
+    useFileScale: 1
+  tangentSpace:
+    normalSmoothAngle: 60
+    normalImportMode: 0
+    tangentImportMode: 3
+  importAnimation: 1
+  copyAvatar: 0
+  humanDescription:
+    human: []
+    skeleton: []
+    armTwist: 0.5
+    foreArmTwist: 0.5
+    upperLegTwist: 0.5
+    legTwist: 0.5
+    armStretch: 0.05
+    legStretch: 0.05
+    feetSpacing: 0
+    rootMotionBoneName: 
+    hasTranslationDoF: 0
+  lastHumanDescriptionAvatarSource: {instanceID: 0}
+  animationType: 2
+  humanoidOversampling: 1
+  additionalBone: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
