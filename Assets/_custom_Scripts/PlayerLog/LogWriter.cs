@@ -12,14 +12,16 @@ using System.Diagnostics;
  * Eine statische Klasse, die eine ueberladene
  * oeffentliche Funktion zur Verfuegung stellt,
  * um strukturierte Log Eintraege zu erzeugen.*/
-public static class LogWriter  {
-    
+public static class LogWriter {
+
+#if (LOG)
     /**
      * Das Verzeichnis, in dem die Logdateien erstellt werden.*/
     private static string dir = @"Logs";
     /**
      * Der Name des Logdatei, die erzeugt wird.*/
     private static string path = @"Logs/GameLog "+ DateTime.Now.ToString("yyyy-MM-dd")+" "+ DateTime.Now.ToString("HH-mm-ss") + ".txt";
+#endif
 
     /**
      * Eine oeffentliche Funktion, die eine Zeile in die Logdatei
@@ -35,7 +37,6 @@ public static class LogWriter  {
      * sowie den uebergebenen String.*/
     public static void WriteLog(String line, GameObject callingObj)
     {
-
 #if (LOG)
         if (!Directory.Exists(path)) Directory.CreateDirectory(dir);
        
@@ -49,8 +50,8 @@ public static class LogWriter  {
             sw.WriteLine(DateTime.Now.ToString("HH:mm:ss: ") + " ; " + CallingObjName + " ; " + typeName + " ; " + methodName + " ; " + line);
         }
 #endif
-
     }
+
     /**
      * Eine oeffentliche Funktion, die eine Zeile in die Logdatei
      * eintraegt.
@@ -62,7 +63,6 @@ public static class LogWriter  {
      * sowie den uebergebenen String.*/
     public static void WriteLog(String line)
     {
-
 #if (LOG)
         if (!Directory.Exists(path)) Directory.CreateDirectory(dir);
          
@@ -75,6 +75,5 @@ public static class LogWriter  {
             sw.WriteLine(DateTime.Now.ToString("HH:mm:ss: ") + " ; " + "Kein Objektname gegeben" + " ; " + typeName + " ; " + methodName + " ; " + line);
         }
 #endif
-
     }
 }
