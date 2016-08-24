@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine.UI;
 using System;
+using System.Security.Cryptography;
 
 [Serializable]
 public class NamedObject {
@@ -11,55 +12,80 @@ public class NamedObject {
 
 public class UserInput : MonoBehaviour {
 
-	private int QueueLength = 3;
-	private LinkedList<GameObject> visibleObjects = new LinkedList<GameObject>();
+	private LinkedList<string> visibleWords = new LinkedList<string>();
 
-	public InputField wordInputField;
-	public NamedObject[] objects;
+	[SerializeField] private InputField wordInputField;
+	[SerializeField] private int wordLimit = 3;
+	[SerializeField] private NamedObject[] objects;
 
-	public void handleUserInput(string inputString) {
-		if (inputString == "all") {
-			deactivateAllGameObjects ();
-		}
-
-		GameObject go = findObjectByWord (inputString);
-		if (visibleObjects.Contains (go)) {
-			visibleObjects.Remove (go);
-			setObjectVisible (go, false);
-		} else {
-			visibleObjects.AddFirst (go);
-			setObjectVisible (go, true);
-			while (visibleObjects.Count > QueueLength) {
-				visibleObjects.RemoveLast ();
-			}
-		}
-
-//		if (!handleGameObjectInQueue (UserInput)) {
-//			disableGameObjectViaTag (UserInput);
-//		}
-
-		wordInputField.ActivateInputField ();
-		wordInputField.text = "" ;
+	void Awake() {
+		deactivateAllGameObjects ();
 	}
 
 	/**
-	 * Loops through all objects (assigned in the inspector) and find the one with the name
+	 * Will be called whenever the user enters a new word
 	 */
-	private GameObject findObjectByWord(string word) {
-		foreach (NamedObject obj in objects)
-			foreach (string n in obj.names)
-				if (string.Equals(n, word, StringComparison.OrdinalIgnoreCase))
-					return obj.thing;
-		return null;
+	public void handleUserInput(string inputString) {
+		Debug.Log ("the input: "+inputString);
+		if (inputString == "all") {
+			deactivateAllGameObjects ();
+			return;
+		}
+		bool t = hasObjectsForWord (inputString);
+		Debug.Log ("handle input: "+t);
+		if (t) {
+			addWordAndUpdate (inputString);
+			wordInputField.text = "" ;
+		}
+		wordInputField.ActivateInputField ();
+	}
+	/**
+	 * Keeps the visible word list up to date and limited to [wordLimit].
+	 * Also deactivates all objects and displays only the selected ones.
+	 */
+	private void addWordAndUpdate(string word) {
+		if (visibleWords.Contains (word)) {
+			visibleWords.Remove (word);
+		} else {
+			visibleWords.AddFirst (word);
+			while (visibleWords.Count > wordLimit)
+				visibleWords.RemoveLast ();
+		}
+		redisplayCurrentSelection ();
+	}
+	/**
+	 * Will deactivate all objects and display only those which are currently entered
+	 */
+	private void redisplayCurrentSelection() {
+		deactivateAllGameObjects ();
+		foreach (string word in visibleWords)
+			foreach (GameObject thing in findObjectsByWord (word))
+				setObjectVisible (thing, true);
 	}
 	/**
 	 * Set the visibility of all assigned objects to hidden
 	 */
-	public void deactivateAllGameObjects() {
+	private void deactivateAllGameObjects() {
 		foreach (NamedObject obj in objects)
 			setObjectVisible (obj.thing, false);
 	}
-
+	/**
+	 * Returns <strong>true</strong> if there are any objects with name
+	 */
+	private bool hasObjectsForWord(string word) {
+		return findObjectsByWord (word).Count > 0;
+	}
+	/**
+	 * Loops through all objects (assigned in the inspector) and find the one with the name
+	 */
+	private List<GameObject> findObjectsByWord(string word) {
+		List<GameObject> allWithThisName = new List<GameObject>();
+		foreach (NamedObject obj in objects)
+			foreach (string n in obj.names)
+				if (string.Equals(n, word, StringComparison.OrdinalIgnoreCase))
+					allWithThisName.Add (obj.thing);
+		return allWithThisName;
+	}
 	/**
 	 * For a single Object (and all children), deactivate the Collider, Renderer and Rigidbody
 	 */
