@@ -14,7 +14,7 @@ namespace Interaction {
 		abstract public string interactMessage ();
 		abstract public void OnInteractionKeyPressed ();
 		virtual public void OnInteractionKeyHold () {} // @overwrite
-
+        virtual public void OnInteractionKeyDown () {} // @overwrite
 		//
 		// Raycasting methods
 		//
@@ -32,14 +32,18 @@ namespace Interaction {
 			if (Input.GetButton ("Interact")) {
 				OnInteractionKeyHold ();
 			}
+            if (Input.GetButtonDown("Interact"))
+            {
+                OnInteractionKeyDown();
+            }
 
-//			if (Input.GetKeyUp (theKeyCode ())) {
-//				playInteractionSound ();
-//				OnInteractionKeyPressed ();
-//			}
-//			if (Input.GetKey (theKeyCode ()))
-//				OnInteractionKeyHold ();
-		}
+            //			if (Input.GetKeyUp (theKeyCode ())) {
+            //				playInteractionSound ();
+            //				OnInteractionKeyPressed ();
+            //			}
+            //			if (Input.GetKey (theKeyCode ()))
+            //				OnInteractionKeyHold ();
+        }
 
 		// used to display text on screen
 		public void EnableGUI (bool enable) {
