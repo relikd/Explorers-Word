@@ -53,7 +53,7 @@ public class MainMenuScript : MonoBehaviour {
 	IEnumerator FadeAndChangeLevel(){
 		float fadeTime = gameObject.GetComponent<SceneFadingScript> ().BeginFade(1);
 		yield return new WaitForSeconds (fadeTime);
-		SceneManager.LoadScene ("room_0");
+		LevelManager.LoadRoom ("room_0");
 	}
 
 	public void ExitGameCanceledPressed(){
