@@ -15,47 +15,51 @@ namespace ExplorersBook
 		private MouseCrosshair MouseCrosshair;
 		private UnityStandardAssets.Characters.FirstPerson.CustomFirstPersonController FPSControllerScript;
 		private AudioSource PlayerSound;
-		private Text StoryText;
+		private GameObject StoryTextLeft;
+		private GameObject StoryTextRight;
+		private LevelManager lvlManager;
 		private bool bookIsOpen = false;
 		private float lastWalkingSpeed;
 		private float lastRunningSpeed;
 		private List<string> ExplorersStory = new List<string>();
 		private int currentStoryIndex = 0;
+	
 
-		void Start () {
+		void Awake() {
 			explBook = GameObject.Find ("Explorers Book");
 			inputField = GameObject.Find ("ExplorersWord");
 			MouseCrosshair = GameObject.Find ("FirstPersonCharacter").GetComponent<MouseCrosshair> ();
 			CharacterController = gameObject.GetComponentInParent<CharacterController> ();
 			FPSControllerScript = GameObject.Find ("FPSController").GetComponent<UnityStandardAssets.Characters.FirstPerson.CustomFirstPersonController> ();
 			PlayerSound = gameObject.GetComponentInParent<AudioSource> ();
-			StoryText = GameObject.Find ("Story").GetComponent<Text> ();
+			StoryTextLeft = GameObject.Find ("StoryLeft");
+			StoryTextRight = GameObject.Find ("StoryRight");
+			lvlManager = GameObject.Find ("LevelManager").GetComponent<LevelManager> ();
+		
 			if (explBook) {
 				explBook.SetActive (false);
 			}
 			if (inputField) {
 				inputField.SetActive (false);
 			}
-			if (StoryText) {
-				StoryText.enabled = false;	
+				
+			if (StoryTextLeft) {
+				StoryTextLeft.SetActive (false);
 			}
+			if (StoryTextRight) {
+				StoryTextRight.SetActive (false);
+			}
+		}
+
+		void Start () {
+			
 		}
 
 		void LateUpdate() {
 			if ((Input.GetKeyUp(KeyCode.B) && !bookIsOpen) || (Input.GetKeyUp(KeyCode.Escape) && bookIsOpen) ) {
 				openExplorersBook ();
 			}
-			if (Input.GetKeyDown (KeyCode.RightArrow) && currentStoryIndex >= 0 && currentStoryIndex <= ExplorersStory.Count-10) {
-				currentStoryIndex += 10;
-				depictExplorersStory ();
-			}
-			if (Input.GetKeyDown (KeyCode.LeftArrow) && currentStoryIndex > 0) {
-				currentStoryIndex += -10;
-				depictExplorersStory();
-			}
 		}
-
-
 
 		public void openExplorersBook() { 
 			bookIsOpen = !bookIsOpen;
@@ -72,6 +76,8 @@ namespace ExplorersBook
 				explBook.SetActive (bookIsOpen);
 				StartCoroutine (playAnimation ());
 			} else {
+				StoryTextLeft.SetActive (bookIsOpen);
+				StoryTextRight.SetActive (bookIsOpen);
 				StartCoroutine(playAnimation ());
 			}
 		}
@@ -132,19 +138,26 @@ namespace ExplorersBook
 		}
 
 		private void depictExplorersStory() {
-			LevelManager lvlManager = GameObject.Find("LevelManager").GetComponent<LevelManager> ();
 			if (!bookIsOpen) {
 				currentStoryIndex = 0;
 			}
 			if (lvlManager) {
 				ExplorersStory = lvlManager.getParagraphs ();
 			}
-			if (StoryText && ExplorersStory != null) {
-				StoryText.enabled = bookIsOpen;
-				TextMesh tt = GameObject.Find ("MeshGO").GetComponent<TextMesh> ();
-				tt.text = getNextPage(currentStoryIndex);
-				//StoryText.text = ExplorersStory[currentStoryIndex];
+			if (StoryTextRight && StoryTextLeft) {
+				StoryTextLeft.SetActive (bookIsOpen);
+				StoryTextRight.SetActive (bookIsOpen);
+				SetText (StoryTextLeft.GetComponent<TextMesh> ());
+				SetText (StoryTextRight.GetComponent<TextMesh> ());
 			}
+			currentStoryIndex = 0;
+		}
+
+		private void SetText(TextMesh textMesh) {
+			if (textMesh && ExplorersStory != null) {
+				textMesh.text = getNextPage(currentStoryIndex);
+			}
+			currentStoryIndex += 20;
 		}
 
 		private string appendLines(List<string> lines) {
@@ -157,8 +170,8 @@ namespace ExplorersBook
 
 		private string getNextPage(int currentIndex) {
 			string result = "";
-			if (ExplorersStory.Count - currentIndex >= 10) {
-				result = appendLines (ExplorersStory.GetRange (currentIndex, 10));
+			if (ExplorersStory.Count - currentIndex >= 20) {
+				result = appendLines (ExplorersStory.GetRange (currentIndex, 20));
 			} else {
 				result = appendLines ( ExplorersStory.GetRange(currentIndex, ExplorersStory.Count - currentIndex));
 			} 

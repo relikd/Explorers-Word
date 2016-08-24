@@ -34,10 +34,15 @@ public class LevelManager : MonoBehaviour {
 
 	public void toggelExplorersBook() {
 		ExplorersBook.OpenExplorersBook explorersBook = GameObject.Find ("FirstPersonCharacter").GetComponent<ExplorersBook.OpenExplorersBook> ();
-		if (explorersBook.isBookOpen ()) {
-			explorersBook.openExplorersBook ();		
+
+		if (explorersBook != null) {
+			if (explorersBook.isBookOpen()) {
+				explorersBook.openExplorersBook ();		
+
+			}
+			explorersBook.enabled = !explorersBook.enabled;
 		}
-		explorersBook.enabled = !explorersBook.enabled;
+
 	}
 
 	private List<string> GetSplitParagraphs(string text) {
@@ -48,7 +53,7 @@ public class LevelManager : MonoBehaviour {
 
 	private List<string> createLinesForParagraph(string text) {
 		List<string> Lines = new List<string>();
-		int LineThreshhold = 20;
+		int LineThreshhold = 48;
 		string oldLine = ""; 
 		string currentLine = "";
 
