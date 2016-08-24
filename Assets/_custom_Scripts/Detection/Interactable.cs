@@ -25,12 +25,20 @@ namespace Interaction {
 		}
 
 		public void HandleRaycastCollission () {
-			if (Input.GetKeyUp (theKeyCode ())) {
+			if (Input.GetButtonUp ("Interact")) {
 				playInteractionSound ();
 				OnInteractionKeyPressed ();
 			}
-			if (Input.GetKey (theKeyCode ()))
+			if (Input.GetButton ("Interact")) {
 				OnInteractionKeyHold ();
+			}
+
+//			if (Input.GetKeyUp (theKeyCode ())) {
+//				playInteractionSound ();
+//				OnInteractionKeyPressed ();
+//			}
+//			if (Input.GetKey (theKeyCode ()))
+//				OnInteractionKeyHold ();
 		}
 
 		// used to display text on screen
