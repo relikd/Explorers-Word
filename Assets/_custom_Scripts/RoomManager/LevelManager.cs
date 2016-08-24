@@ -89,6 +89,10 @@ public class LevelManager : MonoBehaviour {
 		SceneManager.LoadScene ("room_"+levelNumber, LoadSceneMode.Single);
 	}
 
+	static public void LoadRoom (string roomName){
+		SceneManager.LoadScene (roomName, LoadSceneMode.Single);
+	}
+
 	public List<string> getParagraphs() {
 		return Paragraphs;
 	}
@@ -104,4 +108,6 @@ public class LevelManager : MonoBehaviour {
 	{
 		return text = File.ReadAllText (fileName);
 	}
+
+
 }
