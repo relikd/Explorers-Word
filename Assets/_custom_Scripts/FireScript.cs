@@ -6,8 +6,6 @@ public class FireScript : MonoBehaviour {
 	private bool isGettingBrighter;
 	private float currentValue;
 	private Light lightsource;
-	private int updater;
-	private float timedifference = 0;
 	[SerializeField]public float minimum;
 	[SerializeField]public bool randomValue;
 	[SerializeField]public float stepSize;
@@ -18,7 +16,6 @@ public class FireScript : MonoBehaviour {
 		lightsource = gameObject.GetComponent<Light> ();
 		isGettingBrighter = true;
 		currentValue = minimum;
-		updater = 0;
 	}
 	
 	// Update is called once per frame

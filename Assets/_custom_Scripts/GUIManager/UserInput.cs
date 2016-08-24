@@ -1,9 +1,6 @@
 ﻿using UnityEngine;
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine.UI;
-using System.Text;
-using System.IO; 
 using System;
 
 [Serializable]
@@ -12,92 +9,74 @@ public class NamedObject {
 	public string[] names;
 }
 
- public class UserInput : MonoBehaviour {
+public class UserInput : MonoBehaviour {
 
-	public string TriggerTag;
 	private int QueueLength = 3;
-	LinkedList<GameObject> visibleObjects = new LinkedList<GameObject>();
+	private LinkedList<GameObject> visibleObjects = new LinkedList<GameObject>();
 
+	public InputField wordInputField;
 	public NamedObject[] objects;
 
-	public void handleUserInput(string UserInput) {
-		if (UserInput == "all") {
+	public void handleUserInput(string inputString) {
+		if (inputString == "all") {
 			deactivateAllGameObjects ();
 		}
-	
-		if (!handleGameObjectInQueue (UserInput)) {
-			disableGameObjectViaTag (UserInput);
+
+		GameObject go = findObjectByWord (inputString);
+		if (visibleObjects.Contains (go)) {
+			visibleObjects.Remove (go);
+			setObjectVisible (go, false);
+		} else {
+			visibleObjects.AddFirst (go);
+			setObjectVisible (go, true);
+			while (visibleObjects.Count > QueueLength) {
+				visibleObjects.RemoveLast ();
+			}
 		}
 
-		ResetInputField();
+//		if (!handleGameObjectInQueue (UserInput)) {
+//			disableGameObjectViaTag (UserInput);
+//		}
+
+		wordInputField.ActivateInputField ();
+		wordInputField.text = "" ;
 	}
 
-	private void updateQueueWithGameObject(GameObject go) {
-		if (visibleObjects.Count == QueueLength) {
-			deactivateObject (visibleObjects.First.Value, false);
-			visibleObjects.RemoveFirst();
-		}
-			visibleObjects.AddLast (go);
+	/**
+	 * Loops through all objects (assigned in the inspector) and find the one with the name
+	 */
+	private GameObject findObjectByWord(string word) {
+		foreach (NamedObject obj in objects)
+			foreach (string n in obj.names)
+				if (string.Equals(n, word, StringComparison.OrdinalIgnoreCase))
+					return obj.thing;
+		return null;
+	}
+	/**
+	 * Set the visibility of all assigned objects to hidden
+	 */
+	public void deactivateAllGameObjects() {
+		foreach (NamedObject obj in objects)
+			setObjectVisible (obj.thing, false);
 	}
 
-	private void ResetInputField() {
-		InputField inputFieldComponent = GameObject.Find("ExplorersWord").GetComponent<InputField> ();
-		if (inputFieldComponent) {
-			inputFieldComponent.ActivateInputField ();
-			inputFieldComponent.text = "" ;
-		}
-	}
-
-	private void deactivateObject(GameObject go, bool deactivate) {
+	/**
+	 * For a single Object (and all children), deactivate the Collider, Renderer and Rigidbody
+	 */
+	private void setObjectVisible(GameObject go, bool visible) {
 		Collider[] colliders = go.GetComponentsInChildren<Collider> ();
 		foreach (Collider c in colliders) {
-			c.enabled = !deactivate;
+			c.enabled = visible;
 		}
 		Renderer[] renderers = go.GetComponentsInChildren<Renderer>();
 		foreach (Renderer r in renderers) {
-			r.enabled = !deactivate;
+			r.enabled = visible;
 		}
+		// TODO: set all children too
 		Rigidbody rigidbody = go.GetComponent<Rigidbody> ();
 		if (rigidbody) {
-			rigidbody.useGravity = !deactivate;
+			rigidbody.useGravity = visible;
 		}
 		go.transform.hasChanged = true;
 	}
-
-	public void deactivateAllGameObjects() {
-		GameObject[] gameObjects = GameObject.FindGameObjectsWithTag(TriggerTag);
-		foreach (GameObject go in gameObjects) {
-			if (go.activeInHierarchy) {
-				deactivateObject (go, true);
-				go.transform.hasChanged = true;
-			}
-		}
-	}
-
-	private bool handleGameObjectInQueue(string text) {
-		bool result = false;
-		GameObject goToRemove = new GameObject();
-		foreach (GameObject go in visibleObjects) {
-			if (go.name == text) {
-				deactivateObject (go, false);
-				goToRemove = go;
-				result = true;
-			}
-		}
-		if (goToRemove) {
-			visibleObjects.Remove (goToRemove);
-		}
-		return result;
-	}
-
-	private void disableGameObjectViaTag(string text) {
-		GameObject[] gameObjects = GameObject.FindGameObjectsWithTag (TriggerTag);
-		foreach (GameObject go in gameObjects) {
-			if (go.activeInHierarchy && go.name == text) {
-				updateQueueWithGameObject (go);
-				deactivateObject (go, true);
-			}
-		}
-	}
-		
 }
