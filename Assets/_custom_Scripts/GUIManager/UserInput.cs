@@ -2,7 +2,13 @@
 using System.Collections.Generic;
 using UnityEngine.UI;
 using System;
-using System.Security.Cryptography;
+
+public class XplrWrdInputChangedEvent : GameEvent {
+	public bool wordExists;
+	public XplrWrdInputChangedEvent (bool exist) {
+		wordExists = exist;
+	}
+}
 
 [Serializable]
 public class NamedObject {
@@ -26,16 +32,15 @@ public class UserInput : MonoBehaviour {
 	 * Will be called whenever the user enters a new word
 	 */
 	public void handleUserInput(string inputString) {
-		Debug.Log ("the input: "+inputString);
 		if (inputString == "all") {
 			deactivateAllGameObjects ();
 			return;
 		}
-		bool t = hasObjectsForWord (inputString);
-		Debug.Log ("handle input: "+t);
-		if (t) {
+		if (hasObjectsForWord (inputString)) {
 			addWordAndUpdate (inputString);
-			wordInputField.text = "" ;
+			wordInputField.text = "";
+		} else {
+			Events.instance.Raise (new XplrWrdInputChangedEvent(false));
 		}
 		wordInputField.ActivateInputField ();
 	}
@@ -44,14 +49,17 @@ public class UserInput : MonoBehaviour {
 	 * Also deactivates all objects and displays only the selected ones.
 	 */
 	private void addWordAndUpdate(string word) {
-		if (visibleWords.Contains (word)) {
-			visibleWords.Remove (word);
-		} else {
-			visibleWords.AddFirst (word);
-			while (visibleWords.Count > wordLimit)
-				visibleWords.RemoveLast ();
+		if (word != null && word.Length > 0) {
+			if (visibleWords.Contains (word)) {
+				visibleWords.Remove (word);
+			} else {
+				visibleWords.AddFirst (word);
+				while (visibleWords.Count > wordLimit)
+					visibleWords.RemoveLast ();
+			}
+			redisplayCurrentSelection ();
+			Events.instance.Raise (new XplrWrdInputChangedEvent(true));
 		}
-		redisplayCurrentSelection ();
 	}
 	/**
 	 * Will deactivate all objects and display only those which are currently entered
@@ -90,19 +98,14 @@ public class UserInput : MonoBehaviour {
 	 * For a single Object (and all children), deactivate the Collider, Renderer and Rigidbody
 	 */
 	private void setObjectVisible(GameObject go, bool visible) {
-		Collider[] colliders = go.GetComponentsInChildren<Collider> ();
-		foreach (Collider c in colliders) {
+		Collider[] colliders = go.GetComponentsInChildren<Collider> (true);
+		foreach (Collider c in colliders)
 			c.enabled = visible;
-		}
-		Renderer[] renderers = go.GetComponentsInChildren<Renderer>();
-		foreach (Renderer r in renderers) {
+		Renderer[] renderers = go.GetComponentsInChildren<Renderer> (true);
+		foreach (Renderer r in renderers)
 			r.enabled = visible;
-		}
-		// TODO: set all children too
-		Rigidbody rigidbody = go.GetComponent<Rigidbody> ();
-		if (rigidbody) {
-			rigidbody.useGravity = visible;
-		}
-		go.transform.hasChanged = true;
+		Rigidbody[] rigidbodies = go.GetComponentsInChildren<Rigidbody> (true);
+		foreach (Rigidbody rb in rigidbodies)
+			rb.useGravity = visible;
 	}
 }

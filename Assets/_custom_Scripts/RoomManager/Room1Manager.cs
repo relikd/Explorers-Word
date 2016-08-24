@@ -11,58 +11,68 @@ public class Room1Manager : MonoBehaviour {
 	private GlobalSoundPlayer m_globalSoundPlayer;
 
 	private int currentLightsOnFinish = 0;
-	private GameObject globe;
+	private bool shouldRecalculate = false;
+	[SerializeField] private GameObject mayaBook;
+	[SerializeField] private GameObject globe;
+
+	// only used to get an redraw message from after a text input
+	void OnEnable () { Events.instance.AddListener<XplrWrdInputChangedEvent>(OnNewWordEntered); }
+	void OnDisable () { Events.instance.RemoveListener<XplrWrdInputChangedEvent>(OnNewWordEntered); }
+	void OnNewWordEntered (XplrWrdInputChangedEvent e) {
+		if (e.wordExists)
+			shouldRecalculate = true;
+	}
 
 	void Start () {
 		m_globalSoundPlayer = gameObject.GetComponent<GlobalSoundPlayer> ();
-		globe = GameObject.Find ("globe");
 		initialPuzzleTwist ();
 		m_globalSoundPlayer.StartAudio ();
 		m_globalSoundPlayer.PlayOtherSceneSound (0, true, 1.0f, true);
 	}
-
+	/**
+	 * Will rotate the initial correct state to a wrong one. So the puzzle isn't solved immediatelly
+	 */
 	void initialPuzzleTwist () {
 		foreach (GameObject item in rotatableObjects) {
 			RotateInteraction ri_script = item.GetComponent<RotateInteraction> ();
-			if (ri_script) {
+			if (ri_script)
 				item.transform.Rotate (ri_script.rotateBy*2);
-			}
 		}
 	}
-
+	/**
+	 * If game state changes it will recast all lightbeams, otherwise only maya book animation
+	 */
 	void Update () {
-//		if (Input.GetKeyUp (KeyCode.Alpha5)) {
-//			crystal_small.eulerAngles = new Vector3 (0,270,0);
-//		}
-
 		if (currentLightsOnFinish >= lightsRequiredToFinish)
 			activateMayaBook (true); // will be called continuously for glow effect
 
-		bool shouldRecalculate = false;
 		foreach (GameObject item in rotatableObjects)
 			shouldRecalculate |= item.transform.hasChanged;
 
-		if (shouldRecalculate)
-		{
-			clearAllLights ();
-			lightHitObject (startingLightbeam.transform);
-
+		if (shouldRecalculate) {
+			shouldRecalculate = false;
 			foreach (GameObject item in rotatableObjects)
 				item.transform.hasChanged = false;
+			
+			clearAllLights ();
+			lightHitObject (startingLightbeam.transform);
 		}
 	}
-
+	/**
+	 * Deactivates all lightbeams and set solved state to false
+	 */
 	void clearAllLights() {
 		// initially disable all lightbeams
 		GameObject[] lights = GameObject.FindGameObjectsWithTag("lightbeam");
-		foreach(GameObject light in lights) {
+		foreach(GameObject light in lights)
 			light.SetActive (false);
-		}
 		currentLightsOnFinish = 0;
 		activateGlobe (false);
 		activateMayaBook (false);
 	}
-
+	/**
+	 * Will recursively cast lightbeams for all children of target object
+	 */
 	void lightHitObject(Transform t) {
 		// check for special objects
 		if (t == null)
@@ -84,16 +94,19 @@ public class Room1Manager : MonoBehaviour {
 			lightHitObject (lbe_script.Expand ());
 		}
 	}
-
+	/**
+	 * Activates the globes easter egg
+	 */
 	void activateGlobe(bool flag) {
 		Renderer renderer = globe.GetComponent <Renderer>();
 		Color emissisonColor = ( flag ? Color.white : Color.black );
 		if (flag) emissisonColor.a = 0.5f;
 		renderer.material.SetColor ("_EmissionColor", emissisonColor);
 	}
-
-	void activateMayaBook (bool flag)
-	{
+	/**
+	 * Will activate the book glow and trigger interaction
+	 */
+	void activateMayaBook (bool flag) {
 		Color finalColor = Color.black;
 		if (flag) {
 			float emission = 0.01f + Mathf.PingPong (Time.time, 0.7f) / 2.0f;
@@ -101,12 +114,11 @@ public class Room1Manager : MonoBehaviour {
 			finalColor = baseColor * Mathf.LinearToGammaSpace (emission);
 		}
 
-		GameObject maya_book = GameObject.Find ("maya_book");
-		Renderer renderer =	maya_book.GetComponent<Renderer> ();
+		Renderer renderer =	mayaBook.GetComponent<Renderer> ();
 		Material mat = renderer.material;
 		mat.SetColor ("_EmissionColor", finalColor);
 
-		TriggerInteraction script = maya_book.GetComponent<TriggerInteraction> ();
+		TriggerInteraction script = mayaBook.GetComponent<TriggerInteraction> ();
 		script.triggerActive = flag;
 	}
 }
