@@ -13,6 +13,7 @@ public class Room0Manager : MonoBehaviour
 
 	// Use this for initialization
 	void Start () {
+		StartCoroutine(SceneFadeIn());
 		player = GameObject.Find ("FirstPersonCharacter");
 		door = GameObject.Find ("animated_door");
 		particleBeam = GameObject.Find ("doorIndicationBeam");
@@ -40,4 +41,11 @@ public class Room0Manager : MonoBehaviour
 			if (anim) anim.SetBool ("open", doorVisited);
 		}
 	}
+
+	IEnumerator SceneFadeIn(){
+		float fadeTime = gameObject.GetComponent<SceneFadingScript> ().BeginFade (-1);
+		yield return new WaitForSeconds (fadeTime);
+	}
+
+
 }

@@ -7,6 +7,8 @@ public class MainMenuScript : MonoBehaviour {
 
 	public Button startGameButton;
 	public Button exitGameButton;
+	public Button submitExitGame;
+	public Button cancelExitGame;
 	public Canvas quitMenuPopUp;	
 
 
@@ -21,8 +23,37 @@ public class MainMenuScript : MonoBehaviour {
 		globalSoundPlayer.StartAudio ();
 	}
 
+	void Update(){
+		Button selectedButton = null;
+		if (Input.GetKeyUp(KeyCode.UpArrow)) {
+			selectedButton = startGameButton;
+			selectedButton.Select ();
+		}
+		if (Input.GetKeyUp(KeyCode.DownArrow)) {
+			selectedButton = exitGameButton;
+			selectedButton.Select ();
+		}
+
+		if (quitMenuPopUp.enabled == true) {
+			if (Input.GetKeyUp(KeyCode.LeftArrow)) {
+				selectedButton = submitExitGame;
+				selectedButton.Select ();
+			}
+			if (Input.GetKeyUp(KeyCode.RightArrow)) {
+				selectedButton = cancelExitGame;
+				selectedButton.Select ();
+			}
+		}
+	}
+
 	public void StartGame(){
-		SceneManager.LoadScene ("room_0", LoadSceneMode.Single);
+		StartCoroutine (FadeAndChangeLevel());
+	}
+
+	IEnumerator FadeAndChangeLevel(){
+		float fadeTime = gameObject.GetComponent<SceneFadingScript> ().BeginFade(1);
+		yield return new WaitForSeconds (fadeTime);
+		SceneManager.LoadScene ("room_0");
 	}
 
 	public void ExitGameCanceledPressed(){
