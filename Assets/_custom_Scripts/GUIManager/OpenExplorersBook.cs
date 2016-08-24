@@ -42,13 +42,6 @@ namespace ExplorersBook
 			if (inputField) {
 				inputField.SetActive (false);
 			}
-				
-			if (StoryTextLeft) {
-				StoryTextLeft.SetActive (false);
-			}
-			if (StoryTextRight) {
-				StoryTextRight.SetActive (false);
-			}
 		}
 
 		void Start () {
@@ -64,7 +57,7 @@ namespace ExplorersBook
 		public void openExplorersBook() { 
 			bookIsOpen = !bookIsOpen;
 			ActivateExplorersBook ();
-			DisablePlayerSound();
+			DisablePlayerSound ();
 			DisablePlayerMovement ();
 			UnlockMouseMovement ();
 			ActivateUserInputField ();
@@ -76,8 +69,8 @@ namespace ExplorersBook
 				explBook.SetActive (bookIsOpen);
 				StartCoroutine (playAnimation ());
 			} else {
-				StoryTextLeft.SetActive (bookIsOpen);
-				StoryTextRight.SetActive (bookIsOpen);
+//				StoryTextLeft.SetActive (bookIsOpen);
+//				StoryTextRight.SetActive (bookIsOpen);
 				StartCoroutine(playAnimation ());
 			}
 		}
@@ -126,8 +119,12 @@ namespace ExplorersBook
 			Animator anim = explBook.GetComponent<Animator> ();
 			if (anim) {
 				anim.SetBool ("open", bookIsOpen);
-				yield return new WaitForSeconds (getAnimationDuration (anim, "open"));
+				Debug.Log (getAnimationDuration (anim, bookIsOpen ? "BookTranslation" : "BookFadeOut"));
+				yield return new WaitForSeconds (getAnimationDuration (anim, bookIsOpen?"BookTranslation":"BookFadeOut"));
+				Debug.Log (getAnimationDuration(anim,"BookFadeOut"));
 				explBook.SetActive (bookIsOpen); //only matters when book is Open == false. 
+				StoryTextLeft.SetActive (bookIsOpen);
+				StoryTextRight.SetActive (bookIsOpen);
 			}
 		}
 
@@ -144,7 +141,7 @@ namespace ExplorersBook
 			if (lvlManager) {
 				ExplorersStory = lvlManager.getParagraphs ();
 			}
-			if (StoryTextRight && StoryTextLeft) {
+			if (StoryTextRight && StoryTextLeft && bookIsOpen) {
 				StoryTextLeft.SetActive (bookIsOpen);
 				StoryTextRight.SetActive (bookIsOpen);
 				SetText (StoryTextLeft.GetComponent<TextMesh> ());
