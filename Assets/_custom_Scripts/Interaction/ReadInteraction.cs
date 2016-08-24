@@ -38,7 +38,7 @@ public class ReadInteraction : Interactable
      * Da die Sprungfunktion nicht ausgeschlaten werden kann, muss Springen das lesen des Spielers abbrechen. 
      */
     void LateUpdate() {
-        if(reading && (Input.GetKeyDown(KeyCode.Space) || Input.GetKeyDown(KeyCode.B))) {
+        if(reading && (Input.GetKeyDown(KeyCode.Space))) {
             OnInteractionKeyPressed();
         }
     }
@@ -57,6 +57,8 @@ public class ReadInteraction : Interactable
         {
             reading = !reading;
             
+			GameManager.getInstance ().disableExplorersBook ();
+
             lastRunningSpeed = CFPS.m_RunSpeed;
             lastWalkingSpeed = CFPS.m_WalkSpeed;
 
@@ -71,6 +73,8 @@ public class ReadInteraction : Interactable
         {
             reading = !reading;
             
+			GameManager.getInstance ().disableExplorersBook ();
+
             toggleCanvas();
             toggleMouseCrosshair();
             toggleGUIMessage();

@@ -13,6 +13,9 @@ namespace UnityStandardAssets.Characters.FirstPerson
         [SerializeField] private bool m_IsWalking;
         [SerializeField] public float m_WalkSpeed;
         [SerializeField] public float m_RunSpeed;
+		public bool shouldWalk = true;
+		public bool shouldJump = true;
+		public bool shouldLookAround = true;
         [SerializeField] [Range(0f, 1f)] private float m_RunstepLenghten;
         [SerializeField] private float m_JumpSpeed;
         [SerializeField] private float m_StickToGroundForce;
@@ -43,6 +46,7 @@ namespace UnityStandardAssets.Characters.FirstPerson
         private bool m_Jumping;
         private AudioSource m_AudioSource;
 
+	
         // Use this for initialization
         private void Start()
         {
@@ -97,7 +101,8 @@ namespace UnityStandardAssets.Characters.FirstPerson
         private void FixedUpdate()
         {
             float speed;
-            GetInput(out speed);
+            
+			GetInput(out speed);
             // always move along the camera forward as it is the direction that it being aimed at
             Vector3 desiredMove = transform.forward*m_Input.y + transform.right*m_Input.x;
 
@@ -115,7 +120,7 @@ namespace UnityStandardAssets.Characters.FirstPerson
             {
                 m_MoveDir.y = -m_StickToGroundForce;
 
-                if (m_Jump)
+				if (m_Jump && shouldJump)
                 {
                     m_MoveDir.y = m_JumpSpeed;
                     PlayJumpSound();
@@ -127,10 +132,11 @@ namespace UnityStandardAssets.Characters.FirstPerson
             {
                 m_MoveDir += Physics.gravity*m_GravityMultiplier*Time.fixedDeltaTime;
             }
-            m_CollisionFlags = m_CharacterController.Move(m_MoveDir*Time.fixedDeltaTime);
-
+			if (shouldWalk) {
+				m_CollisionFlags = m_CharacterController.Move (m_MoveDir * Time.fixedDeltaTime);
+			}
             ProgressStepCycle(speed);
-            if (m_Mouserotate)
+            if (m_Mouserotate  && shouldLookAround)
             {
                 UpdateCameraPosition(speed);
 

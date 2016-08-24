@@ -23,7 +23,7 @@ namespace ExplorersBook
 		private float lastRunningSpeed;
 		private List<string> ExplorersStory = new List<string>();
 		private int currentStoryIndex = 0;
-	
+		public bool shouldShowBook = true;
 
 		void Awake() {
 			explBook = GameObject.Find ("Explorers Book");
@@ -35,13 +35,13 @@ namespace ExplorersBook
 			StoryTextLeft = GameObject.Find ("StoryLeft");
 			StoryTextRight = GameObject.Find ("StoryRight");
 			lvlManager = GameObject.Find ("LevelManager").GetComponent<LevelManager> ();
-		
 			if (explBook) {
 				explBook.SetActive (false);
 			}
 			if (inputField) {
 				inputField.SetActive (false);
 			}
+
 		}
 
 		void Start () {
@@ -55,13 +55,16 @@ namespace ExplorersBook
 		}
 
 		public void openExplorersBook() { 
-			bookIsOpen = !bookIsOpen;
-			ActivateExplorersBook ();
-			DisablePlayerSound ();
-			DisablePlayerMovement ();
-			UnlockMouseMovement ();
-			ActivateUserInputField ();
-			depictExplorersStory ();
+			if (shouldShowBook) {
+				bookIsOpen = !bookIsOpen;
+				ActivateExplorersBook ();
+				DisablePlayerSound ();
+				DisablePlayerMovement ();
+				DisableJumping ();
+				UnlockMouseMovement ();
+				ActivateUserInputField ();
+				depictExplorersStory ();
+			}
 		}
 
 		private void ActivateExplorersBook() {
@@ -69,8 +72,6 @@ namespace ExplorersBook
 				explBook.SetActive (bookIsOpen);
 				StartCoroutine (playAnimation ());
 			} else {
-//				StoryTextLeft.SetActive (bookIsOpen);
-//				StoryTextRight.SetActive (bookIsOpen);
 				StartCoroutine(playAnimation ());
 			}
 		}
@@ -89,17 +90,12 @@ namespace ExplorersBook
 			}
 		}
 
+		private void DisableJumping() {
+			GameManager.getInstance ().disableJumping ();	
+		}
+
 		private void DisablePlayerMovement() {
-			if (CharacterController) {
-				CharacterController.enabled = !bookIsOpen;
-			}
-			if (FPSControllerScript && bookIsOpen) {
-				lastRunningSpeed = FPSControllerScript.m_RunSpeed;
-				lastWalkingSpeed = FPSControllerScript.m_WalkSpeed;
-				changeWalkingAndRunningSpeed (0, 0);
-			} else {
-				changeWalkingAndRunningSpeed (lastWalkingSpeed, lastRunningSpeed);		
-			}
+			GameManager.getInstance ().disableWalking ();
 		}
 
 		private void changeWalkingAndRunningSpeed(float walkingSpeed, float runningSpeed) {
