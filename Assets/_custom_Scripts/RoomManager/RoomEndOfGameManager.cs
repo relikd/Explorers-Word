@@ -42,11 +42,11 @@ public class RoomEndOfGameManager : MonoBehaviour {
 			cameraShaker.shakeAmount = 0.0f;
 		}
 
-//		if (textObject != null) {
-//			if (textObject.GetComponent<RectTransform>().position.y >= 1400) {
-//				LevelManager.LoadRoom ("startMenu");
-//			}
-//		}
+		if (textObject != null) {
+			if (textObject.GetComponent<RectTransform>().position.y >= 1400) {
+				LevelManager.LoadRoom ("startMenu");
+			}
+		}
 	}
 
 
