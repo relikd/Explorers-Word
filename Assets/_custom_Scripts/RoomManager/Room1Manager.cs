@@ -1,15 +1,21 @@
 ﻿using UnityEngine;
 
+/**
+ * Evalutate Level state for Room 1.
+ * All lightbeams have to be rotated to the correct position
+ */
 public class Room1Manager : MonoBehaviour {
 
 	[SerializeField] private GameObject startingLightbeam;
 	[SerializeField] private GameObject finishCrystal;
-	[SerializeField] private int lightsRequiredToFinish = 2;
+	[SerializeField] private int lightsRequiredToFinish = 3;
 	[SerializeField] private GameObject[] rotatableObjects;
 
 	private GlobalSoundPlayer m_globalSoundPlayer;
 
+	/** Puzzle is solved if the right amount of light hits the final crystal */
 	private int currentLightsOnFinish = 0;
+	/** Flag used to recast lightbeams (saves calculation time) */
 	private bool shouldRecalculate = false;
 	[SerializeField] private GameObject mayaBook;
 	[SerializeField] private GameObject globe;
