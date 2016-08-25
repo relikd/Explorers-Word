@@ -93,7 +93,6 @@ namespace ExplorersBook
 		}
 
 		private void DisablePlayerMovement() {
-			GameManager.getInstance ().disableCammeraRotation ();
 			GameManager.getInstance ().disableWalking ();
 		}
 
