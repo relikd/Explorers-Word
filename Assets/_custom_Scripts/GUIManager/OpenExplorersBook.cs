@@ -88,9 +88,6 @@ namespace ExplorersBook
 		}
 
 		private void depictExplorersStory() {
-			if (!bookIsOpen) {
-				currentStoryIndex = 0;
-			}
 			if (lvlManager) {
 				ExplorersStory = lvlManager.getParagraphs ();
 			}
