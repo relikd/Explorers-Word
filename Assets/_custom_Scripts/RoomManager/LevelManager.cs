@@ -11,7 +11,6 @@ using System.Collections.Generic;
 public class LevelManager : MonoBehaviour {
 
 	static LevelManager Instance;
-	string text = "";
 	public List<string> Chapter = new List<string>();
 	string Path = "";
 	string CurrentStoryChapterName="StoryChapter0"; 
@@ -107,7 +106,7 @@ public class LevelManager : MonoBehaviour {
 	*/
 	private string LoadParagraphs(string fileName)
 	{
-		return text = File.ReadAllText (fileName);
+		return File.ReadAllText (fileName);
 	}
 
 

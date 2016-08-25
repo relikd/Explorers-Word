@@ -1,6 +1,9 @@
 ﻿using UnityEngine;
 using System.Collections;
 
+/**
+* Manages global Sounds like Background Music. 
+*/
 public class GlobalSoundPlayer : MonoBehaviour {
 
 	[SerializeField]private AudioClip storytellerAudio;
@@ -10,55 +13,89 @@ public class GlobalSoundPlayer : MonoBehaviour {
 	[SerializeField]private AudioClip[] otherScenesounds;
 	[SerializeField][Range(0,1.0f)]private float otherSoundsVolume;
 
-
-	private AudioSource audioSource;
+	private AudioSource StoryTellerAudioSource;
+	private AudioSource BackgroundAudioSource;
 	private AudioSource alternateAudioSource;
+	private static AudioSource correctWord;
+	private static AudioClip correctWordClip;
+	private static AudioSource riddleSolved;
+	private static AudioClip riddleSolvedClip;
 
-	// Use this for initialization
+	/**
+	* Plays the CorrectWord Sound. 
+	*/
+	public static void playCorrectWord() {
+		correctWord.clip = correctWordClip;
+		correctWord.volume = 1.0f;
+		correctWord.Play ();
+	}
+
+	/**
+	* Plays the SolvedRidle Sound. 
+	*/
+	public static void playSolvedRiddle() {
+		riddleSolved.clip = correctWordClip;
+		riddleSolved.volume = 1.0f;
+		riddleSolved.Play ();	
+	}
+
+	/**
+	* Instantiates nesseccary Variables. 
+	*/
 	void Awake () {
-		audioSource = gameObject.AddComponent<AudioSource> ();
-		audioSource.playOnAwake = false;
-		//storytellerVolume = 1.0f;
-		//backgroundmusicVolume = 1.0f;
-		//otherSoundsVolume = 1.0f;
+		StoryTellerAudioSource = gameObject.AddComponent<AudioSource> ();
+		BackgroundAudioSource = gameObject.AddComponent<AudioSource> ();
+		correctWord = gameObject.AddComponent<AudioSource> ();
+		correctWordClip = Resources.Load ("bookshelf_moving", typeof(AudioClip)) as AudioClip;
+		correctWordClip = Resources.Load ("bookshelf_moving", typeof(AudioClip)) as AudioClip;
+		StoryTellerAudioSource.playOnAwake = false;
+		BackgroundAudioSource.playOnAwake = false;
+		StartAudio ();
 	}
 	
-	// Update is called once per frame
-	void Update () {
-		if (audioSource.clip == storytellerAudio) {
-			audioSource.volume = storytellerVolume;
-		} else {
-			audioSource.volume = backgroundmusicVolume;
+	/**
+	* Updates the Volumes. 
+	*/
+	void Update () {	
+		if (!StoryTellerAudioSource.isPlaying) {
+			storytellerVolume = 0.0f;
 		}
-
-		if (audioSource.clip == storytellerAudio && !audioSource.isPlaying) {
-			StartBackgroundMusic ();
-		}
+		StoryTellerAudioSource.volume = storytellerVolume;
+		BackgroundAudioSource.volume = backgroundmusicVolume;
 	}
 
+	/**
+	* Starts Audio Source. 
+	*/
 	public void StartAudio(){
-		if (storytellerAudio != null) {
-			StartStoryTellerAudio ();
-		} else {
-			StartBackgroundMusic ();
-		}
+		StartStoryTellerAudio ();
+		LowerVolumesExceptStoryVolume ();
+		StartBackgroundMusic ();
 	}
 
-	public void TogglePauseAudio(){
-		if(audioSource.isPlaying){
+	/**
+	* Toggle the Pausing of a given audio source. 
+	*/
+	public void TogglePauseAudio(AudioSource audioSource){
+		if (audioSource.isPlaying) {
 			audioSource.Pause ();
-		}
-		else{
+		} else{
 			audioSource.UnPause();
 		}
 	}
 
-	public void RestartAudio()
+	/**
+	* Stops and restarts a given AudioSource. 
+	*/
+	public void RestartAudio(AudioSource audioSource)
 	{
 		audioSource.Stop ();
 		StartAudio ();
 	}
-
+		
+	/**
+	* Plays another sound from the other sounds source. 
+	*/
 	public void PlayOtherSceneSound(int index, bool looped = false, float volume = 1.0f, bool overlappingSound = false){
 		if (otherScenesounds.Length != 0) {
 			otherSoundsVolume = volume;
@@ -68,30 +105,39 @@ public class GlobalSoundPlayer : MonoBehaviour {
 				alternateAudioSource.loop = looped;
 				alternateAudioSource.volume = otherSoundsVolume;
 				alternateAudioSource.Play ();
-			} else {
-				audioSource.clip = otherScenesounds [index];
-				audioSource.loop = looped;
-				audioSource.volume = otherSoundsVolume;
-				audioSource.Play ();
-			}
+			} 
 		}
 	}
 
+	/**
+	* Starts the Story Music. 
+	*/
 	private void StartStoryTellerAudio(){
 		if (storytellerAudio != null) {
-			audioSource.clip = storytellerAudio;
-			audioSource.volume = storytellerVolume;
-			audioSource.loop = false;
-			audioSource.Play ();
+			StoryTellerAudioSource.clip = storytellerAudio;
+			StoryTellerAudioSource.volume = storytellerVolume;
+			StoryTellerAudioSource.loop = false;
+			StoryTellerAudioSource.Play ();
 		}
 	}
 
+	/**
+	* Starts the Background Music. 
+	*/
 	private void StartBackgroundMusic(){
 		if (backgroundmusic != null) {
-			audioSource.clip = backgroundmusic;
-			audioSource.volume = backgroundmusicVolume;
-			audioSource.loop = true;
-			audioSource.Play ();
+			BackgroundAudioSource.clip = backgroundmusic;
+			BackgroundAudioSource.volume = backgroundmusicVolume;
+			BackgroundAudioSource.loop = true;
+			BackgroundAudioSource.Play ();
 		}
+	}
+
+	/**
+	* Lower Volumes when Explorers Story is told. 
+	*/
+	private void LowerVolumesExceptStoryVolume() {
+		this.otherSoundsVolume = 0.8f;
+		this.backgroundmusicVolume = 0.8f;
 	}
 }
