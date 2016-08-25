@@ -32,5 +32,6 @@ public class CollectInteraction : Interactable
         LogWriter.WriteLog( NameOfItem + " eingesammelt", gameObject);
         if (TargetGameObject)  attachScript();
 		this.gameObject.SetActive(false);
+
 	}
 }
