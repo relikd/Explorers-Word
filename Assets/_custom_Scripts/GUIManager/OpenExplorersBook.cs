@@ -19,6 +19,9 @@ namespace ExplorersBook
 		private int currentStoryIndex = 0;
 		public bool shouldShowBook = true;
 
+		/**
+		* Instantiate needed Classvariables and make sure Explorers Book and input Field are inactive
+		*/
 		void Awake() {
 			StoryTextLeft = GameObject.Find ("StoryLeft");
 			StoryTextRight = GameObject.Find ("StoryRight");
@@ -31,12 +34,18 @@ namespace ExplorersBook
 			}
 		}
 
+		/**
+		* Listen for Escape and B to open/close ExplorersBook when pressed
+		*/
 		void LateUpdate() {
 			if ((Input.GetKeyUp(KeyCode.B) && !bookIsOpen) || (Input.GetKeyUp(KeyCode.Escape) && bookIsOpen) ) {
 				openExplorersBook ();
 			}
 		}
 
+		/**
+		* Call all neccessary Methods to Activate / Disable The Book and The Input Field as well as the Player Movement usw.
+		*/
 		public void openExplorersBook() { 
 			if (shouldShowBook) {
 				GameManager gameManager = GameManager.getInstance ();
@@ -51,6 +60,9 @@ namespace ExplorersBook
 			}
 		}
 
+		/**
+		* Activate Explorers Book and start the Coroutine for the Animation
+		*/
 		private void ActivateExplorersBook() {
 			if (explBook && bookIsOpen) {
 				explBook.SetActive (bookIsOpen);
@@ -60,6 +72,9 @@ namespace ExplorersBook
 			}
 		}
 
+		/**
+		* Activate the Input Field responsible for UserInput
+		*/
 		private void ActivateUserInputField() {
 			if (inputField) {
 				inputField.SetActive(bookIsOpen);
@@ -67,7 +82,10 @@ namespace ExplorersBook
 				inputFieldComponent.ActivateInputField ();
 			}
 		}
-			
+
+		/**
+		* plays the Book Opening Animation. IEnummerator is used for the Coroutine. 
+		*/
 		IEnumerator playAnimation() {
 			Animator anim = explBook.GetComponent<Animator> ();
 			if (anim) {
@@ -81,12 +99,18 @@ namespace ExplorersBook
 			}
 		}
 
-		private float getAnimationDuration(Animator a, string n) {
-			foreach (AnimationClip clip in a.runtimeAnimatorController.animationClips)
-				if (clip.name == n) return clip.length;
+		/**
+		* Returns the Duration of an Animation used in an Animator that has a specific Name. 
+		*/
+		private float getAnimationDuration(Animator animator, string name) {
+			foreach (AnimationClip clip in animator.runtimeAnimatorController.animationClips)
+				if (clip.name ==  name) return clip.length;
 			return 0;
 		}
 
+		/**
+		* Returns the Duration of an Animation used in an Animator that has a specific Name. 
+		*/
 		private void depictExplorersStory() {
 			if (lvlManager) {
 				ExplorersStory = lvlManager.getParagraphs ();
@@ -100,6 +124,9 @@ namespace ExplorersBook
 			currentStoryIndex = 0;
 		}
 
+		/**
+		* Sets the Text of a given textMesh to a Page text. 
+		*/
 		private void SetText(TextMesh textMesh) {
 			if (textMesh && ExplorersStory != null) {
 				textMesh.text = getNextPage(currentStoryIndex);
@@ -107,6 +134,9 @@ namespace ExplorersBook
 			currentStoryIndex += 20;
 		}
 
+		/**
+		* Appends the lines, wich fit to one Page, for the right Page and gives them back. 
+		*/
 		private string getNextPage(int currentIndex) {
 			string result = "";
 			if (ExplorersStory.Count - currentIndex >= 20) {
@@ -117,6 +147,9 @@ namespace ExplorersBook
 			return result;
 		}
 
+		/**
+		* Appends the Lines of an Array to a string.
+		*/
 		private string appendLines(List<string> lines) {
 			string result = "";
 			foreach (string line in lines) { 
@@ -125,6 +158,9 @@ namespace ExplorersBook
 			return result;
 		}
 
+		/**
+		* Tells you if the book is open. 
+		*/
         public bool isBookOpen()
         {
             return bookIsOpen;
