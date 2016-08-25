@@ -1,9 +1,11 @@
-﻿using System.Collections;
-using UnityEngine;
-
+﻿using UnityEngine;
 
 namespace Interaction
 {
+	/**
+	 * Generic Interaction class for handling all interactions.
+	 * All interactions should subclass this class to get the same experience across all scripts
+	 */
 	[RequireComponent (typeof(Collider))]
 	public abstract class Interactable : MonoBehaviour
 	{

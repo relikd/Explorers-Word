@@ -8,9 +8,10 @@ namespace Interaction
 	public class PlainInteraction : Interactable
 	{
 		[Tooltip("Interaction [message] to be displayed on screen")]
+		/** Interaction text to be displayed at the right side of the screen */
 		public string actionMessage = "interact";
-		[Multiline]
-		public string responseMessage = "Interaction not possible";
+		/** Response text to be displayed in the center of the screen after intercation happend */
+		[Multiline] public string responseMessage = "Interaction not possible";
 
 		override public string interactMessage() {
 			return actionMessage;

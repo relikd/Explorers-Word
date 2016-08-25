@@ -1,19 +1,26 @@
 ﻿using UnityEngine;
 
+/**
+ * Interface for {@link TriggerInteraction}
+ * @see Interaction.TriggerInteraction
+ */
 public abstract class TriggerInteractionCallback : MonoBehaviour {
+	/** Use (trigger.triggerActive) for your validation */
 	abstract public void OnTriggerInteraction (Interaction.TriggerInteraction trigger);
 }
 
 namespace Interaction
 {
+	/**
+	 * Handle an interaction which is evaluated by a second script
+	 */
 	public class TriggerInteraction : PlainInteraction
 	{
+		/** Tells target script if it should be executed, has to be handled in the target script */
 		public bool triggerActive = false;
+		/** Attached script has to be conform to {@link TriggerInteractionCallback} interface */
 		public TriggerInteractionCallback triggerScript;
 
-		override public string interactMessage() {
-			return actionMessage;
-		}
 		/**
 		 * Will run the evaluation script and display the message (can be modified in the script)
 		 */

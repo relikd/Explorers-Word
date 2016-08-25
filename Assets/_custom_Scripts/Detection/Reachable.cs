@@ -1,20 +1,22 @@
 ﻿using UnityEngine;
-using System.Collections;
-using UnityEngine.UI;
 using Interaction;
 
+/**
+ * Search for objects which are in reach of the player
+ */
 public class Reachable : MonoBehaviour
 {
 	GameObject currentGameObject;
-
 	bool initial = true;
 	public float Reach = 0F;
-	//[Tooltip("The tag that triggers the object to be openable")]
-	//public string TriggerTag = "asdfs";
 
 	// PRIVATE SETTINGS
 	[HideInInspector] public RaycastHit RaycastHit;
 
+	/**
+	 * Cast a ray in each update to see whats in front of the camera
+	 * If find any Interaction script enable the GUI respectively
+	 */
 	void Update()
 	{
 		// Set origin of ray to 'center of screen' and direction of ray to 'cameraview'.
@@ -54,12 +56,16 @@ public class Reachable : MonoBehaviour
 			activateCrosshair (false);
 		}
 	}
-
+	/**
+	 * Update Cursor if interaction is possible
+	 */
 	private void activateCrosshair(bool enable) {
 		MouseCrosshair ch = gameObject.GetComponent<MouseCrosshair> ();
 		if (ch) ch.activateCrosshair(enable);
 	}
-
+	/**
+	 * Go through all children and deactivate the interaction GUI
+	 */
 	private void deactiveGUI() {
 		if (currentGameObject) {
 			Interactable[] goInteraction = currentGameObject.GetComponents<Interactable> ();
@@ -68,5 +74,4 @@ public class Reachable : MonoBehaviour
 			}
 		}
 	}
-
 }

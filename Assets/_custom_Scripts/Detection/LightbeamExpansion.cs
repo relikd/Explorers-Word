@@ -1,12 +1,16 @@
 ﻿using UnityEngine;
-using System.Collections;
 
+/**
+ * Simple Raycast to find max distance to any object. Used in lightbeam asset
+ */
 public class LightbeamExpansion : MonoBehaviour
 {
 	void Start() {
 		Expand ();
 	}
-
+	/** Cast ray and transform current {@link GameObject}
+	 * @return The GameObject which was hit by this Raycast
+	 */
 	public Transform Expand() {
 		RaycastHit hit;
 		Ray ray = new Ray (transform.position, transform.up);

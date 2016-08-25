@@ -2,23 +2,26 @@
 
 namespace Interaction
 {
+	/**
+	 * Switch materials for the VictorianLights asset
+	 */
 	public class VictorianLight : Interactable 
 	{
 		public Material LightsOn;
 		public Material LightsOff;
+		/** Tells which material to use and what message to display */
+		public bool isLightOn = false;
 
 		override public string interactMessage() {
-			return "turn on / off";
+			return (isLightOn ? "Turn off light" : "Turn on light");
 		}
 		/**
-		 * Switches the material to indicate a switched on light
+		 * Switches the material to indicate a turned on light
 		 */
 		override public void OnInteractionKeyPressed() {
-			if (GetComponent<Renderer> ().material.name.Contains ("Streetlight_Off")) {
-				GetComponent<Renderer> ().material = LightsOn;
-			} else {
-				GetComponent<Renderer> ().material = LightsOff;
-			}
+			EnableGUI (false);
+			isLightOn = !isLightOn;
+			GetComponent<Renderer> ().material = (isLightOn ? LightsOn : LightsOff);
 		}
 	}
 }
