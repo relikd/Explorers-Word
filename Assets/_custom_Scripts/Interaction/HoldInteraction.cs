@@ -21,9 +21,6 @@ public class HoldInteraction : Interactable
     private Rigidbody myRigid;
 
     Vector3 Scale;
-
-    private bool skipDoubleOnPressed = false;
-
     /**
      * Initialisiert die Variablen des Objekts und des DummyObjekts.
      */
@@ -44,23 +41,30 @@ public class HoldInteraction : Interactable
         dummyRigid.isKinematic = true;
         DummyCollider = Dummy.AddComponent<BoxCollider>();
         DummyCollider.center = myCollider.center;
-        DummyCollider.size = Vector3.Scale(myCollider.size, Scale);
+        DummyCollider.size = LimitSize(Vector3.Scale(myCollider.size, Scale));
     }
     /**
-    * Aktualisiert die Position des getragenen Objekts auf eine mit Lerp interpolierte Position zwischen der aktuellen Lage und einem sicheren Zielpunkt.Erlaubt auch das Fallenlassen des Objekts.
+    * Aktualisiert die Position des getragenen Objekts auf eine mit Lerp interpolierte Position zwischen der aktuellen Lage und einem sicheren Zielpunkt.
     */
     void FixedUpdate()
     {
         if (DummyObj.carrying)
         {
-            if (Input.GetKeyUp(theKeyCode())) drop();
-
             Vector3 NewLoc = Vector3.Lerp(gameObject.transform.position, DummyObj.safe, Time.deltaTime * 8);
             gameObject.transform.position = NewLoc;
             gameObject.transform.rotation = DummyObj.saferotate;//Quaternion.identity;
           
         }
-        skipDoubleOnPressed = false;
+    }
+    /**
+     * Erlaubt es, Objekte fallen zu lassen.
+     */ 
+    void Update()
+    {
+        if (DummyObj.carrying)
+        {
+            if (Input.GetKeyUp(theKeyCode())) drop();
+        }
     }
     public override string interactMessage()
     {
@@ -75,7 +79,6 @@ public class HoldInteraction : Interactable
         {
             DummyObj.safe = gameObject.transform.position;
             pickup();
-            skipDoubleOnPressed = true;
         }
     }    
     /**
@@ -105,4 +108,19 @@ public class HoldInteraction : Interactable
         myCollider.enabled = true;
         DummyObj.carrying = false;       
     } 
+
+    /**
+     * Limitiert Größe des Dummy-Colliders. Sorgt für Clipping bei zu großen Objekten. Ist der Boxcollider größer als 1 ist das erwartete Verhalten nicht mehr sichergestellt.
+     */
+    private Vector3 LimitSize( Vector3 input)
+    {
+        Vector3 retVal;
+        if (input.x >= 1) retVal.x = 1;
+        else retVal.x = input.x;
+        if (input.y >= 1) retVal.y = 1;
+        else retVal.y = input.y;
+        if (input.z >= 1) retVal.z = 1; 
+       else retVal.z = input.z;
+        return retVal;
+    }
 }
