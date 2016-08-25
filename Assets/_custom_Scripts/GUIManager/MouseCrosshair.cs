@@ -16,12 +16,7 @@ public class MouseCrosshair : MonoBehaviour {
 		positionCircle = new Rect((Screen.width - CrosshairDot.width*2) / 2, (Screen.height - 
 			CrosshairDot.height*2) /2, CrosshairDot.width*2, CrosshairDot.height*2);	
 	}
-	
-	// Update is called once per frame
-	void Update () {
 		
-	}
-
 	public void activateCrosshair(bool enable) {
 		shouldChangeTexture = enable;
 	}

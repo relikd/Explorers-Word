@@ -9,9 +9,11 @@ public  class GameManager : MonoBehaviour
 	public GameObject FPS;
 	private 
 	UnityStandardAssets.Characters.FirstPerson.CustomFirstPersonController FPSScript;
+	MouseCrosshair mouseCrosshair;
 
 	void Awake() {
 		FPSScript = FPS.GetComponent<UnityStandardAssets.Characters.FirstPerson.CustomFirstPersonController> ();
+		mouseCrosshair = FPS.GetComponent<MouseCrosshair> ();
 	}
 
 	public  void disableExplorersBook() {		
@@ -34,6 +36,12 @@ public  class GameManager : MonoBehaviour
 
 	public void disableCammeraRotation() {
 		FPSScript.shouldLookAround = !FPSScript.shouldLookAround;
+	}
+
+	public void disableCrosshair() {
+		if (mouseCrosshair) {		
+			mouseCrosshair.enabled = !mouseCrosshair.enabled;
+		}
 	}
 
 	public static GameManager getInstance() {
