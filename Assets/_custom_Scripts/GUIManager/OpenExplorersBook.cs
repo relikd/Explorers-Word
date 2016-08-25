@@ -60,6 +60,7 @@ namespace ExplorersBook
 				gameManager.disableCrosshair ();
 				ActivateUserInputField ();
 				depictExplorersStory ();
+				GlobalSoundPlayer.playCorrectWord ();
 			}
 		}
 
