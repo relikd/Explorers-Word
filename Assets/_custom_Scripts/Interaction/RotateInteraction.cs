@@ -2,19 +2,28 @@
 
 namespace Interaction
 {
+	/**
+	 * Rotate an object by pre defined {@link Vector3} euler angles. Can be either continuously or stepwise
+	 */
 	public class RotateInteraction : Interactable
 	{
+		/** Euler Angles used for rotation, can be negative */
 		public Vector3 rotateBy = new Vector3(0,10,0);
+		/** Define if rotate should happen on key press or continuously */
 		[SerializeField] private bool stepAngle = false;
 
 		override public string interactMessage() {
 			return "rotate";
 		}
-
+		/**
+		 * Rotate one time on key press if {@link #stepAngle} == true
+		 */
 		override public void OnInteractionKeyPressed() {
 			if (stepAngle) rotate ();
 		}
-
+		/**
+		 * Rotate constantly if {@link #stepAngle} == false
+		 */
 		override public void OnInteractionKeyHold() {
 			if (!stepAngle) rotate ();
 		}

@@ -4,7 +4,7 @@ using System.Collections;
 namespace Interaction
 {
 	/**
-	 * Limit rotation of an {@link RotateInteraction}
+	 * Limit the rotation of an {@link RotateInteraction} script
 	 * @see RotateInteraction
 	 */
 	[RequireComponent(typeof(RotateInteraction))]

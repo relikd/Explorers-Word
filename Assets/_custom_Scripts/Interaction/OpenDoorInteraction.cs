@@ -7,7 +7,9 @@ namespace Interaction
 	 */
 	public class OpenDoorInteraction : Interactable
 	{
-		/** Removes the assigned {@link PlainInteraction} */
+		/**
+		 * Removes the assigned {@link PlainInteraction} on initialize
+		*/
 		void Awake() {
 			PlainInteraction old = GetComponent<PlainInteraction> ();
 			if (old)
