@@ -4,7 +4,7 @@ using System.Collections.Generic;
 public class GameEvent{}
 
 /**
- * Code taken from @see <a href="http://www.willrmiller.com/?p=87">http://www.willrmiller.com/?p=87</a>
+ * Code taken from <a href="http://www.willrmiller.com/?p=87">http://www.willrmiller.com/?p=87</a>
  */
 public class Events
 {
