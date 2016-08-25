@@ -5,7 +5,7 @@ using Interaction;
 public abstract class TriggerInteractionCallback : MonoBehaviour {
 	abstract public void OnTriggerInteraction (TriggerInteraction trigger);
 }
-[RequireComponent (typeof(Collider))]
+
 public class TriggerInteraction : PlainInteraction
 {
 	
