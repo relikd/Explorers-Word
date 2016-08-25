@@ -2,6 +2,9 @@
 using System.Collections;
 using System.Collections.Generic;
 
+/**
+* Handles correct depiction on GUI. 
+*/
 public class GUIManager : MonoBehaviour
 {
 	private float yOffset = 30f;
@@ -9,6 +12,9 @@ public class GUIManager : MonoBehaviour
 	List<string> messageList  = new List<string> ();
 	private string centeredText;
 
+	/**
+	* Registers a Text or removes it if it is already registered and should no more be Displayed. 
+	*/
 	public void register (string textToDisplay, bool shouldBeSet) {
 		if (shouldBeSet) {
 			if (!messageList.Contains (textToDisplay)) {
@@ -19,6 +25,9 @@ public class GUIManager : MonoBehaviour
 		}
 	}
 
+	/**
+	* Displayes the registered Strings and centered strings. 
+	*/
 	void OnGUI() {
 		float newYPossition = startingPosition.y;
 		foreach (string reg in messageList) {
@@ -33,10 +42,16 @@ public class GUIManager : MonoBehaviour
 		}
 	}
 
+	/**
+	* Starts Coroutine for a temporary Message. 
+	*/
 	public void centeredMessage (string msg, float timeout) {
 		StartCoroutine(showTemporaryMessage(msg, timeout));
 	}
 
+	/**
+	* Sets CenterdText for Temporary Message. 
+	*/
 	IEnumerator showTemporaryMessage(string msg, float t) {
 		centeredText = msg;
 		yield return new WaitForSeconds(t);
