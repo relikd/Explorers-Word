@@ -1,5 +1,4 @@
 ﻿using UnityEngine;
-using System.Collections;
 
 public class Room1Manager : MonoBehaviour {
 
@@ -34,7 +33,7 @@ public class Room1Manager : MonoBehaviour {
 	 */
 	void initialPuzzleTwist () {
 		foreach (GameObject item in rotatableObjects) {
-			RotateInteraction ri_script = item.GetComponent<RotateInteraction> ();
+			Interaction.RotateInteraction ri_script = item.GetComponent<Interaction.RotateInteraction> ();
 			if (ri_script)
 				item.transform.Rotate (ri_script.rotateBy*2);
 		}
@@ -118,7 +117,7 @@ public class Room1Manager : MonoBehaviour {
 		Material mat = renderer.material;
 		mat.SetColor ("_EmissionColor", finalColor);
 
-		TriggerInteraction script = mayaBook.GetComponent<TriggerInteraction> ();
+		Interaction.TriggerInteraction script = mayaBook.GetComponent<Interaction.TriggerInteraction> ();
 		script.triggerActive = flag;
 	}
 }

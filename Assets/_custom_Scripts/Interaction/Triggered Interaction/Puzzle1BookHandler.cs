@@ -8,7 +8,7 @@ public class Puzzle1BookHandler : TriggerInteractionCallback
 	public GameObject HiddenEntrance;
 	public GameObject EntranceWall;
 
-	override public void OnTriggerInteraction (TriggerInteraction sender) {
+	override public void OnTriggerInteraction (Interaction.TriggerInteraction sender) {
 		if (sender.triggerActive) {
 			sender.responseMessage = "A rusty mechanism moved the bookshelf";
 			StartCoroutine (playAnimation ());

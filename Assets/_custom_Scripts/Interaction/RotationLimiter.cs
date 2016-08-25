@@ -1,41 +1,63 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-[RequireComponent(typeof(RotateInteraction))]
-public class RotationLimiter : MonoBehaviour {
+namespace Interaction
+{
+	/**
+	 * Limit rotation of an {@link RotateInteraction}
+	 * @see RotateInteraction
+	 */
+	[RequireComponent(typeof(RotateInteraction))]
+	public class RotationLimiter : MonoBehaviour {
 
-	[SerializeField] private Vector3 minAngle = new Vector3(-180,-60,-180);
-	[SerializeField] private Vector3 maxAngle = new Vector3(180,30,180);
-	[SerializeField] private bool absoluteAngle = false;
+		/** Limits are [-180 to 180] if relative and [0 to 360] if absolute */
+		[SerializeField] private Vector3 minAngle = new Vector3(-180,-60,-180);
+		/** Limits are [-180 to 180] if relative and [0 to 360] if absolute */
+		[SerializeField] private Vector3 maxAngle = new Vector3(180,30,180);
+		/** either limit relative to initial rotation or absolute 0-360 */
+		[SerializeField] private bool absoluteAngle = false;
 
-	private Quaternion initialRotation;
+		private Quaternion initialRotation;
 
-	// Use this for initialization
-	void Awake () {
-		initialRotation = gameObject.transform.rotation;
-	}
+		/**
+		 * Save the initial rotation for a relative rotation limiter
+		 */
+		void Awake () {
+			initialRotation = gameObject.transform.rotation;
+		}
 
-	// return 0 = fine, 1 = x out of limit, 2 = y, 4 = z
-	public int outOfLimit () {
-		int outCode = 0;
-		Vector3 deg = getCurrentRotation ();
-		if (deg.x > maxAngle.x+0.0001F && deg.x < minAngle.x+359.9999F) { outCode |= 1; }
-		if (deg.y > maxAngle.y+0.0001F && deg.y < minAngle.y+359.9999F) { outCode |= 2; }
-		if (deg.z > maxAngle.z+0.0001F && deg.z < minAngle.z+359.9999F) { outCode |= 4; }
-		return outCode;
-	}
-
-	public int directlyOnLimit() {
-		int outCode = 0;
-		Vector3 deg = getCurrentRotation ();
-		if (Mathf.Min( Mathf.Abs(deg.x-maxAngle.x), Mathf.Abs(deg.x-360-minAngle.x) ) < 0.0001F) { outCode |= 1; }
-		if (Mathf.Min( Mathf.Abs(deg.y-maxAngle.y), Mathf.Abs(deg.y-360-minAngle.y) ) < 0.0001F) { outCode |= 2; }
-		if (Mathf.Min( Mathf.Abs(deg.z-maxAngle.z), Mathf.Abs(deg.z-360-minAngle.z) ) < 0.0001F) { outCode |= 4; }
-		return outCode;
-	}
-
-	private Vector3 getCurrentRotation() {
-		if (absoluteAngle) return gameObject.transform.rotation.eulerAngles;
-		return (Quaternion.Inverse(initialRotation) * gameObject.transform.rotation).eulerAngles;
+		/**
+		 * Returns a bitmask with one bit for each angle, if out of limit
+		 * @return Bitmask with 0 = in bounds, >0 = out of limit (x|=1, y|=2, z|=4)
+		 */
+		public int outOfLimit () {
+			int outCode = 0;
+			Vector3 deg = getCurrentRotation ();
+			if (deg.x > maxAngle.x+0.0001F && deg.x < minAngle.x+359.9999F) { outCode |= 1; }
+			if (deg.y > maxAngle.y+0.0001F && deg.y < minAngle.y+359.9999F) { outCode |= 2; }
+			if (deg.z > maxAngle.z+0.0001F && deg.z < minAngle.z+359.9999F) { outCode |= 4; }
+			return outCode;
+		}
+		/**
+		 * Same like {@link #outOfLimit()} but bit will be set if directly on border
+		 * @return Bitmask same like {@link #outOfLimit()}
+		 * @see #outOfLimit()
+		 */
+		public int directlyOnLimit() {
+			int outCode = 0;
+			Vector3 deg = getCurrentRotation ();
+			if (Mathf.Min( Mathf.Abs(deg.x-maxAngle.x), Mathf.Abs(deg.x-360-minAngle.x) ) < 0.0001F) { outCode |= 1; }
+			if (Mathf.Min( Mathf.Abs(deg.y-maxAngle.y), Mathf.Abs(deg.y-360-minAngle.y) ) < 0.0001F) { outCode |= 2; }
+			if (Mathf.Min( Mathf.Abs(deg.z-maxAngle.z), Mathf.Abs(deg.z-360-minAngle.z) ) < 0.0001F) { outCode |= 4; }
+			return outCode;
+		}
+		/**
+		 * Get the rotation difference between current and initial state
+		 * @return rotation difference
+		 */
+		private Vector3 getCurrentRotation() {
+			if (absoluteAngle) return gameObject.transform.rotation.eulerAngles;
+			return (Quaternion.Inverse(initialRotation) * gameObject.transform.rotation).eulerAngles;
+		}
 	}
 }
