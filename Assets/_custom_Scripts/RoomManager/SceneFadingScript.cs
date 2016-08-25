@@ -1,6 +1,9 @@
 ﻿using UnityEngine;
 using System.Collections;
 
+/**
+* Fading for Scene Start or End. 
+*/
 public class SceneFadingScript : MonoBehaviour {
 
 	public Texture2D fadeTexture;
@@ -10,6 +13,9 @@ public class SceneFadingScript : MonoBehaviour {
 	private float alpha = 1.0f;
 	private int fadeDir = -1;
 
+	/**
+	* Depicts a Texture with the current alpha value. 
+	*/
 	void OnGUI(){
 		fadeTexture = Texture2D.whiteTexture;
 		alpha += fadeDir * fadeSpeed * Time.deltaTime;
@@ -22,12 +28,16 @@ public class SceneFadingScript : MonoBehaviour {
 		GUI.DrawTexture (new Rect (0, 0, Screen.width, Screen.height), fadeTexture);
 	}
 
-
+	/**
+	* Starts the Fading. 
+	*/
 	public float BeginFade(int direction){
 		fadeDir = direction;
 		return (fadeSpeed);
 	}
-
+	/**
+	* Sets The Start Fade. 
+	*/
 	void OnSceneWasLoaded(){
 		BeginFade (-1);
 	}

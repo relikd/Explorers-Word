@@ -3,6 +3,9 @@ using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 using System.Collections;
 
+/**
+* Manages the Main Menu. For Example Button Interactions to start the Game. 
+*/
 public class MainMenuScript : MonoBehaviour {
 
 	public Button startGameButton;
@@ -14,6 +17,9 @@ public class MainMenuScript : MonoBehaviour {
 
 	private GlobalSoundPlayer globalSoundPlayer;
 	// Use this for initialization
+	/**
+	* Initialises nesseccary Components. 
+	*/
 	void Start () {
 		startGameButton = startGameButton.GetComponent<Button>();
 		exitGameButton = exitGameButton.GetComponent < Button> ();
@@ -23,6 +29,10 @@ public class MainMenuScript : MonoBehaviour {
 		globalSoundPlayer.StartAudio ();
 	}
 
+
+	/**
+	* Selects the Keys for User Input . . . 
+	*/
 	void Update(){
 		Button selectedButton = null;
 		if (Input.GetKeyUp(KeyCode.UpArrow)) {
@@ -46,28 +56,43 @@ public class MainMenuScript : MonoBehaviour {
 		}
 	}
 
+	/**
+	* Starts Coroutine for Level Change. 
+	*/
 	public void StartGame(){
 		StartCoroutine (FadeAndChangeLevel());
 	}
 
+	/**
+	* Fades Out and Starts Level. 
+	*/
 	IEnumerator FadeAndChangeLevel(){
 		float fadeTime = gameObject.GetComponent<SceneFadingScript> ().BeginFade(1);
 		yield return new WaitForSeconds (fadeTime);
 		LevelManager.LoadRoom ("room_0");
 	}
 
+	/**
+	* Canceles the Exit Game Menu. 
+	*/
 	public void ExitGameCanceledPressed(){
 		quitMenuPopUp.enabled = false;
 		startGameButton.enabled = true;
 		exitGameButton.enabled = true;
 	}
 
+	/**
+	* Shows the Exit Game Menu. 
+	*/
 	public void ExitGamePressed(){
 		quitMenuPopUp.enabled = true;
 		startGameButton.enabled = false;
 		exitGameButton.enabled = false;
 	}
 
+	/**
+	* Quit the Game. 
+	*/
 	public void ExitGame(){
 		Application.Quit ();
 	}
