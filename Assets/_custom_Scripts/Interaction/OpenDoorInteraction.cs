@@ -20,7 +20,7 @@ public class OpenDoorInteraction : Interaction.Interactable
 
 	public override void OnInteractionKeyPressed ()
 	{
-		
+		LevelManager.LoadNextRoom ();
 	}
 
 }
