@@ -3,6 +3,10 @@ using System.Collections.Generic;
 using UnityEngine.UI;
 using System;
 
+/**
+ * Event used to indicate that visible objects have changed.
+ * Use this to redraw special elements like lightbeams
+ */
 public class XplrWrdInputChangedEvent : GameEvent {
 	public bool wordExists;
 	public XplrWrdInputChangedEvent (bool exist) {
@@ -10,18 +14,32 @@ public class XplrWrdInputChangedEvent : GameEvent {
 	}
 }
 
+/**
+ * Assign mutiple names to one object
+ * @see UserInput
+ */
 [Serializable]
 public class NamedObject {
 	public GameObject thing;
 	public string[] names;
 }
 
+/**
+ * Handles text input from user.
+ * Will be used when the Explorer's Book is open and user wants to enter a word.
+ * Entered words will be set visible in scene.
+ * Word entered event can be implemented with {@link XplrWrdInputChangedEvent}
+ * 
+ * @see Room1Manager for an example
+ */
 public class UserInput : MonoBehaviour {
 
 	private LinkedList<string> visibleWords = new LinkedList<string>();
-
+	/** Hook up input field */
 	[SerializeField] private InputField wordInputField;
+	/** Always display a maximum number of elements, older ones will be hidden */
 	[SerializeField] private int wordLimit = 3;
+	/** The list of objects which can be toggled visible */
 	[SerializeField] private NamedObject[] objects;
 
 	void Awake() {

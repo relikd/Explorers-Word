@@ -1,13 +1,20 @@
-﻿	using UnityEngine;
+﻿using UnityEngine;
 using System.Collections;
 
+/**
+ * Handles Maya book activation and animations for the book and the bookshelve
+ */
 public class Puzzle1BookHandler : TriggerInteractionCallback
 {
+	/** ShelfOpen == true means puzzle is solved */
 	private bool shelfOpen = false;
 	private float shelfRotationAngle = 0.0f;
 	public GameObject HiddenEntrance;
 	public GameObject EntranceWall;
 
+	/**
+	 * Will be called from a {@link TriggerInteraction} but still have to validate if trigger is active
+	 */
 	override public void OnTriggerInteraction (Interaction.TriggerInteraction sender) {
 		if (sender.triggerActive) {
 			sender.responseMessage = "A rusty mechanism moved the bookshelf";
@@ -16,7 +23,9 @@ public class Puzzle1BookHandler : TriggerInteractionCallback
 			EntranceWall.SetActive (false);
 		}
 	}
-
+	/**
+	 * Play book pull animation
+	 */
 	IEnumerator playAnimation() {
 		Animator anim = gameObject.GetComponent<Animator> ();
 		GameObject shelf = GameObject.Find ("Bookshelf");
@@ -28,7 +37,9 @@ public class Puzzle1BookHandler : TriggerInteractionCallback
 		}
 		shelfOpen = true;
 	}
-
+	/**
+	 * Play opening bookshelve animation
+	 */
 	void Update() {
 		if (shelfOpen && shelfRotationAngle > -17.0f) {
 			GameObject bsrc = GameObject.Find ("BookShelfRotationContainer");
@@ -38,7 +49,10 @@ public class Puzzle1BookHandler : TriggerInteractionCallback
 			}
 		}
 	}
-
+	/**
+	 * Duration between book pull and book returning to its original position
+	 * @return duration in seconds
+	 */
 	private float getAnimationDuration(Animator a, string n) {
 		foreach (AnimationClip clip in a.runtimeAnimatorController.animationClips)
 			if (clip.name == n) return clip.length;
