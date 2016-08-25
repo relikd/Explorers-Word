@@ -85,9 +85,7 @@ namespace ExplorersBook
 		}
 
 		private void DisablePlayerSound() {
-			if (PlayerSound) {
-				PlayerSound.mute = bookIsOpen;
-			}
+			GameManager.getInstance().disablePlayerAudioSource();
 		}
 
 		private void DisableJumping() {
@@ -95,6 +93,7 @@ namespace ExplorersBook
 		}
 
 		private void DisablePlayerMovement() {
+			GameManager.getInstance ().disableCammeraRotation ();
 			GameManager.getInstance ().disableWalking ();
 		}
 

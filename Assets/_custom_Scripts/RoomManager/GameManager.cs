@@ -7,7 +7,12 @@ public  class GameManager : MonoBehaviour
 	public GameObject Player;
 	public GameObject FPC;
 	public GameObject FPS;
+	private 
+	UnityStandardAssets.Characters.FirstPerson.CustomFirstPersonController FPSScript;
 
+	void Awake() {
+		FPSScript = FPS.GetComponent<UnityStandardAssets.Characters.FirstPerson.CustomFirstPersonController> ();
+	}
 
 	public  void disableExplorersBook() {		
 		ExplorersBook.OpenExplorersBook OpenExplBook = FPC.GetComponent<ExplorersBook.OpenExplorersBook> ();
@@ -15,13 +20,20 @@ public  class GameManager : MonoBehaviour
 	}
 
 	public void disableWalking() {
-		UnityStandardAssets.Characters.FirstPerson.CustomFirstPersonController FPSScript = FPS.GetComponent<UnityStandardAssets.Characters.FirstPerson.CustomFirstPersonController> ();
 		FPSScript.shouldWalk = !FPSScript.shouldWalk;
+		FPSScript.m_UseHeadBob = !FPSScript.m_UseHeadBob;
 	}
 
 	public void disableJumping() {
-		UnityStandardAssets.Characters.FirstPerson.CustomFirstPersonController FPSScript = FPS.GetComponent<UnityStandardAssets.Characters.FirstPerson.CustomFirstPersonController> ();
 		FPSScript.shouldJump = !FPSScript.shouldJump;
+	}
+
+	public void disablePlayerAudioSource() {
+		FPSScript.shouldPlayAudioSounds = !FPSScript.shouldPlayAudioSounds;
+	}
+
+	public void disableCammeraRotation() {
+		FPSScript.shouldLookAround = !FPSScript.shouldLookAround;
 	}
 
 	public static GameManager getInstance() {
