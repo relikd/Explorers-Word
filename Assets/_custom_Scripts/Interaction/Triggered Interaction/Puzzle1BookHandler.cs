@@ -5,11 +5,15 @@ public class Puzzle1BookHandler : TriggerInteractionCallback
 {
 	private bool shelfOpen = false;
 	private float shelfRotationAngle = 0.0f;
-	
+	public GameObject HiddenEntrance;
+	public GameObject EntranceWall;
+
 	override public void OnTriggerInteraction (TriggerInteraction sender) {
 		if (sender.triggerActive) {
 			sender.responseMessage = "A rusty mechanism moved the bookshelf";
 			StartCoroutine (playAnimation ());
+			HiddenEntrance.SetActive(true);
+			EntranceWall.SetActive (false);
 		}
 	}
 
