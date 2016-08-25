@@ -5,25 +5,28 @@ using System.Text;
 using System.IO;
 using System.Collections.Generic;
 
+/**
+* Loads Next Level as well as a Story Chapter concerning the specific Level. 
+*/
 public class LevelManager : MonoBehaviour {
 
 	static LevelManager Instance;
 	string text = "";
-	public List<string> Paragraphs = new List<string>();
+	public List<string> Chapter = new List<string>();
 	string Path = "";
 	string CurrentStoryChapterName="StoryChapter0"; 
 
+	/**
+	* Instantiates Class Variables. 
+	*/
 	void Start () {
-//		if (Instance != null)
-//			GameObject.Destroy (gameObject);
-//		else {
-//			GameObject.DontDestroyOnLoad (gameObject);
-//			Instance = this;
-//		}
 		this.Path = "" + Application.dataPath + "/StoryChapters/";
-		Paragraphs = GetSplitParagraphs (LoadParagraphs (this.Path + this.CurrentStoryChapterName + getCurrentLevelNumber()+ ".txt"));
+		Chapter = GetSplitParagraphs (LoadParagraphs (this.Path + this.CurrentStoryChapterName + getCurrentLevelNumber()+ ".txt"));
 	}
 
+	/**
+	* Shortcuts For Loading Scenes. 
+	*/
 	void Update () {
 		if (Input.GetKeyUp (KeyCode.Alpha1)) {
 			SceneManager.LoadScene ("room_1");
@@ -32,25 +35,18 @@ public class LevelManager : MonoBehaviour {
 		}
 	}
 
-	public void toggelExplorersBook() {
-		ExplorersBook.OpenExplorersBook explorersBook = GameObject.Find ("FirstPersonCharacter").GetComponent<ExplorersBook.OpenExplorersBook> ();
-
-		if (explorersBook != null) {
-			if (explorersBook.isBookOpen()) {
-				explorersBook.openExplorersBook ();		
-
-			}
-			explorersBook.enabled = !explorersBook.enabled;
-		}
-
-	}
-
+	/**
+	* Calls Method for Spliting a Paragraph. 
+	*/
 	private List<string> GetSplitParagraphs(string text) {
 		List<string> result = new List<string> ();
 		result.AddRange(createLinesForParagraph (text));
 		return result;
 	}
 
+	/**
+	* Splits a given text into Lines fitting a specific Threshhold. 
+	*/
 	private List<string> createLinesForParagraph(string text) {
 		List<string> Lines = new List<string>();
 		int LineThreshhold = 48;
@@ -74,18 +70,14 @@ public class LevelManager : MonoBehaviour {
 		return Lines;
 	}
 
+	/**
+	* Loads the next Room. 
+	*/
 	static public void LoadNextRoom() {
-//		MonoBehaviour[] allScripts = GameObject.FindObjectsOfType<MonoBehaviour> ();
-//		for (int i = allScripts.Length; i > 0; i--) {
-//			if (allScripts[i-1] != Instance) {
-//				Destroy (allScripts[i-1]);
-//			}
-//		}
 		string levelName = SceneManager.GetActiveScene ().name.Substring (5);
 		int levelNumber = 0;
 		int.TryParse (levelName, out levelNumber);
 		levelNumber++;
-
 		SceneManager.LoadScene ("room_"+levelNumber, LoadSceneMode.Single);
 	}
 
@@ -93,10 +85,16 @@ public class LevelManager : MonoBehaviour {
 		SceneManager.LoadScene (roomName, LoadSceneMode.Single);
 	}
 
-	public List<string> getParagraphs() {
-		return Paragraphs;
+	/**
+	* Returns the current Chapter. 
+	*/
+	public List<string> getChapter() {
+		return Chapter;
 	}
 
+	/**
+	* Returns the current Level Number. 
+	*/
 	private int getCurrentLevelNumber() {
 		string levelName = SceneManager.GetActiveScene ().name.Substring (5);
 		int levelNumber = 0;
@@ -104,6 +102,9 @@ public class LevelManager : MonoBehaviour {
 		return levelNumber;
 	}
 
+	/**
+	* Loads the a specific Chapter Textfile given the Name. 
+	*/
 	private string LoadParagraphs(string fileName)
 	{
 		return text = File.ReadAllText (fileName);

@@ -1,6 +1,9 @@
 ﻿using System;
 using UnityEngine;
 
+/**
+* Singleton that provides Features like Disabling the Walking of the Player or to Lock the Player camera. 
+*/
 public  class GameManager : MonoBehaviour
 {
 	private static GameManager GameManagerInstance;
@@ -11,29 +14,47 @@ public  class GameManager : MonoBehaviour
 	UnityStandardAssets.Characters.FirstPerson.CustomFirstPersonController FPSScript;
 	MouseCrosshair mouseCrosshair;
 
+	/**
+	* Instantiates the neccessary class variables. 
+	*/
 	void Awake() {
 		FPSScript = FPS.GetComponent<UnityStandardAssets.Characters.FirstPerson.CustomFirstPersonController> ();
 		mouseCrosshair = FPS.GetComponent<MouseCrosshair> ();
 	}
 
+	/**
+	* Disables the book. 
+	*/
 	public  void disableExplorersBook() {		
 		ExplorersBook.OpenExplorersBook OpenExplBook = FPC.GetComponent<ExplorersBook.OpenExplorersBook> ();
 		OpenExplBook.shouldShowBook = !OpenExplBook.shouldShowBook;
 	}
 
+	/**
+	* Disables Walking in Custom First Person Controller Script. 
+	*/
 	public void disableWalking() {
 		FPSScript.shouldWalk = !FPSScript.shouldWalk;
 		FPSScript.m_UseHeadBob = !FPSScript.m_UseHeadBob;
 	}
 
+	/**
+	* Disables Jumping in Custom First Person Controller Script. 
+	*/
 	public void disableJumping() {
 		FPSScript.shouldJump = !FPSScript.shouldJump;
 	}
 
+	/**
+	* Disables Audio in Custom First Person Controller Script. 
+	*/
 	public void disablePlayerAudioSource() {
 		FPSScript.shouldPlayAudioSounds = !FPSScript.shouldPlayAudioSounds;
 	}
 
+	/**
+	* Disables the Camera in Custom First Person Controller Script. 
+	*/
 	public void disableCammeraRotation() {
 		FPSScript.shouldLookAround = !FPSScript.shouldLookAround;
 	}
@@ -44,6 +65,9 @@ public  class GameManager : MonoBehaviour
 		}
 	}
 
+	/**
+	* Method for getting the Singleton Instance. 
+	*/
 	public static GameManager getInstance() {
 		if (GameManagerInstance == null) {
 			GameManagerInstance = GameObject.Find("LevelManager").GetComponent<GameManager>();
