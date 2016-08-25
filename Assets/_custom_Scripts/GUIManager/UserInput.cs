@@ -3,14 +3,19 @@ using System.Collections.Generic;
 using UnityEngine.UI;
 using System;
 
-/**
- * Event used to indicate that visible objects have changed.
- * Use this to redraw special elements like lightbeams
- */
-public class XplrWrdInputChangedEvent : GameEvent {
-	public bool wordExists;
-	public XplrWrdInputChangedEvent (bool exist) {
-		wordExists = exist;
+namespace XplrEvents
+{
+	/**
+	 * Event used to indicate that visible objects have changed.
+	 * Use this to redraw special elements like lightbeams
+	 */
+	public class WordEntered : GameEvent {
+		public bool exists;
+		public string word;
+		public WordEntered (string n, bool e) {
+			exists = e;
+			word = n;
+		}
 	}
 }
 
@@ -25,10 +30,8 @@ public class NamedObject {
 }
 
 /**
- * Handles text input from user.
- * Will be used when the Explorer's Book is open and user wants to enter a word.
- * Entered words will be set visible in scene.
- * Word entered event can be implemented with {@link XplrWrdInputChangedEvent}
+ * Handles text input from user. Will be used when the Explorer's Book is open and user wants to enter a word.
+ * Entered words will be set visible in scene. Event listener can be implemented with {@link XplrEvents.WordEntered}
  * 
  * @see Room1Manager for an example
  */
@@ -58,7 +61,7 @@ public class UserInput : MonoBehaviour {
 			addWordAndUpdate (inputString);
 			wordInputField.text = "";
 		} else {
-			Events.instance.Raise (new XplrWrdInputChangedEvent(false));
+			Events.instance.Raise (new XplrEvents.WordEntered(inputString,false));
 		}
 		wordInputField.ActivateInputField ();
 	}
@@ -76,7 +79,7 @@ public class UserInput : MonoBehaviour {
 					visibleWords.RemoveLast ();
 			}
 			redisplayCurrentSelection ();
-			Events.instance.Raise (new XplrWrdInputChangedEvent(true));
+			Events.instance.Raise (new XplrEvents.WordEntered(word, true));
 		}
 	}
 	/**

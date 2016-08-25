@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 
 /**
- * Evalutate Level state for Room 1.
+ * Evalutate level state for Room 1.
  * All lightbeams have to be rotated to the correct position
  */
 public class Room1Manager : MonoBehaviour {
@@ -21,10 +21,11 @@ public class Room1Manager : MonoBehaviour {
 	[SerializeField] private GameObject globe;
 
 	// only used to get an redraw message from after a text input
-	void OnEnable () { Events.instance.AddListener<XplrWrdInputChangedEvent>(OnNewWordEntered); }
-	void OnDisable () { Events.instance.RemoveListener<XplrWrdInputChangedEvent>(OnNewWordEntered); }
-	void OnNewWordEntered (XplrWrdInputChangedEvent e) {
-		if (e.wordExists)
+	void OnEnable () { Events.instance.AddListener<XplrEvents.WordEntered>(OnNewWordEntered); }
+	void OnDisable () { Events.instance.RemoveListener<XplrEvents.WordEntered>(OnNewWordEntered); }
+	/** Called every time user enters something in the Explorer's Book */
+	void OnNewWordEntered (XplrEvents.WordEntered e) {
+		if (e.exists)
 			shouldRecalculate = true;
 	}
 
@@ -100,7 +101,7 @@ public class Room1Manager : MonoBehaviour {
 		}
 	}
 	/**
-	 * Activates the globes easter egg
+	 * Activates the easter egg
 	 */
 	void activateGlobe(bool flag) {
 		Renderer renderer = globe.GetComponent <Renderer>();
