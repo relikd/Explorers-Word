@@ -138,6 +138,7 @@ namespace UnityStandardAssets.Characters.FirstPerson
 			}
             ProgressStepCycle(speed);
 
+
 			if (m_Mouserotate && shouldLookAround)
             {
                 UpdateCameraPosition(speed);

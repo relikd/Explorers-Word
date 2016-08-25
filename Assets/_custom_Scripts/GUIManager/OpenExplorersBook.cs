@@ -9,29 +9,17 @@ namespace ExplorersBook
 {
 	public class OpenExplorersBook : MonoBehaviour
 	{
-		private GameObject explBook;
-		private GameObject inputField;
-		private CharacterController CharacterController;
-		private MouseCrosshair MouseCrosshair;
-		private UnityStandardAssets.Characters.FirstPerson.CustomFirstPersonController FPSControllerScript;
-		private AudioSource PlayerSound;
+		public GameObject explBook;
+		public GameObject inputField;
 		private GameObject StoryTextLeft;
 		private GameObject StoryTextRight;
 		private LevelManager lvlManager;
 		private bool bookIsOpen = false;
-		private float lastWalkingSpeed;
-		private float lastRunningSpeed;
 		private List<string> ExplorersStory = new List<string>();
 		private int currentStoryIndex = 0;
 		public bool shouldShowBook = true;
 
 		void Awake() {
-			explBook = GameObject.Find ("Explorers Book");
-			inputField = GameObject.Find ("ExplorersWord");
-			MouseCrosshair = GameObject.Find ("FirstPersonCharacter").GetComponent<MouseCrosshair> ();
-			CharacterController = gameObject.GetComponentInParent<CharacterController> ();
-			FPSControllerScript = GameObject.Find ("FPSController").GetComponent<UnityStandardAssets.Characters.FirstPerson.CustomFirstPersonController> ();
-			PlayerSound = gameObject.GetComponentInParent<AudioSource> ();
 			StoryTextLeft = GameObject.Find ("StoryLeft");
 			StoryTextRight = GameObject.Find ("StoryRight");
 			lvlManager = GameObject.Find ("LevelManager").GetComponent<LevelManager> ();
@@ -41,11 +29,6 @@ namespace ExplorersBook
 			if (inputField) {
 				inputField.SetActive (false);
 			}
-
-		}
-
-		void Start () {
-			
 		}
 
 		void LateUpdate() {
@@ -56,12 +39,13 @@ namespace ExplorersBook
 
 		public void openExplorersBook() { 
 			if (shouldShowBook) {
+				GameManager gameManager = GameManager.getInstance ();
 				bookIsOpen = !bookIsOpen;
 				ActivateExplorersBook ();
-				DisablePlayerSound ();
-				DisablePlayerMovement ();
-				DisableJumping ();
-				UnlockMouseMovement ();
+				gameManager.disablePlayerAudioSource ();
+				gameManager.disableWalking ();
+				gameManager.disableJumping ();
+				gameManager.disableCrosshair ();
 				ActivateUserInputField ();
 				depictExplorersStory ();
 			}
@@ -83,31 +67,6 @@ namespace ExplorersBook
 				inputFieldComponent.ActivateInputField ();
 			}
 		}
-
-		private void DisablePlayerSound() {
-			GameManager.getInstance().disablePlayerAudioSource();
-		}
-
-		private void DisableJumping() {
-			GameManager.getInstance ().disableJumping ();	
-		}
-
-		private void DisablePlayerMovement() {
-			GameManager.getInstance ().disableWalking ();
-		}
-
-		private void changeWalkingAndRunningSpeed(float walkingSpeed, float runningSpeed) {
-			FPSControllerScript.m_RunSpeed = runningSpeed;
-			FPSControllerScript.m_WalkSpeed = walkingSpeed;		
-		}
-
-		private void UnlockMouseMovement() {
-			Cursor.visible = bookIsOpen;
-			Cursor.lockState = CursorLockMode.Confined;
-			if (MouseCrosshair) {
-				MouseCrosshair.enabled = !bookIsOpen;
-			}
-		}
 			
 		IEnumerator playAnimation() {
 			Animator anim = explBook.GetComponent<Animator> ();
@@ -117,8 +76,8 @@ namespace ExplorersBook
 				yield return new WaitForSeconds (getAnimationDuration (anim, bookIsOpen?"BFI":"BFO"));
 				Debug.Log (getAnimationDuration(anim,"BFO"));
 				explBook.SetActive (bookIsOpen); //only matters when book is Open == false. 
-				StoryTextLeft.SetActive (bookIsOpen);
-				StoryTextRight.SetActive (bookIsOpen);
+				StoryTextLeft.gameObject.SetActive (bookIsOpen);
+				StoryTextRight.gameObject.SetActive (bookIsOpen);
 			}
 		}
 
@@ -151,14 +110,6 @@ namespace ExplorersBook
 			currentStoryIndex += 20;
 		}
 
-		private string appendLines(List<string> lines) {
-			string result = "";
-			foreach (string line in lines) { 
-				result += line;
-			}
-			return result;
-		}
-
 		private string getNextPage(int currentIndex) {
 			string result = "";
 			if (ExplorersStory.Count - currentIndex >= 20) {
@@ -169,7 +120,12 @@ namespace ExplorersBook
 			return result;
 		}
 
-		void OnGUI() {
+		private string appendLines(List<string> lines) {
+			string result = "";
+			foreach (string line in lines) { 
+				result += line;
+			}
+			return result;
 		}
 
         public bool isBookOpen()
@@ -178,4 +134,3 @@ namespace ExplorersBook
         }
 	}
 }
-
