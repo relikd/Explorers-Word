@@ -49,7 +49,7 @@ namespace Interaction
 		}
 		/**
 		 * Will inform {@link GUIManager} to display text on the right side of the screen
-		 * @param add or remove text
+		 * @param enable add or remove text
 		 * @see GUIManager
 		 */
 		public void EnableGUI (bool enable) {
@@ -66,15 +66,15 @@ namespace Interaction
 
 		/**
 		 * Display a message in the middle of the screen with a 3 sec timeout
-		 * @param text to be displayed
+		 * @param message text to be displayed
 		 */
 		protected void centeredMessage(string message) {
 			centeredMessage (message, 3);
 		}
 		/**
 		 * Display a message in the middle of the screen
-		 * @param text to be displayed
-		 * @param timeout in seconds
+		 * @param message text to be displayed
+		 * @param timeout duration visible on screen (in seconds)
 		 */
 		protected void centeredMessage(string message, float timeout) {
 			GUIManager gm = GameObject.FindObjectOfType<GUIManager> ();
