@@ -67,7 +67,7 @@ namespace UnityStandardAssets.Characters.FirstPerson
         // Update is called once per frame
         private void Update()
         {
-            if(m_Mouserotate)
+			if(m_Mouserotate && shouldLookAround)
             RotateView();
             // the jump state needs to read here to make sure it is not missed
             if (!m_Jump)
@@ -137,7 +137,8 @@ namespace UnityStandardAssets.Characters.FirstPerson
 				m_CollisionFlags = m_CharacterController.Move (m_MoveDir * Time.fixedDeltaTime);
 			}
             ProgressStepCycle(speed);
-            if (m_Mouserotate  && shouldLookAround)
+
+			if (m_Mouserotate && shouldLookAround)
             {
                 UpdateCameraPosition(speed);
 
