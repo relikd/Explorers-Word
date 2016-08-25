@@ -3,6 +3,7 @@ using UnityEngine;
 using System;
 
 namespace Interaction {
+	[RequireComponent (typeof(Collider))]
 	public abstract class Interactable : MonoBehaviour
 	{
 		public bool interactionEnabled = true;
