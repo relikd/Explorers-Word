@@ -2,6 +2,9 @@
 using System.Collections;
 using System;
 
+/**
+* Manages Room 0. 
+*/
 public class Room0Manager : MonoBehaviour
 {
 	private bool doorLeft = false;
@@ -11,7 +14,9 @@ public class Room0Manager : MonoBehaviour
 
 	GameObject player, door, particleBeam;
 
-	// Use this for initialization
+	/**
+	* Fades in Scene and intantiates all Class Variables. 
+	*/
 	void Start () {
 		StartCoroutine(SceneFadeIn());
 		player = GameObject.Find ("FirstPersonCharacter");
@@ -22,7 +27,9 @@ public class Room0Manager : MonoBehaviour
 		globalsSoundPlayer.PlayOtherSceneSound (0, true, 1.0f, true);
 	}
 	
-	// Update is called once per frame
+	/**
+	* Checks if player is near the Door then opens the door. When Player is over a Specific Distance the door is shown.
+	*/
 	void Update ()
 	{
 		if (!doorLeft)
@@ -42,6 +49,9 @@ public class Room0Manager : MonoBehaviour
 		}
 	}
 
+	/**
+	* Fades in Scene and Waits for a short Time. 
+	*/
 	IEnumerator SceneFadeIn(){
 		float fadeTime = gameObject.GetComponent<SceneFadingScript> ().BeginFade (-1);
 		yield return new WaitForSeconds (fadeTime);
