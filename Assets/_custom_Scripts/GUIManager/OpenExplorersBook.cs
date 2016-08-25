@@ -7,6 +7,9 @@ using System.Collections.Generic;
 
 namespace ExplorersBook
 {
+	/**
+	* Manages the Opening and Closing of the Book as well as the Input Field. 
+	*/
 	public class OpenExplorersBook : MonoBehaviour
 	{
 		public GameObject explBook;
@@ -113,7 +116,7 @@ namespace ExplorersBook
 		*/
 		private void depictExplorersStory() {
 			if (lvlManager) {
-				ExplorersStory = lvlManager.getParagraphs ();
+				ExplorersStory = lvlManager.getChapter ();
 			}
 			if (StoryTextRight && StoryTextLeft && bookIsOpen) {
 				StoryTextLeft.SetActive (bookIsOpen);
