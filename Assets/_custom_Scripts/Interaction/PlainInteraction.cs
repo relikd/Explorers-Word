@@ -1,19 +1,23 @@
 ﻿using UnityEngine;
-using System.Collections;
-using Interaction;
 
-public class PlainInteraction : Interactable
+namespace Interaction
 {
-	[Tooltip("Press 'E' to [message]")]
-	public string actionMessage = "interact";
-	[Multiline]
-	public string responseMessage = "Interaction not possible";
+	/**
+	 * Display a text on screen
+	 */
+	public class PlainInteraction : Interactable
+	{
+		[Tooltip("Interaction [message] to be displayed on screen")]
+		public string actionMessage = "interact";
+		[Multiline]
+		public string responseMessage = "Interaction not possible";
 
-	override public string interactMessage() {
-		return actionMessage;
-	}
-
-	override public void OnInteractionKeyPressed() {
-		centeredMessage (responseMessage);
+		override public string interactMessage() {
+			return actionMessage;
+		}
+		/** Just display the text on screen */
+		override public void OnInteractionKeyPressed() {
+			centeredMessage (responseMessage);
+		}
 	}
 }

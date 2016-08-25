@@ -1,27 +1,25 @@
-﻿
-using UnityEngine;
-using System;
+﻿using UnityEngine;
 
-public class OpenDoorInteraction : Interaction.Interactable
+namespace Interaction
 {
-	void LateUpdate() {
-		
-	}
-
-	void Awake() {
-		PlainInteraction PlainInteraction = GameObject.Find ("pCube1").GetComponent<PlainInteraction> ();
-		Destroy (PlainInteraction);
-	}
-
-	public override string interactMessage ()
+	/**
+	 * Replace {@link PlainInteraction} with this open door script
+	 */
+	public class OpenDoorInteraction : Interactable
 	{
-		return "Open Door With Key";	
-	}
+		/** Removes the assigned {@link PlainInteraction} */
+		void Awake() {
+			PlainInteraction old = GetComponent<PlainInteraction> ();
+			if (old)
+				Destroy (old);
+		}
 
-	public override void OnInteractionKeyPressed ()
-	{
-		LevelManager.LoadNextRoom ();
-	}
+		public override string interactMessage () {
+			return "Open Door With Key";
+		}
 
+		public override void OnInteractionKeyPressed () {
+			LevelManager.LoadNextRoom ();
+		}
+	}
 }
-
