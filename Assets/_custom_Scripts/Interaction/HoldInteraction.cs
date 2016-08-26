@@ -155,7 +155,7 @@ namespace Interaction
                         return target;
                     }
                 }
-                checkDistance = checkDistance - 0.01f;
+                checkDistance = checkDistance - 0.001f;
 
             }
             return safe;
