@@ -63,7 +63,7 @@ namespace Interaction
                 gameObject.transform.position = NewLoc;
                 gameObject.transform.rotation = saferotate;
                 float curDist = Vector3.Distance(mainCamera.transform.position, gameObject.transform.position);
-                if (curDist < minDistance*0.75 || curDist > distance*1.5) drop();
+                if (curDist > distance*1.5) drop();
 
             }
         }
@@ -155,7 +155,7 @@ namespace Interaction
                         return target;
                     }
                 }
-                checkDistance = checkDistance - 0.1f;
+                checkDistance = checkDistance - 0.01f;
 
             }
             return safe;
@@ -168,7 +168,7 @@ namespace Interaction
             Vector3 position = gameObject.transform.position;
             Ray ray = new Ray(position, PositiontoTest - position);
             RaycastHit hit;
-            if (Physics.Raycast(ray, out hit, Vector3.Distance(PositiontoTest, position)))
+            if (Physics.Raycast(ray, out hit, Vector3.Distance(PositiontoTest, position),Physics.AllLayers))
             {
                 if (hit.collider.gameObject.GetHashCode() == gameObject.GetHashCode())
                 {
