@@ -17,7 +17,7 @@ namespace Interaction
         [SerializeField]
         float minDistance = 1f;
         [SerializeField]
-        float smoothnessOfInterpolation = 8;
+        float smoothnessOfInterpolation = 80;
         
         Camera mainCamera;
         GameObject Player;
@@ -59,9 +59,17 @@ namespace Interaction
             if (carrying)
             {
                 safe = mostDistantSafePosition();
-                if ((Input.GetButtonUp("Interact"))) drop();
+                if ((Input.GetButtonUp("Interact")))
+                {
+                    drop();
+                    return;
+                }
+                if (!hasLineOfSight(safe))
+                {
+                    drop();
+                    return;
+                }
                 Vector3 NewLoc = Vector3.Lerp(gameObject.transform.position, safe, Time.deltaTime * smoothnessOfInterpolation);
-                if (!hasLineOfSight(NewLoc)) drop();
                 gameObject.transform.position = NewLoc;
                 gameObject.transform.rotation = saferotate;
                 dropIfBelow();
