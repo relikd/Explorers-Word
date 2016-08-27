@@ -5,108 +5,72 @@ using UnityStandardAssets.Characters.FirstPerson;
 namespace Interaction
 {
 	/**
-	 * Ein Skript, dass es erlaubt, den Text auf dem versteckten Papier zu lesen. Es erfordert, dass dieses Papier ein Child Canvas besitzt. Während der Spieler liest, kann er sich nicht bewegen und die Kameera nicht rotieren.
+	 * Ein Skript, dass es erlaubt, ein Canvas ein- bzw. auszublenden.!!!!!!! Es erfordert, dass dieses Papier ein Child Canvas besitzt. Während der Spieler liest, kann er sich nicht bewegen und die Kameera nicht rotieren.
 	 */
 	public class ReadInteraction : Interactable
 	{
 		[SerializeField] 
-		public string actionMessage = "read";
+		string actionMessage;
 		[SerializeField]
-		public string retrurnMessage = "stop reading";
+		string actionMessageWhileOpen;
+        [SerializeField]
+        Canvas CanvasToShow;
+        private CustomFirstPersonController CFPS;
+        private MouseCrosshair Mouse;
 		private bool reading = false;
-		private CustomFirstPersonController CFPS;
-		private Reachable ray;
-		private float lastWalkingSpeed;
-		private float lastRunningSpeed;
-		private string storedMessage;
-		private AudioSource PlayerSound;
 
 		/**
 		 * Initialisiert einige Variablen.
 		 */
 		void Awake() {
 			CFPS = GameObject.Find("FPSController").GetComponent<CustomFirstPersonController>();
-			PlayerSound = GameObject.Find("FPSController").GetComponent<AudioSource>();
-			ray = GameObject.Find("FPSController").GetComponentInChildren<Reachable>();
-			storedMessage = actionMessage;
-		}
+            Mouse = GameObject.Find("FirstPersonCharacter").GetComponent<MouseCrosshair>();
 
-		/**
-		 * Da die Sprungfunktion nicht ausgeschlaten werden kann, muss Springen das lesen des Spielers abbrechen. 
-		 */
-		void LateUpdate() {
-			if(reading && (Input.GetKeyDown(KeyCode.Space))) {
-				OnInteractionKeyPressed();
-			}
-		}
-
-		override public string interactMessage()
+        }
+        /*
+         * Gibt je nach Zustand die entsprechende Nachricht zurück.
+         */
+        override public string interactMessage()
 		{
-			return actionMessage;
-		}
+            return (!reading ? actionMessage : actionMessageWhileOpen);
+        }
 
 		/**
-		 * Schaltet den Lesemodus an bzw. aus, abhängig vom aktuell aktiven Modus. 
+		 * Schaltet den Lesemodus an bzw. aus, abhängig vom aktuell aktiven Modus. Deaktiviert alle Handlungsmoeglichkeiten des Spielers, bis der Lesemodus beendet wird.
 		 */
 		override public void OnInteractionKeyPressed()
 		{
 			if (!reading)
 			{
+                EnableGUI(false);
 				reading = !reading;
-
 				GameManager.getInstance ().disableExplorersBook ();
-
-				lastRunningSpeed = CFPS.m_RunSpeed;
-				lastWalkingSpeed = CFPS.m_WalkSpeed;
-
-				toggleCanvas();
-				toggleMouseCrosshair();
-				toggleGUIMessage();
-				DisablePlayerSound();
-				changeWalkingAndRunningSpeed(0, 0);
-				LogWriter.WriteLog("lesen", gameObject);
-			}
+                CFPS.shouldWalk = false;
+                CFPS.shouldJump = false;
+                CFPS.shouldLookAround = false;
+                CFPS.shouldPlayAudioSounds = false;
+                toggleCanvas();
+                toggleMouseCrosshair();
+            }
 			else
 			{
-				reading = !reading;
-
+                EnableGUI(false);
+                reading = !reading;
 				GameManager.getInstance ().disableExplorersBook ();
-
-				toggleCanvas();
-				toggleMouseCrosshair();
-				toggleGUIMessage();
-				DisablePlayerSound();
-				changeWalkingAndRunningSpeed(lastWalkingSpeed, lastRunningSpeed);
-				LogWriter.WriteLog("lesen beendet", gameObject);
-			}
+                CFPS.shouldWalk = true;
+                CFPS.shouldJump = true;
+                CFPS.shouldLookAround = true;
+                CFPS.shouldPlayAudioSounds = true;
+                toggleCanvas();
+                toggleMouseCrosshair();            
+            }
 		}
-
-		/**
-		 * Setzt die Lauf- und die Renngeschwindigkeit des Spielers auf die gegebenen Werte. 
-		 */
-		private void changeWalkingAndRunningSpeed(float walkingSpeed, float runningSpeed)
-		{
-			CFPS.m_RunSpeed = runningSpeed;
-			CFPS.m_WalkSpeed = walkingSpeed;
-		}
-
-		/**
-		 * Deaktiviert die Spieler-Soundquelle. 
-		 */
-		private void DisablePlayerSound()
-		{
-			if (PlayerSound)
-			{
-				PlayerSound.mute = reading;
-			}
-		}
-
 		/**
 		 * Schaltet die Sichtbarkeit des Canvas um.
 		 */
 		private void toggleCanvas() 
 		{
-			gameObject.GetComponentInChildren<Canvas>().enabled = reading;
+            CanvasToShow.enabled = reading;
 
 		}
 		/**
@@ -114,46 +78,8 @@ namespace Interaction
 		 */
 		private void toggleMouseCrosshair() 
 		{
-			GameObject.Find("FirstPersonCharacter").GetComponent<MouseCrosshair>().enabled = !reading;
+			Mouse.enabled = !reading;
 
-		}
-
-		/**
-		 * Schaltet die GUI-Message um, damit im Lesemodus die Option zum verlassen angezeigt wird. 
-		 */
-		private void toggleGUIMessage() {
-			if (reading)
-			{
-				toggleMouseRotate();
-				toggleRay();
-				EnableGUI(false);
-				actionMessage = retrurnMessage;
-				toggleRay();
-
-			}
-			else
-			{
-				toggleMouseRotate();
-				toggleRay();
-				EnableGUI(false);
-				actionMessage = storedMessage;
-				toggleRay();
-			}
-		}
-
-		/**
-		 * Schaltet das Reachable Skript, damit der Raycast keine Probleme bereitet, während die neue GUI-Message eingetragen wird.
-		 */
-		private void toggleRay() {
-			ray.enabled = !ray.enabled;
-		}
-
-		/**
-		 * Schaltet die Rotation durch bewegen der Maus an bzw. aus.
-		 */
-		private void toggleMouseRotate()
-		{
-			CFPS.toggleRotate();
 		}
 	}
 }
