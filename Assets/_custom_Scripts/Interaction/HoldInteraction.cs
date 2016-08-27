@@ -13,12 +13,12 @@ namespace Interaction
     public class HoldInteraction : Interactable
     {
         [SerializeField]
-        float distance = 2.5f;
+        float distance = 2f;
         [SerializeField]
-        float minDistance = 0.5f;
+        float minDistance = 1f;
         [SerializeField]
         float smoothnessOfInterpolation = 8;
-
+        
         Camera mainCamera;
         GameObject Player;
         private BoxCollider myCollider;
@@ -37,9 +37,10 @@ namespace Interaction
         private int oldLayer;
         private int newLayer = 2;
 
-        bool dropping = false;
+        CharacterController controller;
+
         /**
-         *Initialisieren von Vairablen. 
+         *Initialisieren von Variablen. 
          */
         void Awake()
         {
@@ -47,39 +48,36 @@ namespace Interaction
             mainCamera = Player.GetComponentInChildren<Camera>();
             myCollider = gameObject.GetComponent<BoxCollider>();
             myRigid = gameObject.GetComponent<Rigidbody>();
-            halfbox = myCollider.size * 0.5f;
+            halfbox = Vector3.Scale(myCollider.size * 0.5f, gameObject.transform.lossyScale);
+            controller = Player.GetComponent<CharacterController>();
         }
         /**
          * Erneuert die Position des Objekts beim Tragen und erlaubt es das Tragen auch dann abzubrechen, wenn das Objekt eigentlich nicht in Reichweite ist. Bricht  Tragen ab, wenn unerlaubte Bewegungen versucht werden.
          */
         void Update()
-        {
+        {   
             if (carrying)
             {
                 safe = mostDistantSafePosition();
                 if ((Input.GetButtonUp("Interact"))) drop();
                 Vector3 NewLoc = Vector3.Lerp(gameObject.transform.position, safe, Time.deltaTime * smoothnessOfInterpolation);
-                hasLineOfSight(NewLoc);
+                if (!hasLineOfSight(NewLoc)) drop();
                 gameObject.transform.position = NewLoc;
                 gameObject.transform.rotation = saferotate;
-                float curDist = Vector3.Distance(mainCamera.transform.position, gameObject.transform.position);
-                if (curDist > distance*1.5) drop();
-
+                dropIfBelow();
             }
         }
         public override string interactMessage()
         {
-            return "carry";
+            return "Hold key to carry";
         }
         public override void OnInteractionKeyPressed()
         {
-
             if (carrying)
             {
                 drop();
             }
         }
-
         public override void OnInteractionKeyDown()
         {
             if (!carrying)
@@ -88,20 +86,16 @@ namespace Interaction
                 pickup();
             }
         }
-
-
         /**
         * Hebt das Objekt auf und setzt entsprechende Parameter.
         */
         private void pickup()
-        {
-            carrying = true;
+        {  carrying = true;
             LogWriter.WriteLog("aufgehoben", gameObject);
             oldLayer = gameObject.layer;
             gameObject.layer = newLayer;
             myRigid.isKinematic = true;
-          myRigid.useGravity = false;
-
+            myRigid.useGravity = false;
         }
         /**
          * Laesst das Objekt fallen und setzt entsprechende Parameter.
@@ -110,12 +104,13 @@ namespace Interaction
         {
             carrying = false;
             gameObject.layer = oldLayer;
-            LogWriter.WriteLog("fallen gelassen", gameObject);
+            LogWriter.WriteLog("fallen gelassen", gameObject);          
             myRigid.velocity = Vector3.zero;
             myRigid.angularVelocity = Vector3.zero;
-
             myRigid.isKinematic = false;
             myRigid.useGravity = true;
+            myRigid.AddForce(transform.forward * 0.8f, ForceMode.VelocityChange);
+            myRigid.AddForce(Vector3.up * 0.8f, ForceMode.VelocityChange);
 
         }
         /**
@@ -130,11 +125,7 @@ namespace Interaction
         {
             Ray ray = mainCamera.ScreenPointToRay(new Vector3(x, y));
             RaycastHit hit;
-            if (Physics.Raycast(ray, out hit, Checkdistance + halfbox.z))
-            {
-                return true;
-            }
-            return false;
+            return Physics.Raycast(ray, out hit, Checkdistance );
         }
         /**
          * Sucht den am weitesten entfernten Punkt, auf dem das Objekt nicht kollidiert
@@ -142,7 +133,6 @@ namespace Interaction
         private Vector3 mostDistantSafePosition()
         {
             float checkDistance = distance;
-
             while (checkDistance > minDistance)
             {
                 if (!inbetween(checkDistance))
@@ -156,7 +146,6 @@ namespace Interaction
                     }
                 }
                 checkDistance = checkDistance - 0.001f;
-
             }
             return safe;
         }
@@ -168,7 +157,7 @@ namespace Interaction
             Vector3 position = gameObject.transform.position;
             Ray ray = new Ray(position, PositiontoTest - position);
             RaycastHit hit;
-            if (Physics.Raycast(ray, out hit, Vector3.Distance(PositiontoTest, position),Physics.AllLayers))
+            if (Physics.Raycast(ray, out hit, Vector3.Distance(PositiontoTest, position), Physics.AllLayers))
             {
                 if (hit.collider.gameObject.GetHashCode() == gameObject.GetHashCode())
                 {
@@ -180,6 +169,23 @@ namespace Interaction
                 }
             }
             return true;
+        }
+        /*
+         * Laesst das Objekt fallen, falls es sich in einer Sphaere unter dem Spieler befindet.
+         */
+        private void dropIfBelow() 
+        {
+            Collider[] hitColliders = Physics.OverlapSphere(Player.transform.position + 0.36f * controller.height * Vector3.down, controller.radius * 1.1f, Physics.IgnoreRaycastLayer);
+            int i = 0;
+            while (i < hitColliders.Length)
+            {
+                if (hitColliders[i].gameObject == gameObject)
+                {
+                    drop();
+                    return;
+                }
+                i++;    
+            }
         }
     }
 }
