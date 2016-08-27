@@ -15,10 +15,10 @@ namespace Interaction
         [SerializeField]
         float distance = 2f;
         [SerializeField]
-        float minDistance = 1f;
+        float minDistance = 1.5f;
         [SerializeField]
         float smoothnessOfInterpolation = 80;
-        
+
         Camera mainCamera;
         GameObject Player;
         private BoxCollider myCollider;
@@ -39,6 +39,7 @@ namespace Interaction
 
         CharacterController controller;
 
+
         /**
          *Initialisieren von Variablen. 
          */
@@ -50,6 +51,7 @@ namespace Interaction
             myRigid = gameObject.GetComponent<Rigidbody>();
             halfbox = Vector3.Scale(myCollider.size * 0.5f, gameObject.transform.lossyScale);
             controller = Player.GetComponent<CharacterController>();
+            safe = gameObject.transform.position;
         }
         /**
          * Erneuert die Position des Objekts beim Tragen und erlaubt es das Tragen auch dann abzubrechen, wenn das Objekt eigentlich nicht in Reichweite ist. Bricht  Tragen ab, wenn unerlaubte Bewegungen versucht werden.
@@ -69,7 +71,7 @@ namespace Interaction
                     drop();
                     return;
                 }
-                Vector3 NewLoc = Vector3.Lerp(gameObject.transform.position, safe, Time.deltaTime * smoothnessOfInterpolation);
+                Vector3 NewLoc = Vector3.Lerp(gameObject.transform.position, safe, Time.deltaTime * smoothnessOfInterpolation); 
                 gameObject.transform.position = NewLoc;
                 gameObject.transform.rotation = saferotate;
                 dropIfBelow();
@@ -98,27 +100,34 @@ namespace Interaction
         * Hebt das Objekt auf und setzt entsprechende Parameter.
         */
         private void pickup()
-        {  carrying = true;
-            LogWriter.WriteLog("aufgehoben", gameObject);
-            oldLayer = gameObject.layer;
-            gameObject.layer = newLayer;
-            myRigid.isKinematic = true;
-            myRigid.useGravity = false;
+        {
+            if (!carrying)
+            {
+                carrying = true;
+                LogWriter.WriteLog("aufgehoben", gameObject);
+                oldLayer = gameObject.layer;
+                gameObject.layer = newLayer;
+                myRigid.isKinematic = true;
+                myRigid.useGravity = false;
+            }
         }
         /**
          * Laesst das Objekt fallen und setzt entsprechende Parameter.
          */
         private void drop()
         {
-            carrying = false;
-            gameObject.layer = oldLayer;
-            LogWriter.WriteLog("fallen gelassen", gameObject);          
-            myRigid.velocity = Vector3.zero;
-            myRigid.angularVelocity = Vector3.zero;
-            myRigid.isKinematic = false;
-            myRigid.useGravity = true;
-            myRigid.AddForce(transform.forward * 0.8f, ForceMode.VelocityChange);
-            myRigid.AddForce(Vector3.up * 0.8f, ForceMode.VelocityChange);
+            if (carrying)
+            {
+                carrying = false;
+                gameObject.layer = oldLayer;
+                LogWriter.WriteLog("fallen gelassen", gameObject);
+                myRigid.velocity = Vector3.zero;
+                myRigid.angularVelocity = Vector3.zero;
+                myRigid.isKinematic = false;
+                myRigid.useGravity = true;
+                myRigid.AddForce(transform.forward * 0.8f, ForceMode.VelocityChange);
+                myRigid.AddForce(Vector3.up * 0.8f, ForceMode.VelocityChange);
+            }
 
         }
         /**
@@ -164,6 +173,7 @@ namespace Interaction
         {
             Vector3 position = gameObject.transform.position;
             Ray ray = new Ray(position, PositiontoTest - position);
+            Debug.DrawLine(ray.origin, ray.origin + ray.direction * Vector3.Distance(PositiontoTest, position), Color.green, 10.0f);
             RaycastHit hit;
             if (Physics.Raycast(ray, out hit, Vector3.Distance(PositiontoTest, position), Physics.AllLayers))
             {
@@ -183,7 +193,7 @@ namespace Interaction
          */
         private void dropIfBelow() 
         {
-            Collider[] hitColliders = Physics.OverlapSphere(Player.transform.position + 0.36f * controller.height * Vector3.down, controller.radius * 1.1f, Physics.IgnoreRaycastLayer);
+            Collider[] hitColliders = Physics.OverlapSphere(Player.transform.position + 0.45f * controller.height * Vector3.down, controller.radius * 0.95f, Physics.IgnoreRaycastLayer);
             int i = 0;
             while (i < hitColliders.Length)
             {
