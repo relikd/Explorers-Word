@@ -12,6 +12,7 @@ public class LevelManager : MonoBehaviour {
 
 	static LevelManager Instance;
 	public List<string> Chapter = new List<string>();
+	//public string story;
 	string Path = "";
 	string CurrentStoryChapterName="StoryChapter0"; 
 
@@ -20,7 +21,10 @@ public class LevelManager : MonoBehaviour {
 	*/
 	void Start () {
 		this.Path = "" + Application.dataPath + "/StoryChapters/";
-		Chapter = GetSplitParagraphs (LoadParagraphs (this.Path + this.CurrentStoryChapterName + getCurrentLevelNumber()+ ".txt"));
+		int levelNr;
+		if (shouldLoadParagraphs ()) {
+			Chapter = GetSplitParagraphs (LoadParagraphs (this.Path + this.CurrentStoryChapterName + getCurrentLevelNumber()+ ".txt"));
+		}
 	}
 
 	/**
@@ -33,7 +37,7 @@ public class LevelManager : MonoBehaviour {
 			SceneManager.LoadScene ("room_2");
 		}
 	}
-
+		
 	/**
 	* Calls Method for Spliting a Paragraph. 
 	*/
@@ -89,6 +93,18 @@ public class LevelManager : MonoBehaviour {
 	*/
 	public List<string> getChapter() {
 		return Chapter;
+	}
+
+	private bool shouldLoadParagraphs() {
+		string[] x = { "room_1", "room_2", "room_3", "room_4" };
+		bool result = false;
+		string levelName = SceneManager.GetActiveScene ().name;
+		foreach (string str in x) {
+			if (str.ToUpper() == levelName.ToUpper()) {
+				result = true;
+			}
+		}
+		return result;
 	}
 
 	/**
