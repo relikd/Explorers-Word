@@ -173,11 +173,10 @@ namespace Interaction
         {
             Vector3 position = gameObject.transform.position;
             Ray ray = new Ray(position, PositiontoTest - position);
-            Debug.DrawLine(ray.origin, ray.origin + ray.direction * Vector3.Distance(PositiontoTest, position), Color.green, 10.0f);
             RaycastHit hit;
             if (Physics.Raycast(ray, out hit, Vector3.Distance(PositiontoTest, position), Physics.AllLayers))
             {
-                if (hit.collider.gameObject.GetHashCode() == gameObject.GetHashCode())
+                if (hit.collider.gameObject.GetHashCode() == gameObject.GetHashCode() || hit.collider.isTrigger)
                 {
                     return true;
                 }
