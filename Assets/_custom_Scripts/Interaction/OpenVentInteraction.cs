@@ -32,7 +32,7 @@ public class OpenVentInteraction : PlainInteraction {
 	private void checkIfAllScrewsAreRemoved() {
 		int count = 0;
 		foreach (Interactable interact in Screws) {
-			if (!interact.interactionEnabled) {
+			if (!interact.gameObject.activeSelf) {
 				count++;
 			} 
 		}
