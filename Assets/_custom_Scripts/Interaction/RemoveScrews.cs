@@ -17,7 +17,8 @@ public class RemoveScrews : Interactable
 	 * Sets its own Interaction Possibility to false.
 	 */
 	public override void OnInteractionKeyPressed () {
-		this.interactionEnabled = false;
+		centeredMessage ("You removed a Screws");
+		this.gameObject.SetActive(false);
 	}
 }
 
