@@ -69,7 +69,7 @@ public class GlobalSoundPlayer : MonoBehaviour {
 	*/
 	public void StartAudio(){
 		StartStoryTellerAudio ();
-		LowerVolumesExceptStoryVolume ();
+		//LowerVolumesExceptStoryVolume ();
 		StartBackgroundMusic ();
 	}
 
@@ -140,4 +140,5 @@ public class GlobalSoundPlayer : MonoBehaviour {
 		this.otherSoundsVolume = 0.8f;
 		this.backgroundmusicVolume = 0.8f;
 	}
+		
 }

@@ -84,13 +84,13 @@ namespace Interaction
         public override void OnInteractionKeyPressed()
         {
             if (carrying)
-            {
+			{
                 drop();
             }
         }
         public override void OnInteractionKeyDown()
-        {
-            if (!carrying)
+		{
+			if (!carrying)
             {
                 safe = gameObject.transform.position;
                 pickup();
@@ -103,6 +103,7 @@ namespace Interaction
         {
             if (!carrying)
             {
+				playInteractionSound (0);
                 carrying = true;
                 LogWriter.WriteLog("aufgehoben", gameObject);
                 oldLayer = gameObject.layer;
@@ -118,6 +119,7 @@ namespace Interaction
         {
             if (carrying)
             {
+				playInteractionSound (1);
                 carrying = false;
                 gameObject.layer = oldLayer;
                 LogWriter.WriteLog("fallen gelassen", gameObject);
