@@ -32,7 +32,7 @@ namespace Interaction
          */
         public override string interactMessage()
         {
-            return !ChainControlScript.isDropping()? "Press to loosen chain": "Press to pull the chain";
+            return !ChainControlScript.isDropping()? "Kronleuchter fallen lassen": "Kronleuchter hochziehen";
         }
 
     }
