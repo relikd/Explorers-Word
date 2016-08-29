@@ -93,9 +93,7 @@ namespace ExplorersBook
 			Animator anim = explBook.GetComponent<Animator> ();
 			if (anim) {
 				anim.SetBool ("open", bookIsOpen);
-				Debug.Log (getAnimationDuration (anim, bookIsOpen ? "BFI" : "BF0"));
 				yield return new WaitForSeconds (getAnimationDuration (anim, bookIsOpen?"BFI":"BFO"));
-				Debug.Log (getAnimationDuration(anim,"BFO"));
 				explBook.SetActive (bookIsOpen); //only matters when book is Open == false. 
 				StoryTextLeft.gameObject.SetActive (bookIsOpen);
 				StoryTextRight.gameObject.SetActive (bookIsOpen);

@@ -6,14 +6,14 @@ using System.Collections.Generic;
 public class TutorialManager : MonoBehaviour
 {
 	public GUITutorialManager GUITutorialManager;
-	public string IntroText = "Aus zahlreichen Studien ist bekannt, dass sich ein Mensch maximal 3 Dinge gleichzeitig merken kann. Dies trift auch den Spieler dieser Welt zu, welcher nur 3 Dinge gleichzeitig visualisieren kann.";
+	public string IntroText = "Aus zahlreichen Studien ist bekannt, dass sich ein Mensch maximal 3 Dinge gleichzeitig merken kann. Dies trift auch den Spieler dieser Welt zu, welcher nur 3 Dinge gleichzeitig visualisieren kann. Drücke die Rechte Pfeiltaste um fortzufahren.";
 	public string HowToDisplayTheBookText = "Um sich auch eine neue Sache konzentrieren und diese somit zu visualisieren muss der Spieler den Beschriebenen Gegenstand benennen. \n Drücke B um eine kurzbeschreibung deiner Umgebung zu bekommen und ein Eingabefeld anzuzeigen.";
-	public string OpenedTheBookText = "Sehr gut du hast erfolgreich das Buch geöffnet";
+	public string OpenedTheBookText = "Sehr gut du hast erfolgreich das Buch geöffnet. Drücke die Rechte Pfeiltaste um fortzufahren.";
 	public string NameAnObjectText = "Nachdem du die Raumbeschreibung auf der rechten Seite gelesen hast kannst du ein Objekt nennen, welches sich wahrscheinlich im Raum befindet. \n Für den Anfang ist dort bereits ein richtiges Wort plaziert, alles was du noch tuhen musst ist, Enter zu drücken.";
 	public string PressedEnterText = "Gut gemacht. Um wieder einen Blick auf den Raum zu werfen und sicher zu stellen, dass das genannte Objekt angezeigt wird, drücke Escape.";
 	public string VisibleText = "Wie du siehst ist das Objekt nun sichtbar." + " Um das Object erneut unsichtbar zu schalten musst du das Object erneut benennen. Öffne erneut das Buch und benenne das Object und schau dir an ob du das Objekt vergessen hast.";
-	public string ObjectInvisibleText = "Wie du siehst hast du das Objekt nun wieder vergessen";
-	public string ObjectOverflowText = "Nun weißt du wie man Objekte sichtbar visualisiert und vergisst, experimentiere wie man mehrere Objekt auf einmal zu visualisiert oder was passiert wenn man versucht sich zu viel auf einmal vorzustellen. Um das Tutorial zu verlassen laufe zur Tür.";
+	public string ObjectInvisibleText = "Wie du siehst hast du das Objekt nun wieder vergessen. Drücke die Rechte Pfeiltaste um fortzufahren.";
+	public string ObjectOverflowText = "Nun weißt du wie man Objekte sichtbar visualisiert und vergisst, experimentiere wie man mehrere Objekt auf einmal zu visualisiert oder was passiert wenn man versucht sich zu viel auf einmal vorzustellen. Um das Tutorial zu verlassen laufe zur Tür und interagiere mit ihr.";
 	bool tutorialInitilization = false;
 	bool shouldDisplayOpenBookText = false;
 	bool shouldOpenBook = false;
@@ -25,6 +25,9 @@ public class TutorialManager : MonoBehaviour
 	bool shouldNameObjectAgain = false;
 	bool shouldExperiment = false;
 
+	/**
+	 * 
+	 */
 	void LateUpdate() {
 		if (!tutorialInitilization) {
 			GameManager.getInstance ().disableExplorersBook ();
@@ -82,17 +85,17 @@ public class TutorialManager : MonoBehaviour
 		}
 	}
 
-	private IEnumerator waitAndSetBool(bool boolToSet, float seconds) {
-		yield return new WaitForSeconds(seconds);
-		boolToSet = true;
-	}
-
-	//TODO: MOVE player to 0 0 0 and rotate him fitting;
+	/**
+	 * Initialises The Tutorial Scene.
+	 */
 	private void TutorialIntitialization() {
 		lockUserControlls ();
 		shouldDisplayOpenBookText = true;
 	}
 
+	/**
+	 * Locks the User Controlls.
+	 */
 	private void lockUserControlls() {
 		GameManager gameManager = GameManager.getInstance ();
 		gameManager.disableJumping ();
