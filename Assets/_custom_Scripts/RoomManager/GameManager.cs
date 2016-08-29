@@ -13,6 +13,7 @@ public  class GameManager : MonoBehaviour
 	private 
 	UnityStandardAssets.Characters.FirstPerson.CustomFirstPersonController FPSScript;
 	MouseCrosshair mouseCrosshair;
+	ExplorersBook.OpenExplorersBook explorersBook;
 
 	/**
 	* Instantiates the neccessary class variables. 
@@ -20,6 +21,7 @@ public  class GameManager : MonoBehaviour
 	void Awake() {
 		FPSScript = FPS.GetComponent<UnityStandardAssets.Characters.FirstPerson.CustomFirstPersonController> ();
 		mouseCrosshair = FPS.GetComponent<MouseCrosshair> ();
+		explorersBook = FPC.GetComponent<ExplorersBook.OpenExplorersBook> ();
 	}
 
 	/**
@@ -36,6 +38,13 @@ public  class GameManager : MonoBehaviour
 	public void disableWalking() {
 		FPSScript.shouldWalk = !FPSScript.shouldWalk;
 		FPSScript.m_UseHeadBob = !FPSScript.m_UseHeadBob;
+	}
+
+	/**
+	* Disables Right book page of Explorers Book. 
+	*/
+	public void disableRightBookPage() {
+		explorersBook.shouldShowLeftPage = false;
 	}
 
 	/**

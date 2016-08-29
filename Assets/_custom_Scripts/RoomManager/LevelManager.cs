@@ -22,8 +22,14 @@ public class LevelManager : MonoBehaviour {
 	void Start () {
 		this.Path = "" + Application.dataPath + "/StoryChapters/";
 		int levelNr;
+		
 		if (shouldLoadParagraphs ()) {
-			Chapter = GetSplitParagraphs (LoadParagraphs (this.Path + this.CurrentStoryChapterName + getCurrentLevelNumber()+ ".txt"));
+			if (SceneManager.GetActiveScene ().name == "room_Tutorial") {
+				Chapter = GetSplitParagraphs (LoadParagraphs (this.Path + "room_Tutorial" + ".txt"));
+				Debug.Log (Chapter[Chapter.Count-1]);
+			} else {
+				Chapter = GetSplitParagraphs (LoadParagraphs (this.Path + this.CurrentStoryChapterName + getCurrentLevelNumber()+ ".txt"));
+			}
 		}
 	}
 
@@ -84,6 +90,10 @@ public class LevelManager : MonoBehaviour {
 		SceneManager.LoadScene ("room_"+levelNumber, LoadSceneMode.Single);
 	}
 
+	static public void LoadStartScreen() {
+		SceneManager.LoadScene ("startMenu",LoadSceneMode.Single);
+	}
+
 	static public void LoadRoom (string roomName){
 		SceneManager.LoadScene (roomName, LoadSceneMode.Single);
 	}
@@ -96,7 +106,7 @@ public class LevelManager : MonoBehaviour {
 	}
 
 	private bool shouldLoadParagraphs() {
-		string[] x = { "room_1", "room_2", "room_3", "room_4" };
+		string[] x = { "room_Tutorial", "room_1", "room_2", "room_3", "room_4" };
 		bool result = false;
 		string levelName = SceneManager.GetActiveScene ().name;
 		foreach (string str in x) {
