@@ -20,7 +20,7 @@ public class LevelManager : MonoBehaviour {
 	* Instantiates Class Variables. 
 	*/
 	void Start () {
-		this.Path = "" + Application.dataPath + "/StoryChapters/";
+		this.Path = "" + Application.dataPath + "/Resources/StoryChapters/";
 		int levelNr;
 		
 		if (shouldLoadParagraphs ()) {
