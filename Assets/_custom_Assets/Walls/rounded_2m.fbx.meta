@@ -1,6 +1,6 @@
 fileFormatVersion: 2
 guid: 85d34ce39285b43c58fc01cec24ee370
-timeCreated: 1471267708
+timeCreated: 1472466782
 licenseType: Free
 ModelImporter:
   serializedVersion: 19
@@ -11,6 +11,7 @@ ModelImporter:
     3300000: //RootNode
     4300000: rounded_2m
     6400000: //RootNode
+    9500000: //RootNode
   materials:
     importMaterials: 1
     materialName: 0
@@ -54,7 +55,7 @@ ModelImporter:
     normalSmoothAngle: 60
     normalImportMode: 0
     tangentImportMode: 3
-  importAnimation: 1
+  importAnimation: 0
   copyAvatar: 0
   humanDescription:
     human: []

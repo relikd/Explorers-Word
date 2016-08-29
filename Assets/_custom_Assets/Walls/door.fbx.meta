@@ -1,6 +1,6 @@
 fileFormatVersion: 2
 guid: f562083cf07064f62bd6e2acec04dcae
-timeCreated: 1471267727
+timeCreated: 1472472112
 licenseType: Free
 ModelImporter:
   serializedVersion: 19
@@ -11,6 +11,7 @@ ModelImporter:
     3300000: //RootNode
     4300000: door
     6400000: //RootNode
+    9500000: //RootNode
   materials:
     importMaterials: 1
     materialName: 0
@@ -54,7 +55,7 @@ ModelImporter:
     normalSmoothAngle: 60
     normalImportMode: 0
     tangentImportMode: 3
-  importAnimation: 1
+  importAnimation: 0
   copyAvatar: 0
   humanDescription:
     human: []

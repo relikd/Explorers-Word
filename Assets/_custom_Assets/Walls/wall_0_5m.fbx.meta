@@ -1,6 +1,6 @@
 fileFormatVersion: 2
 guid: 401d31b4af5d44f33b9fdab5d10b5447
-timeCreated: 1471267679
+timeCreated: 1472466755
 licenseType: Free
 ModelImporter:
   serializedVersion: 19
@@ -11,6 +11,7 @@ ModelImporter:
     3300000: //RootNode
     4300000: wall_0_5m
     6400000: //RootNode
+    9500000: //RootNode
   materials:
     importMaterials: 1
     materialName: 0
@@ -54,7 +55,7 @@ ModelImporter:
     normalSmoothAngle: 60
     normalImportMode: 0
     tangentImportMode: 3
-  importAnimation: 1
+  importAnimation: 0
   copyAvatar: 0
   humanDescription:
     human: []
