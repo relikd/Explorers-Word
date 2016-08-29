@@ -1,6 +1,6 @@
 fileFormatVersion: 2
-guid: 9b00aa7ab9fd04e33a5382f40a15df0c
-timeCreated: 1472466767
+guid: 5e7efb6f767e94665a326654d44f858a
+timeCreated: 1472472185
 licenseType: Free
 ModelImporter:
   serializedVersion: 19
@@ -9,7 +9,7 @@ ModelImporter:
     400000: //RootNode
     2300000: //RootNode
     3300000: //RootNode
-    4300000: rounded_4m
+    4300000: door1
     6400000: //RootNode
     9500000: //RootNode
   materials:
