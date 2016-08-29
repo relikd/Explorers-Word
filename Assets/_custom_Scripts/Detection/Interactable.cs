@@ -86,20 +86,24 @@ namespace Interaction
 		 * Play any assigned sound for each {@link #OnInteractionKeyPressed()}
 		 * @see #OnInteractionKeyPressed()
 		 */
-		private void playInteractionSound(){
-			AudioSource m_AudioSource = gameObject.GetComponent<AudioSource>();
-			if (m_AudioSource != null && m_Sounds != null) {
+		protected void playInteractionSound(){
+			if (m_Sounds != null) {
 				if (m_Sounds.Length == 1) {
-					m_AudioSource.clip = m_Sounds[0];
-					m_AudioSource.Play();
+					AudioSource.PlayClipAtPoint (m_Sounds [0], gameObject.transform.position);
 				} else if (m_Sounds.Length > 2) {
 					int n = UnityEngine.Random.Range(1, m_Sounds.Length);
-					m_AudioSource.clip = m_Sounds[n];
-					m_AudioSource.Play();
+					AudioSource.PlayClipAtPoint (m_Sounds [n], gameObject.transform.position);
 					// move picked sound to index 0 so it's not picked next time
+					AudioClip currentClip = m_Sounds[n];
 					m_Sounds[n] = m_Sounds[0];
-					m_Sounds[0] = m_AudioSource.clip;
+					m_Sounds [0] = currentClip;
 				}
+			}
+		}
+
+		protected void playInteractionSound(int index){
+			if (m_Sounds.Length != 0) {
+				AudioSource.PlayClipAtPoint ( m_Sounds [index],this.gameObject.transform.position);
 			}
 		}
 	}

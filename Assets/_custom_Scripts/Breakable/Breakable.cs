@@ -8,12 +8,16 @@ public class Breakable : MonoBehaviour {
     GameObject remains;
     [SerializeField]
     float disappearAfterInSeconds;
+	[SerializeField]
+	AudioClip shatterSound;
+
     /*
      * Entfernt das Objekt und laed das Prefab fuer die Einzelteile an seine Position.
      */
     public void shatter() 
     {
-            Instantiate(remains, transform.position, transform.rotation);
-            Destroy(gameObject);
+        Instantiate(remains, transform.position, transform.rotation);
+		AudioSource.PlayClipAtPoint (shatterSound, this.transform.position);
+        Destroy(gameObject);
     }
 }
