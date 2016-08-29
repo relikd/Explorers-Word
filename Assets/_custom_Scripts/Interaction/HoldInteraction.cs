@@ -13,9 +13,9 @@ namespace Interaction
     public class HoldInteraction : Interactable
     {
         [SerializeField]
-        float distance = 2f;
+        float distance = 1.6f;
         [SerializeField]
-        float minDistance = 1.5f;
+        float minDistance = 0.8f;
         [SerializeField]
         float smoothnessOfInterpolation = 80;
 
