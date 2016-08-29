@@ -9,10 +9,13 @@ using System.Collections;
 public class MainMenuScript : MonoBehaviour {
 
 	public Button startGameButton;
+	public Button tutorialButton;
 	public Button exitGameButton;
 	public Button submitExitGame;
 	public Button cancelExitGame;
 	public Canvas quitMenuPopUp;	
+
+	private int selectedButtonIndex = -1;
 
 
 	private GlobalSoundPlayer globalSoundPlayer;
@@ -22,6 +25,7 @@ public class MainMenuScript : MonoBehaviour {
 	*/
 	void Start () {
 		startGameButton = startGameButton.GetComponent<Button>();
+		tutorialButton = tutorialButton.GetComponent<Button>();
 		exitGameButton = exitGameButton.GetComponent < Button> ();
 		quitMenuPopUp = quitMenuPopUp.GetComponent<Canvas> ();
 		quitMenuPopUp.enabled = false;
@@ -36,12 +40,39 @@ public class MainMenuScript : MonoBehaviour {
 	void Update(){
 		Button selectedButton = null;
 		if (Input.GetKeyUp(KeyCode.UpArrow)) {
-			selectedButton = startGameButton;
-			selectedButton.Select ();
+			//selectedButton = startGameButton;
+			//selectedButton.Select ();
+			if(selectedButtonIndex <= 0) 
+				selectedButtonIndex = 0;
+			else 
+				selectedButtonIndex--;
 		}
 		if (Input.GetKeyUp(KeyCode.DownArrow)) {
-			selectedButton = exitGameButton;
-			selectedButton.Select ();
+			//selectedButton = exitGameButton;
+			//selectedButton.Select ();
+			if(selectedButtonIndex > 2) 
+				selectedButtonIndex = 2;
+			else 
+				selectedButtonIndex++;
+		}
+
+		switch(selectedButtonIndex){
+		case 0: 
+			{
+				selectedButton = startGameButton;
+				selectedButton.Select ();
+			}break;
+		case 1: 
+			{
+				selectedButton = tutorialButton;
+				selectedButton.Select ();
+			}break;
+		case 2: 
+			{
+				selectedButton = exitGameButton;
+				selectedButton.Select ();
+			}break;
+
 		}
 
 		if (quitMenuPopUp.enabled == true) {
@@ -61,6 +92,10 @@ public class MainMenuScript : MonoBehaviour {
 	*/
 	public void StartGame(){
 		StartCoroutine (FadeAndChangeLevel());
+	}
+
+	public void StartTutorial(){
+		LevelManager.LoadRoom("room_tutorial");
 	}
 
 	/**

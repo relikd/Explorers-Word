@@ -39,6 +39,11 @@ namespace Interaction
 				responseMessage = responseMessage.Replace ("[leave_room]", "");
 				return true;
 			}
+			if (src.Contains ("[load_cutscene]")) {
+				LevelManager.LoadRoom ("cutscene");
+				responseMessage = responseMessage.Replace ("[load_cutscene]", "");
+				return true;
+			}
 			return false;
 		}
 	}
