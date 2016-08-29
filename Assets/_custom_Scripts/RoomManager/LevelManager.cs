@@ -12,7 +12,7 @@ public class LevelManager : MonoBehaviour {
 
 	static LevelManager Instance;
 	public List<string> Chapter = new List<string>();
-	//public string story;
+	public string story;
 	string Path = "";
 	string CurrentStoryChapterName="StoryChapter0"; 
 
@@ -22,15 +22,15 @@ public class LevelManager : MonoBehaviour {
 	void Start () {
 		this.Path = "" + Application.dataPath + "/Resources/StoryChapters/";
 		int levelNr;
-		
-		if (shouldLoadParagraphs ()) {
-			if (SceneManager.GetActiveScene ().name == "room_Tutorial") {
-				Chapter = GetSplitParagraphs (LoadParagraphs (this.Path + "room_Tutorial" + ".txt"));
-				Debug.Log (Chapter[Chapter.Count-1]);
-			} else {
-				Chapter = GetSplitParagraphs (LoadParagraphs (this.Path + this.CurrentStoryChapterName + getCurrentLevelNumber()+ ".txt"));
-			}
-		}
+		Chapter = GetSplitParagraphs (story + ".txt");
+//		if (shouldLoadParagraphs ()) {
+//			if (SceneManager.GetActiveScene ().name == "room_Tutorial") {
+//				Chapter = GetSplitParagraphs (LoadParagraphs (this.Path + "room_Tutorial" + ".txt"));
+//				Debug.Log (Chapter[Chapter.Count-1]);
+//			} else {
+//				Chapter = GetSplitParagraphs (story + ".txt");
+//			}
+//		}
 	}
 
 	/**
