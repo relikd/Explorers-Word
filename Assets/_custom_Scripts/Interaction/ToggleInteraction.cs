@@ -19,8 +19,9 @@ namespace Interaction
 		/** Defines what should happen after an interaction was triggered */
 		[SerializeField] private OnInteractionOperation onInteraction;
 		/** The list of scripts which should be toggled */
-		[Tooltip("for single usage: add this script to the list below")]
 		[SerializeField] private Interactable[] toggleScriptsEnabledState;
+		/** A list of GameObject to be turned on or off {@link #setActive()} */
+		[SerializeField] private GameObject[] toggleGameObjectActiveState;
 
 		/**
 		 * Display message and run Coroutine {@link #toggleScriptsAfter}
@@ -37,10 +38,13 @@ namespace Interaction
 			// wait to suppress multiple interaction on same gaming object
 			yield return new WaitForSeconds (0.01f);
 
-			foreach (Interactable script in toggleScriptsEnabledState) {
+			foreach (Interactable script in toggleScriptsEnabledState)
 				if (script)
 					script.interactionEnabled = !script.interactionEnabled;
-			}
+			foreach (GameObject go in toggleGameObjectActiveState)
+				if (go)
+					go.SetActive (!go.activeSelf);
+			
 			// have to deactivate the old message in case it will be deactivated or deleted
 			// but will be set on true anyway if it is still in reach
 			EnableGUI (false);

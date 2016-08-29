@@ -1,55 +1,45 @@
 ﻿using UnityEngine;
-using System.Collections;
-using Interaction;
 
-/**
-* Functionality for the Vent Interaction in Room 3.
-*/
-public class OpenVentInteraction : PlainInteraction {
-	
-	[SerializeField]private Interactable[] Screws;
-	bool removedAllScrews;
-	public string TriggerMessage;
-	public string CenteredMessage;
+namespace Interaction {
+	/**
+	* Functionality for the Vent Interaction in Room 3.
+	*/
+	public class OpenVentInteraction : PlainInteraction {
 
-	/**
-	 * Gives the response Message.
-	 */
-	public override string interactMessage () {			
-		return responseMessage;
-	}
+		[SerializeField] private GameObject[] Screws;
+		[Multiline]
+		[SerializeField] private string messageIfAllUnscrewed;
 
-	/**
-	 * Checks if all the Screws are removed.
-	 */
-	void LateUpdate() {
-		checkIfAllScrewsAreRemoved ();
-	}
-		
-	/**
-	 * Method for checking if the Screws are removed.
-	 */
-	private void checkIfAllScrewsAreRemoved() {
-		int count = 0;
-		foreach (Interactable interact in Screws) {
-			if (!interact.gameObject.activeSelf) {
-				count++;
-			} 
+		/**
+		 * Gives the response Message.
+		 */
+		public override string interactMessage () {
+			return actionMessage;
 		}
-		if (count == Screws.Length) {
-			removedAllScrews = true;
-			responseMessage = TriggerMessage;
-			centeredMessage (CenteredMessage);
-		}
-	}
 
-	/**
-	 * If all screws are removed and an interaction takes place, it loads the next Room .
-	 */
-	public override void OnInteractionKeyPressed () {
-		Debug.Log (Screws.Length);
-		if (removedAllScrews) {
-			LevelManager.LoadNextRoom ();
+		/**
+		 * Method for checking if the Screws are removed.
+		 */
+		private bool checkIfAllScrewsAreRemoved() {
+			int count = 0;
+			foreach (GameObject screw in Screws) {
+				if (screw == null) {
+					count++;
+				}
+			}
+			return (count == Screws.Length);
+		}
+
+		/**
+		 * If all screws are removed and an interaction takes place, it loads the next Room .
+		 */
+		public override void OnInteractionKeyPressed () {
+			if (checkIfAllScrewsAreRemoved ()) {
+				responseMessage = messageIfAllUnscrewed;
+				gameObject.SetActive (false);
+				// TODO: play sound manually
+			}
+			base.OnInteractionKeyPressed ();
 		}
 	}
 }
