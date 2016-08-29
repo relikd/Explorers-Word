@@ -21,7 +21,7 @@ namespace ExplorersBook
 		private List<string> ExplorersStory = new List<string>();
 		private int currentStoryIndex = 0;
 		public bool shouldShowBook = true;
-
+		public bool shouldShowLeftPage = true;
 		/**
 		* Instantiate needed Classvariables and make sure Explorers Book and input Field are inactive
 		*/
@@ -121,7 +121,9 @@ namespace ExplorersBook
 			if (StoryTextRight && StoryTextLeft && bookIsOpen) {
 				StoryTextLeft.SetActive (bookIsOpen);
 				StoryTextRight.SetActive (bookIsOpen);
-				SetText (StoryTextLeft.GetComponent<TextMesh> ());
+				if (shouldShowLeftPage) {
+					SetText (StoryTextLeft.GetComponent<TextMesh> ());
+				}
 				SetText (StoryTextRight.GetComponent<TextMesh> ());
 			}
 			currentStoryIndex = 0;
@@ -142,10 +144,15 @@ namespace ExplorersBook
 		*/
 		private string getNextPage(int currentIndex) {
 			string result = "";
+
+			if (ExplorersStory.Count < 20) {
+				return appendLines(ExplorersStory.GetRange(0, ExplorersStory.Count));
+			}
+
 			if (ExplorersStory.Count - currentIndex >= 20) {
 				result = appendLines (ExplorersStory.GetRange (currentIndex, 20));
 			} else {
-				result = appendLines ( ExplorersStory.GetRange(currentIndex, ExplorersStory.Count - currentIndex));
+				result = appendLines (ExplorersStory.GetRange (currentIndex, ExplorersStory.Count - currentIndex));
 			} 
 			return result;
 		}
