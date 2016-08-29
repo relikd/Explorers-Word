@@ -13,7 +13,7 @@ namespace Interaction
 		public bool isLightOn = false;
 
 		override public string interactMessage() {
-			return (isLightOn ? "Turn off light" : "Turn on light");
+			return (isLightOn ? "Licht ausschalten" : "Licht anschalten");
 		}
 		/**
 		 * Switches the material to indicate a turned on light

@@ -79,7 +79,7 @@ namespace Interaction
         }
         public override string interactMessage()
         {
-            return "Hold key to carry";
+            return "Taste halten zum Tragen";
         }
         public override void OnInteractionKeyPressed()
         {

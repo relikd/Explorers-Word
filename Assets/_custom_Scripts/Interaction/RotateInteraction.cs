@@ -13,7 +13,7 @@ namespace Interaction
 		[SerializeField] private bool stepAngle = false;
 
 		override public string interactMessage() {
-			return "rotate";
+			return "drehen";
 		}
 		/**
 		 * Rotate one time on key press if {@link #stepAngle} == true
