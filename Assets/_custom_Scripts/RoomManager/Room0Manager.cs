@@ -24,7 +24,7 @@ public class Room0Manager : MonoBehaviour
 		particleBeam = GameObject.Find ("doorIndicationBeam");
 		globalsSoundPlayer = gameObject.GetComponent<GlobalSoundPlayer> ();
 		globalsSoundPlayer.StartAudio ();
-		globalsSoundPlayer.PlayOtherSceneSound (0, true, 1.0f, true);
+		globalsSoundPlayer.PlayOtherSceneSound (0);
 	}
 	
 	/**
