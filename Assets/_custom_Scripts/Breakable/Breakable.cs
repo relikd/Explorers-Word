@@ -15,9 +15,10 @@ public class Breakable : MonoBehaviour {
      * Entfernt das Objekt und laed das Prefab fuer die Einzelteile an seine Position.
      */
     public void shatter() 
-    {
-        Instantiate(remains, transform.position, transform.rotation);
-		AudioSource.PlayClipAtPoint (shatterSound, this.transform.position);
+    {   
+        GameObject neu = (GameObject) Instantiate(remains, transform.position, transform.rotation);
+        if (gameObject.transform.parent) neu.transform.parent = gameObject.transform.parent;
+        AudioSource.PlayClipAtPoint (shatterSound, this.transform.position);
         Destroy(gameObject);
     }
 }
