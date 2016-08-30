@@ -22,8 +22,10 @@ public class LevelManager : MonoBehaviour {
 	void Start () {
 		this.Path = "" + Application.dataPath + "/Resources/StoryChapters/";
 		int levelNr;
-		Chapter = GetSplitParagraphs (story + ".txt");
-//		if (shouldLoadParagraphs ()) {
+		if (Chapter != null) {
+			Chapter = GetSplitParagraphs (story);
+		}
+		//if (shouldLoadParagraphs ()) {
 //			if (SceneManager.GetActiveScene ().name == "room_Tutorial") {
 //				Chapter = GetSplitParagraphs (LoadParagraphs (this.Path + "room_Tutorial" + ".txt"));
 //				Debug.Log (Chapter[Chapter.Count-1]);
