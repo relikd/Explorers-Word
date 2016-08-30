@@ -3,7 +3,7 @@ using System.Collections;
 namespace Interaction
 {
     /*
-     * Ein Interaktionsskript, mit dem der Kronleuchter im zweiten Raum zu Fall gebreacht bzw. nach oben gezogen werden kann.
+     * Ein Interaktionsskript, mit dem der Kronleuchter im zweiten Raum zu Fall gebracht bzw. nach oben gezogen werden kann.
      */
     public class DropAndPullChainInteraction : Interactable
     {
