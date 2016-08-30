@@ -16,10 +16,10 @@ public class MouseLock : MonoBehaviour {
 
 	void OnGUI ()
 	{
-		// Release cursor on escape keypress
-		if (Input.GetKeyDown (KeyCode.Escape))
-			Cursor.lockState = wantedMode = CursorLockMode.Confined;
-
+//		// Release cursor on escape keypress
+//		if (Input.GetKeyDown (KeyCode.Escape))
+//			Cursor.lockState = wantedMode = CursorLockMode.Confined;
+//
 		if (Input.GetKeyDown (KeyCode.Mouse0))
 			Cursor.lockState = wantedMode = CursorLockMode.Locked;
 		
