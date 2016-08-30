@@ -53,7 +53,7 @@ public class LevelManager : MonoBehaviour {
 	*/
 	private List<string> createLinesForParagraph(string text) {
 		List<string> Lines = new List<string>();
-		int LineThreshhold = 48;
+		int LineThreshhold = 36;
 		string oldLine = ""; 
 		string currentLine = "";
 
