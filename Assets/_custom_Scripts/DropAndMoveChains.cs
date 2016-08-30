@@ -34,9 +34,9 @@ public class DropAndMoveChains : MonoBehaviour {
      */
 	void Update () {
         if(!dropping)
-            gameObject.transform.position = Vector3.Lerp(gameObject.transform.position, InitialPos, Time.deltaTime * 4); 
+            gameObject.transform.position = Vector3.Lerp(LastPos, InitialPos, Time.deltaTime * 4); 
         float Distance = Vector3.Distance( transform.position,  LastPos);
-        if (dropping)
+        if (LastPos.y > transform.position.y)
         {
             Chain1.transform.localPosition = Chain1.transform.localPosition + Direction1 * Distance;
             Chain2.transform.localPosition = Chain2.transform.localPosition + Direction2 * Distance;
@@ -45,7 +45,6 @@ public class DropAndMoveChains : MonoBehaviour {
         {
             Chain1.transform.localPosition = Chain1.transform.localPosition - Direction1 * Distance;
             Chain2.transform.localPosition = Chain2.transform.localPosition - Direction2 * Distance;
-
         }
         LastPos = transform.position;
     }
