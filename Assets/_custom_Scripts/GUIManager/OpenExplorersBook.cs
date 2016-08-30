@@ -12,6 +12,8 @@ namespace ExplorersBook
 	*/
 	public class OpenExplorersBook : MonoBehaviour
 	{
+		const int numberOfLines = 22;
+
 		public GameObject explBook;
 		public GameObject inputField;
 		private GameObject StoryTextLeft;
@@ -134,7 +136,7 @@ namespace ExplorersBook
 			if (textMesh && ExplorersStory != null) {
 				textMesh.text = getNextPage(currentStoryIndex);
 			}
-			currentStoryIndex += 20;
+			currentStoryIndex += numberOfLines;
 		}
 
 		/**
@@ -143,12 +145,12 @@ namespace ExplorersBook
 		private string getNextPage(int currentIndex) {
 			string result = "";
 
-			if (ExplorersStory.Count < 20) {
+			if (ExplorersStory.Count < numberOfLines) {
 				return appendLines(ExplorersStory.GetRange(0, ExplorersStory.Count));
 			}
 
-			if (ExplorersStory.Count - currentIndex >= 20) {
-				result = appendLines (ExplorersStory.GetRange (currentIndex, 20));
+			if (ExplorersStory.Count - currentIndex >= numberOfLines) {
+				result = appendLines (ExplorersStory.GetRange (currentIndex, numberOfLines));
 			} else {
 				result = appendLines (ExplorersStory.GetRange (currentIndex, ExplorersStory.Count - currentIndex));
 			} 
