@@ -41,7 +41,7 @@ namespace ExplorersBook
 		* Listen for Escape and B to open/close ExplorersBook when pressed
 		*/
 		void LateUpdate() {
-			if ((Input.GetKeyUp(KeyCode.B) && !bookIsOpen) || (Input.GetKeyUp(KeyCode.Caret) && bookIsOpen) ) {
+			if ((Input.GetKeyUp(KeyCode.B) && !bookIsOpen) || (Input.GetKeyUp(KeyCode.Escape) && bookIsOpen) ) {
 				openExplorersBook ();
 			}
 		}
