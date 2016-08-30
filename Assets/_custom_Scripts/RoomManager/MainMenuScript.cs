@@ -103,7 +103,7 @@ public class MainMenuScript : MonoBehaviour {
 	}
 
 	public void StartTutorial(){
-		LevelManager.LoadRoom("room_tutorial");
+		LevelManager.LoadRoom("room_Tutorial");
 	}
 
 	/**

@@ -12,27 +12,20 @@ public class LevelManager : MonoBehaviour {
 
 	static LevelManager Instance;
 	public List<string> Chapter = new List<string>();
-	public string story;
-	string Path = "";
+	string Path = "StoryChapters/";
 	string CurrentStoryChapterName="StoryChapter0"; 
 
 	/**
 	* Instantiates Class Variables. 
 	*/
-	void Start () {
-		this.Path = "" + Application.dataPath + "/Resources/StoryChapters/";
-		int levelNr;
-		if (Chapter != null) {
-			Chapter = GetSplitParagraphs (story);
+	void Awake() {
+		if (shouldLoadParagraphs ()) {
+			if (SceneManager.GetActiveScene ().name == "room_Tutorial") {
+				Chapter = GetSplitParagraphs (LoadParagraphs(Path + "roomTutorial"));
+			} else {
+				Chapter = GetSplitParagraphs (LoadParagraphs(Path + CurrentStoryChapterName + getCurrentLevelNumber()));
+			}
 		}
-		//if (shouldLoadParagraphs ()) {
-//			if (SceneManager.GetActiveScene ().name == "room_Tutorial") {
-//				Chapter = GetSplitParagraphs (LoadParagraphs (this.Path + "room_Tutorial" + ".txt"));
-//				Debug.Log (Chapter[Chapter.Count-1]);
-//			} else {
-//				Chapter = GetSplitParagraphs (story + ".txt");
-//			}
-//		}
 	}
 
 	/**
@@ -134,7 +127,12 @@ public class LevelManager : MonoBehaviour {
 	*/
 	private string LoadParagraphs(string fileName)
 	{
-		return File.ReadAllText (fileName);
+		string result = "";
+		TextAsset textAsset = Resources.Load (fileName) as TextAsset;
+		if (textAsset) {
+			result = textAsset.text;
+		}
+		return result;
 	}
 
 

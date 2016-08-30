@@ -26,7 +26,7 @@ public class TutorialManager : MonoBehaviour
 	bool shouldExperiment = false;
 
 	/**
-	 * 
+	 * Routine of the Tutorial.
 	 */
 	void LateUpdate() {
 		if (!tutorialInitilization) {

@@ -16,7 +16,7 @@ namespace Interaction
 		}
 
 		public override string interactMessage () {
-			return responseMessage;
+			return actionMessage;
 		}
 
 		public override void OnInteractionKeyPressed () {
