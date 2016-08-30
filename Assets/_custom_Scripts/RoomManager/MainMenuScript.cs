@@ -24,6 +24,7 @@ public class MainMenuScript : MonoBehaviour {
 	* Initialises nesseccary Components. 
 	*/
 	void Start () {
+		lockCursor ();
 		startGameButton = startGameButton.GetComponent<Button>();
 		tutorialButton = tutorialButton.GetComponent<Button>();
 		exitGameButton = exitGameButton.GetComponent < Button> ();
@@ -87,6 +88,13 @@ public class MainMenuScript : MonoBehaviour {
 		}
 	}
 
+	/**
+	* Unlocks the cursor and makes it invisible. 
+	*/
+	void lockCursor() {
+		Cursor.lockState = CursorLockMode.None;
+		Cursor.visible = false;
+	}
 	/**
 	* Starts Coroutine for Level Change. 
 	*/
