@@ -45,16 +45,16 @@ public class TutorialManager : MonoBehaviour
 			shouldOpenBook = false;
 			shouldNameAnObject = true;
 
-			textBox.text = "Sehr gut du hast erfolgreich das Buch geöffnet. \nDrücke 'E' um fortzufahren.";
+			textBox.text = "Sehr gut, du hast erfolgreich das Buch geöffnet. \nDrücke 'E' um fortzufahren.";
 
 		} else if (shouldNameAnObject && Input.GetKeyDown (KeyCode.E)) {
 			shouldNameAnObject = false;
 			shouldPressEnter = true;
 
 			inputField.text = "Sessel";
-			textBox.text = "Nachdem du die Raumbeschreibung auf der rechten Seite gelesen hast, kannst " +
-				"du ein Objekt nennen welches sich im Raum befindet. " +
-				"\n \nDrücke nun Enter um das Eingabefeld zu öffnen.";
+			textBox.text = "Nachdem du die Raumbeschreibung auf der rechten Seite gelesen hast, " +
+				"kannst du ein Objekt nennen welches sich im Raum befindet. " +
+				"\n\nDrücke Enter um das Eingabefeld zu öffnen.";
 		} else if(shouldPressEnter && Input.GetKeyDown(KeyCode.Return)){
 			shouldPressEnter = false;
 			shouldPressEnterAgain = true;
@@ -73,13 +73,13 @@ public class TutorialManager : MonoBehaviour
 			objectInvisibleAgain = true;
 
 			textBox.text = "Wie du siehst ist das Objekt nun sichtbar. " +
-			"\nUm er erneut unsichtbar zu schalten, musst es erneut eingeben. " +
-			"\nÖffne mit Enter erneut die Texteingabe und schalte das Objekt wieder unsichtbar.";
+			"Um es wieder unsichtbar zu schalten, musst du es erneut eingeben. " +
+			"\nÖffne erneut die Texteingabe und schalte das Objekt wieder unsichtbar.";
 
-		} else if (objectInvisibleAgain && Input.GetKeyDown (KeyCode.E)) {
+		} else if (objectInvisibleAgain && Input.GetKeyDown (KeyCode.Return)) {
 			shouldNameObjectAgain = true;
 			objectInvisibleAgain = false;
-		} else if (shouldNameObjectAgain && Input.GetKeyDown (KeyCode.E)) {
+		} else if (shouldNameObjectAgain && Input.GetKeyDown (KeyCode.Return)) {
 			shouldNameObjectAgain = false;
 
 			textBox.text = "Um das Tutorial zu verlassen laufe zur Tür und drücke 'E' oder die " +
