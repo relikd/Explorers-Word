@@ -17,7 +17,7 @@ public class Puzzle1BookHandler : TriggerInteractionCallback
 	 */
 	override public void OnTriggerInteraction (Interaction.TriggerInteraction sender) {
 		if (sender.triggerActive) {
-			sender.responseMessage = "A rusty mechanism moved the bookshelf";
+			sender.responseMessage = "Das Bücherregal bewegt sich";
 			StartCoroutine (playAnimation ());
 			HiddenEntrance.SetActive(true);
 			EntranceWall.SetActive (false);
@@ -36,6 +36,8 @@ public class Puzzle1BookHandler : TriggerInteractionCallback
 			shelf.GetComponent<AudioSource> ().Play ();
 		}
 		shelfOpen = true;
+		yield return new WaitForSeconds (4.0f);
+		GlobalSoundPlayer.playPuzzleSolved ();
 	}
 	/**
 	 * Play opening bookshelve animation

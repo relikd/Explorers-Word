@@ -35,7 +35,12 @@ public class GlobalSoundPlayer : MonoBehaviour {
 		correctWord.loop = puzzleSolved.loop = false;
 		correctWord.playOnAwake = puzzleSolved.playOnAwake = false;
 
-		correctWordClip =Resources.LoadAll("objectVisibleSounds") as AudioClip[];
+		correctWordClip = new AudioClip[6];
+		Object[] resources = Resources.LoadAll ("objectVisibleSounds");
+
+		for (int i = 0; i < 6; i++) {
+			correctWordClip [i] = resources [i] as AudioClip;
+		}
 		puzzleSolved.clip = Resources.Load ("puzzleSolvedSound") as AudioClip;
 
 		StartAudio ();
