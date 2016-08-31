@@ -1,14 +1,15 @@
 ﻿using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
+using ProceduralToolkit;
 
 /**
 * Handles correct depiction on GUI. 
 */
 public class GUIManager : MonoBehaviour
 {
-	private float yOffset = 30f;
-	Vector2 startingPosition;
+	private int padding = 5;
+	private Vector2Int boxSize = new Vector2Int(200, 25);
 	List<string> messageList  = new List<string> ();
 	private string centeredText;
 
@@ -29,12 +30,11 @@ public class GUIManager : MonoBehaviour
 	* Displayes the registered Strings and centered strings. 
 	*/
 	void OnGUI() {
-		startingPosition = new Vector2 (Screen.width - Screen.width / 4, Screen.height / 4);
-		float newYPossition = startingPosition.y;
+		float yWithOffset = Screen.height / 4;
 		foreach (string reg in messageList) {
 			GUI.color = Color.white;
-			GUI.Box (new Rect (startingPosition.x, newYPossition, 200, 25), reg);
-			newYPossition += yOffset;
+			GUI.Box (new Rect (Screen.width - boxSize.x - padding, yWithOffset, boxSize.x, boxSize.y), reg);
+			yWithOffset += boxSize.y + padding;
 		}
 		if (centeredText != null && centeredText != "") {
 			GUI.color = Color.white;
