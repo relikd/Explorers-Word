@@ -102,7 +102,7 @@ namespace Interaction
 		}
 
 		protected void playInteractionSound(int index){
-			if (m_Sounds.Length != 0) {
+			if (m_Sounds.Length >= index+1) {
 				AudioSource.PlayClipAtPoint ( m_Sounds [index],this.gameObject.transform.position);
 			}
 		}
