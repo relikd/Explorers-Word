@@ -7,6 +7,7 @@ using System;
  */
 public class Reachable : MonoBehaviour
 {
+	public static bool shouldRaycast = true;
 	private GameObject currentGameObject;
 	public float Reach = 0F;
 	public float proceduralReach;
@@ -26,7 +27,7 @@ public class Reachable : MonoBehaviour
 
 		proceduralReach = getDownLookingReach (1.9f, 50, 10);
 		// Cast a ray from the center of screen towards where the player is looking.
-		if (Physics.Raycast (ray, out hit, proceduralReach)) {
+		if (shouldRaycast && Physics.Raycast (ray, out hit, proceduralReach)) {
 			RaycastHit = hit;
 
 			GameObject go = hit.transform.gameObject;

@@ -1,6 +1,4 @@
 ﻿using UnityEngine;
-using System.Collections;
-using UnityStandardAssets.Characters.FirstPerson;
 
 namespace Interaction
 {
@@ -9,77 +7,42 @@ namespace Interaction
 	 */
 	public class ReadInteraction : Interactable
 	{
-		[SerializeField] 
-		string actionMessage;
-		[SerializeField]
-		string actionMessageWhileOpen;
-        [SerializeField]
-        Canvas CanvasToShow;
-        private CustomFirstPersonController CFPS;
-        private MouseCrosshair Mouse;
+		[SerializeField] string actionMessage;
+		[SerializeField] string actionMessageWhileOpen;
+		[SerializeField] Canvas CanvasToShow;
 		private bool reading = false;
 
-		/**
-		 * Initialisiert einige Variablen.
+		/*
+		 * Gibt je nach Zustand die entsprechende Nachricht zurück.
 		 */
-		void Awake() {
-			CFPS = GameObject.Find("FPSController").GetComponent<CustomFirstPersonController>();
-            Mouse = GameObject.Find("FirstPersonCharacter").GetComponent<MouseCrosshair>();
-
-        }
-        /*
-         * Gibt je nach Zustand die entsprechende Nachricht zurück.
-         */
-        override public string interactMessage()
-		{
-            return (!reading ? actionMessage : actionMessageWhileOpen);
-        }
-
+		override public string interactMessage() {
+			return (!reading ? actionMessage : actionMessageWhileOpen);
+		}
 		/**
-		 * Schaltet den Lesemodus an bzw. aus, abhängig vom aktuell aktiven Modus. Deaktiviert alle Handlungsmoeglichkeiten des Spielers, bis der Lesemodus beendet wird.
+		 * Schaltet den Lesemodus an bzw. aus, abhängig vom aktuell aktiven Modus.
 		 */
-		override public void OnInteractionKeyPressed()
-		{
-			if (!reading)
-			{
-                EnableGUI(false);
-				reading = !reading;
-				GameManager.getInstance ().disableExplorersBook ();
-                CFPS.shouldWalk = false;
-                CFPS.shouldJump = false;
-                CFPS.shouldLookAround = false;
-                CFPS.shouldPlayAudioSounds = false;
-                toggleCanvas();
-                toggleMouseCrosshair();
-            }
-			else
-			{
-                EnableGUI(false);
-                reading = !reading;
-				GameManager.getInstance ().disableExplorersBook ();
-                CFPS.shouldWalk = true;
-                CFPS.shouldJump = true;
-                CFPS.shouldLookAround = true;
-                CFPS.shouldPlayAudioSounds = true;
-                toggleCanvas();
-                toggleMouseCrosshair();            
-            }
+		override public void OnInteractionKeyPressed() {
+			setCanvasVisible (!reading);
 		}
 		/**
 		 * Schaltet die Sichtbarkeit des Canvas um.
+		 * Deaktiviert alle Handlungsmoeglichkeiten des Spielers, bis der Lesemodus beendet wird.
 		 */
-		private void toggleCanvas() 
-		{
-            CanvasToShow.enabled = reading;
+		private void setCanvasVisible (bool flag) {
+			EnableGUI(false);
 
-		}
-		/**
-		 * Scahltet die Sichtbarkeit des Fadenkreuzes um. 
-		 */
-		private void toggleMouseCrosshair() 
-		{
-			Mouse.enabled = !reading;
+			reading = flag;
+			ExplorersBook.BookController.disableBook = flag;
+			MouseCrosshair.showCrosshair = !flag;
+			ExplorersBook.UserInput.disableInput = flag;
 
+			GameManager gameManager = GameManager.getInstance ();
+			gameManager.disablePlayerAudioSource (flag);
+			gameManager.disableWalking (flag);
+			gameManager.disableJumping (flag);
+			gameManager.disableCammeraRotation (flag);
+
+			CanvasToShow.enabled = flag;
 		}
 	}
 }
