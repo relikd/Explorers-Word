@@ -7,9 +7,9 @@ using System.Collections;
 public class GlobalSoundPlayer : MonoBehaviour {
 
 	[SerializeField]private AudioClip storytellerAudio;
-	[SerializeField][Range(0,1.0f)]private float storytellerVolume;
+	[SerializeField][Range(0,1.0f)]private float storytellerVolume = 1.0f;
 	[SerializeField]private AudioClip backgroundmusic;
-	[SerializeField][Range(0,1.0f)]private float backgroundmusicVolume;
+	[SerializeField][Range(0,1.0f)]private float backgroundmusicVolume = 0.15f;
 	[SerializeField]private AudioClip[] otherScenesounds;
 	[SerializeField][Range(0,1.0f)]private float otherSoundsVolume;
 

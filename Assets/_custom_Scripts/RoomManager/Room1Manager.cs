@@ -11,8 +11,6 @@ public class Room1Manager : MonoBehaviour {
 	[SerializeField] private int lightsRequiredToFinish = 3;
 	[SerializeField] private GameObject[] rotatableObjects;
 
-	private GlobalSoundPlayer m_globalSoundPlayer;
-
 	/** Puzzle is solved if the right amount of light hits the final crystal */
 	private int currentLightsOnFinish = 0;
 	/** Flag used to recast lightbeams (saves calculation time) */
@@ -30,10 +28,7 @@ public class Room1Manager : MonoBehaviour {
 	}
 
 	void Start () {
-		m_globalSoundPlayer = gameObject.GetComponent<GlobalSoundPlayer> ();
 		initialPuzzleTwist ();
-		m_globalSoundPlayer.StartAudio ();
-		m_globalSoundPlayer.PlayOtherSceneSound (0, true, 1.0f, true);
 	}
 	/**
 	 * Will rotate the initial correct state to a wrong one. So the puzzle isn't solved immediatelly

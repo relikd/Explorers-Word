@@ -8,8 +8,8 @@ public class GUITutorialManager : MonoBehaviour
 {	
 	public Text textBox;
 	public InputField inputField; 
-	private float yOffset = 30f;
-	Vector2 startingPosition = new Vector2 (Screen.width / 4, Screen.height / 4);
+//	private float yOffset = 30f;
+//	Vector2 startingPosition = new Vector2 (Screen.width / 4, Screen.height / 4);
 	List<string> messageList  = new List<string> ();
 	private string centeredText;
 
@@ -28,7 +28,7 @@ public class GUITutorialManager : MonoBehaviour
 		}
 
 	void LateUpdate() {
-		float newYPossition = startingPosition.y;
+//		float newYPossition = startingPosition.y;
 		foreach (string reg in messageList) {
 			textBox.text = reg;
 		}

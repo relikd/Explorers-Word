@@ -17,10 +17,10 @@ public class TutorialManager : MonoBehaviour
 	bool tutorialInitilization = false;
 	bool shouldDisplayOpenBookText = false;
 	bool shouldOpenBook = false;
-	bool openedTheBook = false;
+//	bool openedTheBook = false;
 	bool shouldNameAnObject = false;
 	bool shouldPressEnter = false;
-	bool pressedEnter = false;
+//	bool pressedEnter = false;
 	bool pressedEscape = false;
 	bool shouldNameObjectAgain = false;
 	bool shouldExperiment = false;
@@ -30,8 +30,7 @@ public class TutorialManager : MonoBehaviour
 	 */
 	void LateUpdate() {
 		if (!tutorialInitilization) {
-			GameManager.getInstance ().disableExplorersBook ();
-			GameManager.getInstance ().disableRightBookPage ();
+			ExplorersBook.BookController.disableBook = true;
 			TutorialIntitialization ();
 			tutorialInitilization = true;
 			GUITutorialManager.register (IntroTexte, true);
@@ -39,8 +38,8 @@ public class TutorialManager : MonoBehaviour
 		if (shouldDisplayOpenBookText && Input.GetKeyDown (KeyCode.RightArrow)) {
 			GUITutorialManager.register (IntroTexte, false);
 			GUITutorialManager.register (HowToDisplayTheBookText, true);
-			lockUserControlls ();
-			GameManager.getInstance ().disableExplorersBook ();
+			lockUserControlls (false);
+			ExplorersBook.BookController.disableBook = false;
 
 			shouldDisplayOpenBookText = false;
 			shouldOpenBook = true;
@@ -87,18 +86,18 @@ public class TutorialManager : MonoBehaviour
 	 * Initialises The Tutorial Scene.
 	 */
 	private void TutorialIntitialization() {
-		lockUserControlls ();
+		lockUserControlls (true);
 		shouldDisplayOpenBookText = true;
 	}
 
 	/**
 	 * Locks the User Controlls.
 	 */
-	private void lockUserControlls() {
+	private void lockUserControlls(bool flag) {
 		GameManager gameManager = GameManager.getInstance ();
-		gameManager.disableJumping ();
-		gameManager.disableWalking ();
-		gameManager.disablePlayerAudioSource ();
+		gameManager.disableJumping (flag);
+		gameManager.disableWalking (flag);
+		gameManager.disablePlayerAudioSource (flag);
 	}
 
 }

@@ -1,7 +1,9 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class MouseCrosshair : MonoBehaviour {
+public class MouseCrosshair : MonoBehaviour
+{
+	public static bool showCrosshair = true;
 	public Texture2D CrosshairDot;
 	public Texture2D CrosshairCircle;
 	private Rect positionDot;
@@ -30,6 +32,8 @@ public class MouseCrosshair : MonoBehaviour {
 	*/
 	void OnGUI ()
 	{
+		if (!showCrosshair)
+			return;
 		GUI.DrawTexture (positionDot, CrosshairDot);
 		if (shouldChangeTexture) {
 			GUI.DrawTexture (positionCircle,  CrosshairCircle);
