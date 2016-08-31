@@ -8,7 +8,7 @@ using System.Collections.Generic;
 public class GUIManager : MonoBehaviour
 {
 	private float yOffset = 30f;
-	Vector2 startingPosition = new Vector2 (Screen.width - Screen.width / 4, Screen.height / 4);
+	Vector2 startingPosition;
 	List<string> messageList  = new List<string> ();
 	private string centeredText;
 
@@ -29,6 +29,7 @@ public class GUIManager : MonoBehaviour
 	* Displayes the registered Strings and centered strings. 
 	*/
 	void OnGUI() {
+		startingPosition = new Vector2 (Screen.width - Screen.width / 4, Screen.height / 4);
 		float newYPossition = startingPosition.y;
 		foreach (string reg in messageList) {
 			GUI.color = Color.white;
