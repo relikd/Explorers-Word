@@ -20,7 +20,7 @@ namespace ExplorersBook
 		/**
 		* Set assigned Texture and make sure Explorers Book is inactive
 		*/
-		void Awake() {
+		void Start() {
 			setTextureForPage (textureLeftPage, planeLeftPage);
 			setTextureForPage (textureRightPage, planeRightPage);
 			if (explorersBook)
