@@ -97,11 +97,13 @@ namespace ExplorersBook
 				deactivateAllGameObjects (false);
 				return;
 			}
-			if (hasObjectsForWord (inputString))
+
+			bool validInput = hasObjectsForWord (inputString);
+			if (validInput)
 				addWordAndUpdate (inputString);
-			else
-				Events.instance.Raise (new XplrEvents.WordEntered(inputString, false));
-			
+
+			Events.instance.Raise (new XplrEvents.WordEntered (inputString, validInput));
+			LogWriter.WriteLog ("Wort eingegeben: '"+inputString+"' existiert: "+validInput, gameObject);
 			wordInputField.text = "";
 			// wordInputField.ActivateInputField ();
 		}
@@ -110,18 +112,18 @@ namespace ExplorersBook
 		 * Also deactivates all objects and displays only the selected ones.
 		 */
 		private void addWordAndUpdate(string word) {
-			if (word != null && word.Length > 0) {
-				if (visibleWords.Contains (word)) {
-					visibleWords.Remove (word);
-				} else {
-					GlobalSoundPlayer.playCorrectWord ();
-					visibleWords.AddFirst (word);
-					while (visibleWords.Count > wordLimit)
-						visibleWords.RemoveLast ();
-				}
-				redisplayCurrentSelection ();
-				Events.instance.Raise (new XplrEvents.WordEntered(word, true));
+			if (word == null || word.Length == 0)
+				return;
+			word = word.ToUpperInvariant ().Trim ();
+			if (visibleWords.Contains (word)) {
+				visibleWords.Remove (word);
+			} else {
+				GlobalSoundPlayer.playCorrectWord ();
+				visibleWords.AddFirst (word);
+				while (visibleWords.Count > wordLimit)
+					visibleWords.RemoveLast ();
 			}
+			redisplayCurrentSelection ();
 		}
 		/**
 		 * Will deactivate all objects and display only those which are currently entered
@@ -143,6 +145,8 @@ namespace ExplorersBook
 		 * Returns <strong>true</strong> if there are any objects with name
 		 */
 		private bool hasObjectsForWord(string word) {
+			if (word == null || word.Length == 0)
+				return false;
 			return findObjectsByWord (word).Count > 0;
 		}
 		/**
@@ -150,9 +154,13 @@ namespace ExplorersBook
 		 */
 		private List<GameObject> findObjectsByWord(string word) {
 			List<GameObject> allWithThisName = new List<GameObject>();
+			if (word == null || word.Length == 0)
+				return allWithThisName; // return empty list
+
+			word = word.ToUpperInvariant ().Trim ();
 			foreach (NamedObject obj in objects)
 				foreach (string n in obj.names)
-					if (string.Equals(n, word, StringComparison.OrdinalIgnoreCase))
+					if (word == n.ToUpperInvariant ())
 						allWithThisName.Add (obj.thing);
 			return allWithThisName;
 		}
