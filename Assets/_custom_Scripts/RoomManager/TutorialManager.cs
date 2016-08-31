@@ -2,103 +2,96 @@
 using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
+using UnityEngine.UI;
 
 public class TutorialManager : MonoBehaviour
 {
-	public GUITutorialManager GUITutorialManager;
-	private string IntroTexte = "Aus zahlreichen Studien ist bekannt, dass sich ein Mensch maximal 3 Dinge gleichzeitig merken kann. Dies trifft auch auf den Spieler dieser Welt zu, welcher nur 3 Dinge gleichzeitig visualisieren kann. \nDrücke die Rechte Pfeiltaste um fortzufahren.";
-	private string HowToDisplayTheBookText = "Um sich auf eine neue Sache zu konzentrieren und diese somit zu visualisieren, muss der Spieler den beschriebenen Gegenstand benennen. \nDrücke 'B' um eine Kurzbeschreibung deiner Umgebung zu bekommen und ein Eingabefeld anzuzeigen.";
-	private string OpenTheBookText = "Sehr gut du hast erfolgreich das Buch geöffnet. \nDrücke die Rechte Pfeiltaste um fortzufahren.";
-	private string NameAnObjectText = "Nachdem du die Raumbeschreibung auf der rechten Seite gelesen hast, kannst du ein Objekt nennen welches sich wahrscheinlich im Raum befindet. \nFür den Anfang ist dort bereits ein richtiges Wort platziert, alles was du noch machen musst ist Enter zu drücken.";
-	private string PressedEnterText = "Gut gemacht. Um wieder einen Blick auf den Raum zu werfen und sicher zu stellen, dass das genannte Objekt angezeigt wird, drücke die Escape Taste.";
-	private string VisibleText = "Wie du siehst ist das Objekt nun sichtbar. \nUm das Objekt erneut unsichtbar zu schalten musst du das Objekt erneut benennen. Öffne erneut das Buch und benenne das Objekt und schau dir an ob du das Objekt vergessen hast.";
-	private string InvisibleText = "Wie du siehst hast du das Objekt nun wieder vergessen. \nDrücke die Rechte Pfeiltaste um fortzufahren.";
-	private string OverflowText = "Nun weißt du wie man Objekte visualisiert und vergisst. Experimentiere wie man mehrere Objekt gleichzeitig visualisiert. \nUm das Tutorial zu verlassen laufe zur Tür und drücke 'E' oder die linke Maustaste um mit ihr zu interagieren.";
 	bool tutorialInitilization = false;
-	bool shouldDisplayOpenBookText = false;
+	bool shouldDisplayOpenBookText = true;
 	bool shouldOpenBook = false;
-//	bool openedTheBook = false;
 	bool shouldNameAnObject = false;
 	bool shouldPressEnter = false;
-//	bool pressedEnter = false;
+	bool shouldPressEnterAgain = false;
 	bool pressedEscape = false;
+	bool objectInvisibleAgain = false;
 	bool shouldNameObjectAgain = false;
-	bool shouldExperiment = false;
+
+	public Text textBox;
+	public InputField inputField; 
 
 	/**
 	 * Routine of the Tutorial.
 	 */
 	void LateUpdate() {
-		if (!tutorialInitilization) {
-			ExplorersBook.BookController.disableBook = true;
-			TutorialIntitialization ();
-			tutorialInitilization = true;
-			GUITutorialManager.register (IntroTexte, true);
-		}
-		if (shouldDisplayOpenBookText && Input.GetKeyDown (KeyCode.RightArrow)) {
-			GUITutorialManager.register (IntroTexte, false);
-			GUITutorialManager.register (HowToDisplayTheBookText, true);
-			lockUserControlls (false);
-			ExplorersBook.BookController.disableBook = false;
 
+		if (!tutorialInitilization) {
+			shouldDisplayOpenBookText = true;
+			tutorialInitilization = true;
+
+			textBox.text = "Wie man sieht, sieht man nichts! Der Spieler muss sich " +
+				"zunächst auf einen Gegenstand konzentrieren um diesen zu sehen." +
+				"\nDrücke 'E' um fortzufahren.";
+		}
+		else if (shouldDisplayOpenBookText && Input.GetKeyDown (KeyCode.E)) {
 			shouldDisplayOpenBookText = false;
 			shouldOpenBook = true;
+
+			textBox.text = "Um sich auf eine neue Sache zu konzentrieren und diese " +
+				"somit zu visualisieren, muss der Spieler den beschriebenen Gegenstand benennen." +
+				"\nDrücke 'B' um das Buch zu öffnen.";
+			
 		} else if (shouldOpenBook && Input.GetKeyDown (KeyCode.B)) {
-			GUITutorialManager.register (HowToDisplayTheBookText, false);
-			GUITutorialManager.register (OpenTheBookText, true);
 
 			shouldOpenBook = false;
 			shouldNameAnObject = true;
-		} else if (shouldNameAnObject && Input.GetKeyDown (KeyCode.RightArrow)) {
-			GUITutorialManager.register (OpenTheBookText, false);
-			GUITutorialManager.register (NameAnObjectText, true);
-			GUITutorialManager.WriteToInputField ("Bücher");
 
+			textBox.text = "Sehr gut du hast erfolgreich das Buch geöffnet. \nDrücke 'E' um fortzufahren.";
+
+		} else if (shouldNameAnObject && Input.GetKeyDown (KeyCode.E)) {
 			shouldNameAnObject = false;
 			shouldPressEnter = true;
-		} else if (shouldPressEnter && Input.GetKeyDown (KeyCode.Return)) {
-			GUITutorialManager.register (NameAnObjectText, false);
-			GUITutorialManager.register (PressedEnterText, true);
 
-			pressedEscape = true;
+			inputField.text = "Sessel";
+			textBox.text = "Nachdem du die Raumbeschreibung auf der rechten Seite gelesen hast, kannst " +
+				"du ein Objekt nennen welches sich im Raum befindet. " +
+				"\n \nDrücke nun Enter um das Eingabefeld zu öffnen.";
+		} else if(shouldPressEnter && Input.GetKeyDown(KeyCode.Return)){
 			shouldPressEnter = false;
+			shouldPressEnterAgain = true;
+
+			textBox.text = "Für den Anfang ist dort bereits ein richtiges Wort platziert." +
+				"\nDrücke nun Enter um das Objekt anzuzeigen.";
+		} else if (shouldPressEnterAgain && Input.GetKeyDown (KeyCode.Return)) {
+			pressedEscape = true;
+			shouldPressEnterAgain = false;
+
+			textBox.text = "Gut gemacht. Um wieder einen Blick auf den Raum zu werfen und sicher " +
+				"zu stellen, dass das genannte Objekt angezeigt wird, drücke wieder 'B'.";
 		} 
-		if (pressedEscape && Input.GetKeyDown (KeyCode.Escape)) {
-			GUITutorialManager.register (PressedEnterText, false);
-			GUITutorialManager.register (VisibleText, true);
-
+		if (pressedEscape && Input.GetKeyDown (KeyCode.B)) {
 			pressedEscape = false;
-			shouldNameObjectAgain = true;
-		} else if (shouldNameObjectAgain && Input.GetKeyDown (KeyCode.Escape)) {
-			GUITutorialManager.register (VisibleText, false);
-			GUITutorialManager.register (InvisibleText, true);
+			objectInvisibleAgain = true;
 
+			textBox.text = "Wie du siehst ist das Objekt nun sichtbar. " +
+			"\nUm er erneut unsichtbar zu schalten, musst es erneut eingeben. " +
+			"\nÖffne mit Enter erneut die Texteingabe und schalte das Objekt wieder unsichtbar.";
+
+		} else if (objectInvisibleAgain && Input.GetKeyDown (KeyCode.E)) {
+			shouldNameObjectAgain = true;
+			objectInvisibleAgain = false;
+		} else if (shouldNameObjectAgain && Input.GetKeyDown (KeyCode.E)) {
 			shouldNameObjectAgain = false;
-			shouldExperiment = true;
-		} else if (shouldExperiment && Input.GetKeyDown (KeyCode.RightArrow)) {
-			GUITutorialManager.register (InvisibleText, false);
-			GUITutorialManager.register (OverflowText, true);
-			shouldExperiment = false;
+
+			textBox.text = "Um das Tutorial zu verlassen laufe zur Tür und drücke 'E' oder die " +
+			"linke Maustaste um mit ihr zu interagieren.";
+
+			StartCoroutine (Yielder());
 		}
 	}
 
-	/**
-	 * Initialises The Tutorial Scene.
-	 */
-	private void TutorialIntitialization() {
-		lockUserControlls (true);
-		shouldDisplayOpenBookText = true;
+	IEnumerator Yielder(){
+		yield return new WaitForSeconds (2.0f);
+		GlobalSoundPlayer.playPuzzleSolved ();
 	}
-
-	/**
-	 * Locks the User Controlls.
-	 */
-	private void lockUserControlls(bool flag) {
-		GameManager gameManager = GameManager.getInstance ();
-		gameManager.disableJumping (flag);
-		gameManager.disableWalking (flag);
-		gameManager.disablePlayerAudioSource (flag);
-	}
-
 }
 
