@@ -76,6 +76,7 @@ namespace ExplorersBook
 		{
 			Reachable.shouldRaycast = !flag;
 			MouseCrosshair.showCrosshair = !flag;
+			ExplorersBook.BookController.disableBook = flag;
 			GameManager gameManager = GameManager.getInstance ();
 			gameManager.disablePlayerAudioSource (flag);
 			gameManager.disableWalking (flag);
@@ -113,6 +114,7 @@ namespace ExplorersBook
 				if (visibleWords.Contains (word)) {
 					visibleWords.Remove (word);
 				} else {
+					GlobalSoundPlayer.playCorrectWord ();
 					visibleWords.AddFirst (word);
 					while (visibleWords.Count > wordLimit)
 						visibleWords.RemoveLast ();
