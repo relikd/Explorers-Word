@@ -48,9 +48,10 @@ public class RoomEndOfGameManager : MonoBehaviour {
 
 	void OnTriggerEnter(Collider col){
 
-		GameManager gm = GameManager.getInstance ();
-		gm.disableWalking (true);
-		gm.disableCammeraRotation (true);
+		XplrCharacter.FPSController fps_script = GetComponent<XplrCharacter.FPSController> ();
+		fps_script.shouldWalk = false;
+		fps_script.shouldJump = false;
+		fps_script.shouldLookAround = false;
 
 		float lookDirection = mainCamera.transform.rotation.eulerAngles.y;
 		bool blackEnd = (lookDirection >= 0 && lookDirection < 180);
