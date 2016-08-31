@@ -21,6 +21,7 @@ public class Puzzle1BookHandler : TriggerInteractionCallback
 			StartCoroutine (playAnimation ());
 			HiddenEntrance.SetActive(true);
 			EntranceWall.SetActive (false);
+			sender.interactionEnabled = false;
 		}
 	}
 	/**

@@ -17,6 +17,8 @@ public class Room1Manager : MonoBehaviour {
 	private bool shouldRecalculate = false;
 	[SerializeField] private GameObject mayaBook;
 	[SerializeField] private GameObject globe;
+	[SerializeField] private GameObject raumDesign;
+	private int beenThereDoneThat;
 
 	// only used to get an redraw message from after a text input
 	void OnEnable () { Events.instance.AddListener<XplrEvents.WordEntered>(OnNewWordEntered); }
@@ -44,6 +46,7 @@ public class Room1Manager : MonoBehaviour {
 	 * If game state changes it will recast all lightbeams, otherwise only maya book animation
 	 */
 	void Update () {
+		activateRoomDesign ();
 		if (currentLightsOnFinish >= lightsRequiredToFinish)
 			activateMayaBook (true); // will be called continuously for glow effect
 
@@ -94,6 +97,16 @@ public class Room1Manager : MonoBehaviour {
 			t.gameObject.SetActive (true);
 			lightHitObject (lbe_script.Expand ());
 		}
+	}
+	/**
+	 * Sets the design texture for the room
+	 */
+	void activateRoomDesign() {
+		if (beenThereDoneThat == 0 && Camera.main.transform.position.x < -9)
+			beenThereDoneThat = 1;
+		if (beenThereDoneThat == 1 && Camera.main.transform.position.x > -5)
+			beenThereDoneThat = 2;
+		raumDesign.SetActive (beenThereDoneThat == 2);
 	}
 	/**
 	 * Activates the easter egg
