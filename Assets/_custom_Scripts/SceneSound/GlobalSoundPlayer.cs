@@ -17,7 +17,7 @@ public class GlobalSoundPlayer : MonoBehaviour {
 	private AudioSource BackgroundAudioSource;
 	private AudioSource alternateAudioSource;
 	private static AudioSource correctWord;
-	private static AudioClip correctWordClip;
+	private static AudioClip[] correctWordClip;
 	private static AudioSource riddleSolved;
 	private static AudioClip riddleSolvedClip;
 
@@ -25,16 +25,24 @@ public class GlobalSoundPlayer : MonoBehaviour {
 	* Plays the CorrectWord Sound. 
 	*/
 	public static void playCorrectWord() {
-		correctWord.clip = correctWordClip;
-		correctWord.volume = 1.0f;
+		int n = UnityEngine.Random.Range(1, correctWordClip.Length);
+		correctWord.clip = correctWordClip [n];
 		correctWord.Play ();
+		// move picked sound to index 0 so it's not picked next time
+		AudioClip currentClip = correctWordClip[n];
+		correctWordClip[n] = correctWordClip[0];
+		correctWordClip [0] = currentClip;
+
+//		correctWord.clip = correctWordClip;
+//		correctWord.volume = 1.0f;
+//		correctWord.Play ();
 	}
 
 	/**
 	* Plays the SolvedRidle Sound. 
 	*/
 	public static void playSolvedRiddle() {
-		riddleSolved.clip = correctWordClip;
+		riddleSolved.clip = correctWordClip[0];
 		riddleSolved.volume = 1.0f;
 		riddleSolved.Play ();	
 	}
@@ -46,8 +54,9 @@ public class GlobalSoundPlayer : MonoBehaviour {
 		StoryTellerAudioSource = gameObject.AddComponent<AudioSource> ();
 		BackgroundAudioSource = gameObject.AddComponent<AudioSource> ();
 		correctWord = gameObject.AddComponent<AudioSource> ();
-		correctWordClip = Resources.Load ("bookshelf_moving", typeof(AudioClip)) as AudioClip;
-		correctWordClip = Resources.Load ("bookshelf_moving", typeof(AudioClip)) as AudioClip;
+		correctWordClip =Resources.LoadAll("objectVisibleSounds") as AudioClip[];
+		correctWord.loop = false;
+		correctWord.playOnAwake = false;
 		StoryTellerAudioSource.playOnAwake = false;
 		BackgroundAudioSource.playOnAwake = false;
 		StartAudio ();
