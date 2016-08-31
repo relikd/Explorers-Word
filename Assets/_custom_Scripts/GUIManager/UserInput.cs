@@ -55,7 +55,7 @@ namespace ExplorersBook
 		/**
 		 * Hide all GameObjects and input field
 		 */
-		void Awake() {
+		void Start() {
 			deactivateAllGameObjects (true);
 			setUserInputEnabled (false);
 		}
