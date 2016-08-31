@@ -18,34 +18,7 @@ public class GlobalSoundPlayer : MonoBehaviour {
 	private AudioSource alternateAudioSource;
 	private static AudioSource correctWord;
 	private static AudioClip[] correctWordClip;
-	private static AudioSource riddleSolved;
-	private static AudioClip riddleSolvedClip;
-
-	/**
-	* Plays the CorrectWord Sound. 
-	*/
-	public static void playCorrectWord() {
-		int n = UnityEngine.Random.Range(1, correctWordClip.Length);
-		correctWord.clip = correctWordClip [n];
-		correctWord.Play ();
-		// move picked sound to index 0 so it's not picked next time
-		AudioClip currentClip = correctWordClip[n];
-		correctWordClip[n] = correctWordClip[0];
-		correctWordClip [0] = currentClip;
-
-//		correctWord.clip = correctWordClip;
-//		correctWord.volume = 1.0f;
-//		correctWord.Play ();
-	}
-
-	/**
-	* Plays the SolvedRidle Sound. 
-	*/
-	public static void playSolvedRiddle() {
-		riddleSolved.clip = correctWordClip[0];
-		riddleSolved.volume = 1.0f;
-		riddleSolved.Play ();	
-	}
+	private static AudioSource puzzleSolved;
 
 	/**
 	* Instantiates nesseccary Variables. 
@@ -53,12 +26,18 @@ public class GlobalSoundPlayer : MonoBehaviour {
 	void Awake () {
 		StoryTellerAudioSource = gameObject.AddComponent<AudioSource> ();
 		BackgroundAudioSource = gameObject.AddComponent<AudioSource> ();
-		correctWord = gameObject.AddComponent<AudioSource> ();
-		correctWordClip =Resources.LoadAll("objectVisibleSounds") as AudioClip[];
-		correctWord.loop = false;
-		correctWord.playOnAwake = false;
 		StoryTellerAudioSource.playOnAwake = false;
 		BackgroundAudioSource.playOnAwake = false;
+
+		correctWord = gameObject.AddComponent<AudioSource> ();
+		puzzleSolved = gameObject.AddComponent<AudioSource> ();
+
+		correctWord.loop = puzzleSolved.loop = false;
+		correctWord.playOnAwake = puzzleSolved.playOnAwake = false;
+
+		correctWordClip =Resources.LoadAll("objectVisibleSounds") as AudioClip[];
+		puzzleSolved.clip = Resources.Load ("puzzleSolvedSound") as AudioClip;
+
 		StartAudio ();
 	}
 	
@@ -142,6 +121,32 @@ public class GlobalSoundPlayer : MonoBehaviour {
 		}
 	}
 
+
+	/**
+	* Plays the CorrectWord Sound. 
+	*/
+	public static void playCorrectWord() {
+		int n = UnityEngine.Random.Range(1, correctWordClip.Length);
+		correctWord.clip = correctWordClip [n];
+		correctWord.Play ();
+		// move picked sound to index 0 so it's not picked next time
+		AudioClip currentClip = correctWordClip[n];
+		correctWordClip[n] = correctWordClip[0];
+		correctWordClip [0] = currentClip;
+
+		//		correctWord.clip = correctWordClip;
+		//		correctWord.volume = 1.0f;
+		//		correctWord.Play ();
+	}
+
+	/**
+	* Plays the PuzzleRidle Sound. 
+	*/
+	public static void playPuzzleSolved() {
+		puzzleSolved.volume = 0.8f;
+		puzzleSolved.Play ();	
+	}
+
 	/**
 	* Lower Volumes when Explorers Story is told. 
 	*/
@@ -150,4 +155,6 @@ public class GlobalSoundPlayer : MonoBehaviour {
 		this.backgroundmusicVolume = 0.8f;
 	}
 		
+
+
 }
