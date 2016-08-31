@@ -52,6 +52,7 @@ namespace Interaction
             halfbox = Vector3.Scale(myCollider.size * 0.5f, gameObject.transform.lossyScale);
             controller = Player.GetComponent<CharacterController>();
             safe = gameObject.transform.position;
+            saferotate = gameObject.transform.rotation;
         }
         /**
          * Erneuert die Position des Objekts beim Tragen und erlaubt es das Tragen auch dann abzubrechen, wenn das Objekt eigentlich nicht in Reichweite ist. Bricht  Tragen ab, wenn unerlaubte Bewegungen versucht werden.
@@ -157,7 +158,7 @@ namespace Interaction
                 if (!inbetween(checkDistance))
                 {
                     target = mainCamera.transform.position + mainCamera.transform.forward * checkDistance;
-                    tarRotation = Player.transform.rotation;
+                    tarRotation.eulerAngles =  new Vector3(saferotate.eulerAngles.x, Player.transform.rotation.eulerAngles.y, saferotate.eulerAngles.z);
                     if (!colliding())
                     {
                         saferotate = tarRotation;
