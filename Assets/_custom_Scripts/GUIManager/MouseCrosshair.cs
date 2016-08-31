@@ -14,10 +14,7 @@ public class MouseCrosshair : MonoBehaviour
 	* Instantiates the possition of the Crosshair components. 
 	*/
 	void Start () {
-		positionDot = new Rect((Screen.width - CrosshairDot.width) / 2, (Screen.height - 
-			CrosshairDot.height) /2, CrosshairDot.width, CrosshairDot.height);
-		positionCircle = new Rect((Screen.width - CrosshairDot.width*2) / 2, (Screen.height - 
-			CrosshairDot.height*2) /2, CrosshairDot.width*2, CrosshairDot.height*2);	
+		
 	}
 		
 	/**
@@ -32,6 +29,11 @@ public class MouseCrosshair : MonoBehaviour
 	*/
 	void OnGUI ()
 	{
+		positionDot = new Rect((Screen.width - CrosshairDot.width) / 2, (Screen.height - 
+			CrosshairDot.height) /2, CrosshairDot.width, CrosshairDot.height);
+		positionCircle = new Rect((Screen.width - CrosshairDot.width*2) / 2, (Screen.height - 
+			CrosshairDot.height*2) /2, CrosshairDot.width*2, CrosshairDot.height*2);	
+		
 		if (!showCrosshair)
 			return;
 		GUI.DrawTexture (positionDot, CrosshairDot);
