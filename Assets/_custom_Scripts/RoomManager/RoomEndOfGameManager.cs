@@ -1,7 +1,5 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
-using System.Collections;
-using UnityStandardAssets.Characters.FirstPerson;
 
 public class RoomEndOfGameManager : MonoBehaviour {
 
@@ -22,7 +20,6 @@ public class RoomEndOfGameManager : MonoBehaviour {
 		blackPortalBorder = blackPortalBorder.GetComponent<Transform> ();
 		creditCanvas.enabled = false;
 	}
-
 
 	void Update(){
 		float distanceWhite = Vector3.Distance (mainCamera.transform.position, whitePortalBorder.transform.position);
@@ -49,34 +46,23 @@ public class RoomEndOfGameManager : MonoBehaviour {
 		}
 	}
 
-
 	void OnTriggerEnter(Collider col){
 
+		GameManager gm = GameManager.getInstance ();
+		gm.disableWalking (true);
+		gm.disableCammeraRotation (true);
 
-		gameObject.GetComponent<CustomFirstPersonController> ().shouldWalk = false;
-		gameObject.GetComponent<CustomFirstPersonController> ().shouldLookAround = false;
+		float lookDirection = mainCamera.transform.rotation.eulerAngles.y;
+		bool blackEnd = (lookDirection >= 0 && lookDirection < 180);
+		LogWriter.WriteLog ("Game End: "+ (blackEnd ? "BLACK" : "WHITE"));
 
-		if (mainCamera.transform.rotation.eulerAngles.y >= 0 &&
-		    mainCamera.transform.rotation.eulerAngles.y < 180) {
-			Debug.Log ("BLACK");
-			creditCanvas.GetComponent<Image> ().color = Color.black;
-
-			creditCanvas.enabled = true;
-			textObject = creditCanvas.transform.FindChild("Text");
-			creditText = textObject.GetComponent<Text> ();
-			creditText.color = Color.white;
-			creditText.GetComponent<CreditsTranslation> ().StartCredits ();
-		} else {
-			Debug.Log ("WHITE");
-			creditCanvas.GetComponent<Image> ().color = Color.white;
-
-			creditCanvas.enabled = true;
-			textObject = creditCanvas.transform.FindChild("Text");
-			creditText = textObject.GetComponent<Text> ();
-			creditText.color = Color.black;
-			creditText.GetComponent<CreditsTranslation> ().StartCredits ();
-
-		}
-
+		// background color
+		creditCanvas.GetComponent<Image> ().color = (blackEnd ? Color.black : Color.white);
+		creditCanvas.enabled = true;
+		textObject = creditCanvas.transform.FindChild("Text");
+		creditText = textObject.GetComponent<Text> ();
+		// text color
+		creditText.color = (blackEnd ? Color.white : Color.black);
+		creditText.GetComponent<CreditsTranslation> ().StartCredits ();
 	}
 }
