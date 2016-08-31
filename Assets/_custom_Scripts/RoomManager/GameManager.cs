@@ -10,14 +10,13 @@ public  class GameManager : MonoBehaviour
 	public GameObject Player;
 	public GameObject FPC;
 	public GameObject FPS;
-	private 
-	UnityStandardAssets.Characters.FirstPerson.CustomFirstPersonController FPSScript;
+	private XplrCharacter.FPSController FPSScript;
 
 	/**
 	* Instantiates the neccessary class variables. 
 	*/
 	void Awake() {
-		FPSScript = FPS.GetComponent<UnityStandardAssets.Characters.FirstPerson.CustomFirstPersonController> ();
+		FPSScript = FPS.GetComponent<XplrCharacter.FPSController> ();
 	}
 
 	/**
