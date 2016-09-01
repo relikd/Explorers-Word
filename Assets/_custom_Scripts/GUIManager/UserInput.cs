@@ -177,6 +177,9 @@ namespace ExplorersBook
 			Rigidbody[] rigidbodies = go.GetComponentsInChildren<Rigidbody> (true);
 			foreach (Rigidbody rb in rigidbodies)
 				rb.useGravity = visible;
+			Light[] lights = go.GetComponentsInChildren <Light>(true);
+			foreach (Light l in lights)
+				l.enabled = visible;
 		}
 	}
 }
