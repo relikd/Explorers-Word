@@ -6,8 +6,6 @@ using System.Collections;
 public class Breakable : MonoBehaviour {
     [SerializeField]
     GameObject remains;
-    [SerializeField]
-    float disappearAfterInSeconds;
 	[SerializeField]
 	AudioClip shatterSound;
 
