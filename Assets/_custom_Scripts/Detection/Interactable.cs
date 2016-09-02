@@ -12,6 +12,7 @@ namespace Interaction
 		/** Turn off interaction */
 		public bool interactionEnabled = true;
 		[SerializeField] private AudioClip[] m_Sounds; 
+		[SerializeField][Range(0.0f,1.0f)]private float m_SoundsVolume = 1.0f;
 
 		/** String to be shown as interact text */
 		abstract public string interactMessage ();
@@ -89,10 +90,10 @@ namespace Interaction
 		protected void playInteractionSound(){
 			if (m_Sounds != null) {
 				if (m_Sounds.Length == 1) {
-					AudioSource.PlayClipAtPoint (m_Sounds [0], gameObject.transform.position);
+					AudioSource.PlayClipAtPoint (m_Sounds [0], gameObject.transform.position, m_SoundsVolume);
 				} else if (m_Sounds.Length > 2) {
 					int n = UnityEngine.Random.Range(1, m_Sounds.Length);
-					AudioSource.PlayClipAtPoint (m_Sounds [n], gameObject.transform.position);
+					AudioSource.PlayClipAtPoint (m_Sounds [n], gameObject.transform.position, m_SoundsVolume);
 					// move picked sound to index 0 so it's not picked next time
 					AudioClip currentClip = m_Sounds[n];
 					m_Sounds[n] = m_Sounds[0];
@@ -103,7 +104,7 @@ namespace Interaction
 
 		protected void playInteractionSound(int index){
 			if (m_Sounds.Length >= index+1) {
-				AudioSource.PlayClipAtPoint ( m_Sounds [index],this.gameObject.transform.position);
+				AudioSource.PlayClipAtPoint ( m_Sounds [index],this.gameObject.transform.position, m_SoundsVolume);
 			}
 		}
 	}
