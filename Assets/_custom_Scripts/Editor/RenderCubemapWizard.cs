@@ -2,14 +2,16 @@
 using UnityEditor;
 using System.Collections;
 
+// taken from: https://docs.unity3d.com/ScriptReference/Camera.RenderToCubemap.html
+
 public class RenderCubemapWizard : ScriptableWizard {
 
 	public Transform renderFromPosition;
 	public Cubemap cubemap;
 
 	void OnWizardUpdate () {
-		string helpString = "Select transform to render from and cubemap to render into";
-		bool isValid = (renderFromPosition != null) && (cubemap != null);
+		helpString = "Select transform to render from and cubemap to render into";
+		isValid = (renderFromPosition != null) && (cubemap != null);
 	}
 
 	void OnWizardCreate () {
@@ -19,14 +21,14 @@ public class RenderCubemapWizard : ScriptableWizard {
 		// place it on the object
 		go.transform.position = renderFromPosition.position;
 		go.transform.rotation = Quaternion.identity;
-		// render into cubemap		
+		// render into cubemap
 		go.GetComponent<Camera>().RenderToCubemap( cubemap );
 
 		// destroy temporary camera
 		DestroyImmediate( go );
 	}
 
-	[MenuItem("GameObject/Render into Cubemap")]
+	[MenuItem("-µ-/Render into Cubemap")]
 	static void RenderCubemap () {
 		ScriptableWizard.DisplayWizard<RenderCubemapWizard>(
 			"Render cubemap", "Render!");
