@@ -7,22 +7,24 @@ public class NamedObjectInspector : PropertyDrawer
 	const float CELL_HEIGHT = 16.0f;
 	const float CELL_PAD_WIDTH = 4.0f;
 	const float CELL_PAD_HEIGHT = 4.0f;
+	const float ICON_SIZE = 32.0f;
 
 	public override float GetPropertyHeight (SerializedProperty property, GUIContent label) {
 		int rows = Mathf.CeilToInt(property.FindPropertyRelative ("names").arraySize / 3.0f);
 		if (!property.isExpanded) rows = 0;
-		return (CELL_HEIGHT + CELL_PAD_HEIGHT) * (rows+1);// +1 for the object field
+		return (CELL_HEIGHT + CELL_PAD_HEIGHT) * (rows+2);// +1 for the object field, +1 for the icon
 	}
 
 	void checkClassConsistency() {
 		// make sure properties with this name exist, otherwise change name in OnGUI()
-		NamedObject o = new NamedObject (); o.names = null; o.thing = null;
+		NamedObject o = new NamedObject (); o.names = null; o.thing = null; o.icon = null;
 	}
 
 	public override void OnGUI(Rect position, SerializedProperty property, GUIContent label)
 	{
 		SerializedProperty theNames = property.FindPropertyRelative ("names");
 		SerializedProperty theObject = property.FindPropertyRelative ("thing");
+		SerializedProperty theIcon = property.FindPropertyRelative ("icon");
 
 		float widthDiff = position.width - EditorGUI.IndentedRect (position).width;
 		float txtWidth = (position.width + 2*(widthDiff - CELL_PAD_WIDTH)) / 3.0f;
@@ -48,13 +50,20 @@ public class NamedObjectInspector : PropertyDrawer
 
 		if (property.isExpanded) {
 			// DISPLAY object field
-			Rect rectObject = new Rect (position.x, position.y, position.width, CELL_HEIGHT);
+			Rect rectObject = new Rect (position.x, position.y, position.width - ICON_SIZE - CELL_PAD_WIDTH, CELL_HEIGHT);
 			EditorGUI.PropertyField (rectObject, theObject, GUIContent.none);
+
+			// DISPLAY icon field
+			Rect rectIconField = rectObject;
+			rectIconField.y += CELL_HEIGHT + CELL_PAD_HEIGHT;
+			Rect rectIcon = new Rect (position.xMax - ICON_SIZE, position.yMin, ICON_SIZE, ICON_SIZE);
+			EditorGUI.PropertyField( rectIconField, theIcon, GUIContent.none, false );
+			DrawTexture(theIcon, rectIcon);
 
 			// DISPLAY names field
 			for (int i = 0; i <= nameCount; i++) {
 				int col = i % 3;
-				int row = Mathf.FloorToInt (i / 3.0f) + 1; // +1 because of the object field
+				int row = Mathf.FloorToInt (i / 3.0f) + 2; // +1 object field, +1 icon field
 				Rect pos = new Rect (position.x + col*cWidth, position.y + row*rWidth, txtWidth, CELL_HEIGHT);
 
 				if (i == nameCount)
@@ -74,6 +83,17 @@ public class NamedObjectInspector : PropertyDrawer
 		}
 
 		EditorGUI.EndProperty ();
+	}
+
+	private void DrawTexture(SerializedProperty iconProp, Rect rect) {
+		if (iconProp.objectReferenceValue != null) {
+			Texture2D tex = (Texture2D)iconProp.objectReferenceValue;
+//			EditorGUI.DrawTextureTransparent(rect, tex, ScaleMode.ScaleToFit);
+			EditorGUI.DropShadowLabel(rect, new GUIContent(tex));// or LabelField
+		} else {
+			// Draw a visibly unconfigured rectangle
+			EditorGUI.DrawRect( rect, Color.magenta );
+		}
 	}
 
 	private bool isEmptyIndex(SerializedProperty array, int index) {

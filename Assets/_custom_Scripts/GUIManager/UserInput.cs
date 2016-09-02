@@ -26,6 +26,7 @@ namespace XplrEvents
 [Serializable]
 public class NamedObject {
 	public GameObject thing;
+	public Texture2D icon;
 	public string[] names;
 }
 
