@@ -3,7 +3,7 @@
 namespace Interaction
 {
 	/**
-	 * Ein Skript, dass es erlaubt, ein Canvas ein- bzw. auszublenden.!!!!!!! Es erfordert, dass dieses Papier ein Child Canvas besitzt. Während der Spieler liest, kann er sich nicht bewegen und die Kameera nicht rotieren.
+	 * Ein Skript, dass es erlaubt, ein Canvas ein- bzw. auszublenden. Beim Anzeigen des Canvas wird die Steuerung des Spielers deaktiviert.
 	 */
 	public class ReadInteraction : Interactable
 	{
