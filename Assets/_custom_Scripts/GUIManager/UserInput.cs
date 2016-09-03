@@ -28,6 +28,14 @@ public class NamedObject {
 	public GameObject thing;
 	public Texture2D icon;
 	public string[] names;
+
+//	public override int GetHashCode () { return thing.GetHashCode (); }
+//	public override bool Equals (object obj) {
+//		if (obj == null) return false;
+//		NamedObject other = obj as NamedObject;
+//		if (other == null) return false;
+//		return other.thing == this.thing;
+//	}
 }
 
 namespace ExplorersBook
@@ -43,7 +51,7 @@ namespace ExplorersBook
 		public static bool disableInput = false;
 		private bool isUserInputOpen;
 
-		private LinkedList<string> visibleWords = new LinkedList<string>();
+		private LinkedList<List<NamedObject>> visibleObjects = new LinkedList<List<NamedObject>>();
 		/** This canvas will be used as on/off toggle */
 		[SerializeField] private GameObject inputCanvas;
 		/** Hook up input field */
@@ -68,6 +76,30 @@ namespace ExplorersBook
 				if (isUserInputOpen)
 					handleUserInput (wordInputField.text);
 				setUserInputEnabled (!isUserInputOpen);
+			}
+		}
+		/**
+		 * Display the Object Icon at the top screen area
+		 */
+		void OnGUI() {
+			const float IconSize = 64;
+			const float Padding = 10;
+			float total_width = Mathf.Max (wordLimit, visibleObjects.Count) * (IconSize + Padding);
+			Rect boxPos = new Rect(Screen.width-total_width, Padding, IconSize, IconSize);
+
+			int count = 0;
+			foreach (List<NamedObject> obj in visibleObjects) {
+				Texture2D img = obj[0].icon;
+				if(img) GUI.Box (boxPos, img);
+				else    GUI.Box (boxPos, "no icon");
+				boxPos.x += IconSize + Padding;
+				count++;
+			}
+			// empty boxes if less than word limit
+			while (count < wordLimit) {
+				GUI.Box(boxPos, "");
+				boxPos.x += IconSize + Padding;
+				count++;
 			}
 		}
 		/**
@@ -116,24 +148,44 @@ namespace ExplorersBook
 			if (word == null || word.Length == 0)
 				return;
 			word = word.ToUpperInvariant ().Trim ();
-			if (visibleWords.Contains (word)) {
-				visibleWords.Remove (word);
-			} else {
+
+			List<NamedObject> foundList = findObjectsByWord (word);
+			List<NamedObject> toBeDeleted = findListInVisibleObjects (foundList);
+			if (toBeDeleted != null) { // was already in list, so delete it
+				visibleObjects.Remove (toBeDeleted);
+			} else { // a new word, so add it
 				GlobalSoundPlayer.playCorrectWord ();
-				visibleWords.AddFirst (word);
-				while (visibleWords.Count > wordLimit)
-					visibleWords.RemoveLast ();
+				visibleObjects.AddFirst (foundList);
+				while (visibleObjects.Count > wordLimit)
+					visibleObjects.RemoveLast ();
 			}
 			redisplayCurrentSelection ();
+		}
+		/**
+		 * Return the reference to the found NamedObject List
+		 * @return List<NamedObject> of the visibleObjects List. null if not found
+		 */
+		List<NamedObject> findListInVisibleObjects (List<NamedObject> other) {
+			foreach (List<NamedObject> nList in visibleObjects) {
+				int nCount = nList.Count;
+				if (other.Count == nCount) {
+					foreach (NamedObject otherObj in other)
+						if (nList.Contains (otherObj))
+							nCount--;
+					if (nCount == 0)
+						return nList;
+				}
+			}
+			return null;
 		}
 		/**
 		 * Will deactivate all objects and display only those which are currently entered
 		 */
 		private void redisplayCurrentSelection() {
 			deactivateAllGameObjects (true);
-			foreach (string word in visibleWords)
-				foreach (GameObject thing in findObjectsByWord (word))
-					setObjectVisible (thing, true);
+			foreach (List<NamedObject> nList in visibleObjects)
+				foreach (NamedObject nObj in nList)
+					setObjectVisible (nObj.thing, true);
 		}
 		/**
 		 * Set the visibility of all assigned objects to hidden
@@ -153,8 +205,8 @@ namespace ExplorersBook
 		/**
 		 * Loops through all objects (assigned in the inspector) and find the one with the name
 		 */
-		private List<GameObject> findObjectsByWord(string word) {
-			List<GameObject> allWithThisName = new List<GameObject>();
+		private List<NamedObject> findObjectsByWord(string word) {
+			List<NamedObject> allWithThisName = new List<NamedObject>();
 			if (word == null || word.Length == 0)
 				return allWithThisName; // return empty list
 
@@ -162,7 +214,7 @@ namespace ExplorersBook
 			foreach (NamedObject obj in objects)
 				foreach (string n in obj.names)
 					if (word == n.ToUpperInvariant ())
-						allWithThisName.Add (obj.thing);
+						allWithThisName.Add (obj);
 			return allWithThisName;
 		}
 		/**
