@@ -30,7 +30,8 @@ public class GUIManager : MonoBehaviour
 	* Displayes the registered Strings and centered strings. 
 	*/
 	void OnGUI() {
-		float yWithOffset = Screen.height / 4;
+		
+		float yWithOffset = 64 +10 +10;
 		foreach (string reg in messageList) {
 			GUI.color = Color.white;
 			GUI.Box (new Rect (Screen.width - boxSize.x - padding, yWithOffset, boxSize.x, boxSize.y), reg);
