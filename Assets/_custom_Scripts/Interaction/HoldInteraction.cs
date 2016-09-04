@@ -76,6 +76,7 @@ namespace Interaction
                 gameObject.transform.position = NewLoc;
                 gameObject.transform.rotation = saferotate;
                 dropIfBelow();
+				LogWriter.WriteLog ("Carrying Object: " + carrying, gameObject);
             }
         }
         public override string interactMessage()
