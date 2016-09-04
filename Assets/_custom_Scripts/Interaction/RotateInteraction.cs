@@ -33,6 +33,7 @@ namespace Interaction
 		void rotate() {
 			gameObject.transform.Rotate (rotateBy);
 			checkForRotationLimit ();
+			LogWriter.WriteLog ("Rotated Objekt by " + rotateBy, gameObject);
 		}
 		/**
 		 * Will call the {@link RotationLimiter} Extension to check for any limitation

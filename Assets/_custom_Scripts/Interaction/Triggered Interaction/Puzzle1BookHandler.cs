@@ -23,6 +23,7 @@ public class Puzzle1BookHandler : TriggerInteractionCallback
 			EntranceWall.SetActive (false);
 			sender.interactionEnabled = false;
 		}
+		LogWriter.WriteLog ("Interacted with Bookshelf: " + sender.triggerActive, gameObject);
 	}
 	/**
 	 * Play book pull animation

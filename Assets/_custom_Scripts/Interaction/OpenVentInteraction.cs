@@ -37,7 +37,9 @@ namespace Interaction {
 			if (checkIfAllScrewsAreRemoved ()) {
 				responseMessage = messageIfAllUnscrewed;
 				gameObject.SetActive (false);
-				// TODO: play sound manually
+				LogWriter.WriteLog ("Opened Vent", gameObject);
+			} else {
+				LogWriter.WriteLog ("Tryed to Open Vent", gameObject);
 			}
 			base.OnInteractionKeyPressed ();
 		}
