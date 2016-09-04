@@ -13,15 +13,12 @@ public class Room0Manager : MonoBehaviour
 	[SerializeField] private GameObject player;
 	[SerializeField] private GameObject door;
 	[SerializeField] private GameObject particleBeam;
+	[SerializeField] private GlobalSoundPlayer globalSoundPlayer;
 
-	private GlobalSoundPlayer globalSoundPlayer;
-
-	/** Scene Fade in */
+	/** Start beep sound */
 	void Start () {
-		StartCoroutine(SceneFadeIn());
-		globalSoundPlayer = gameObject.GetComponent<GlobalSoundPlayer> ();
-		globalSoundPlayer.StartAudio ();
-		globalSoundPlayer.PlayOtherSceneSound (0, true, 1.0f, true);
+		if (globalSoundPlayer)
+			globalSoundPlayer.PlayOtherSceneSound (0, true, 1.0f, true);
 	}
 	/** Automatically open door when player is near */
 	void Update ()
@@ -41,11 +38,6 @@ public class Room0Manager : MonoBehaviour
 			Animator anim = door.GetComponent<Animator> ();
 			if (anim) anim.SetBool ("open", doorVisited);
 		}
-	}
-	/**  Fade scene in and wait for a short period */
-	IEnumerator SceneFadeIn(){
-		float fadeTime = gameObject.GetComponent<SceneFadingScript> ().BeginFade (-1);
-		yield return new WaitForSeconds (fadeTime);
 	}
 	/** Load cutscene when player enters door */
 	void OnTriggerEnter(Collider other) {
