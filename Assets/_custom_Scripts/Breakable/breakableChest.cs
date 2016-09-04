@@ -17,9 +17,13 @@ public class breakableChest : Breakable {
 	 * Setzt den Inhalt der Truhe auf inaktiv.
 	 */
 	void Start () {
-		foreach (GameObject current in contains) {
-			current.SetActive(false);
-		}
+        if (contains.Length > 0)
+        {
+            foreach (GameObject current in contains)
+            {
+                if(current) current.SetActive(false);
+            }
+        }
 	}
 	/*
 	 * Prüft bei Kollision, ob die Kollision mit dem BreakingObject war unmd ob dieses sich schnell genung nach unten bewegt hat.
@@ -34,10 +38,17 @@ public class breakableChest : Breakable {
 	 */
 	public void shatterChest() {
 		LogWriter.WriteLog("Truhe zerbrochen", gameObject);
-		foreach(GameObject current in contains) {
-			current.transform.position = transform.position;
-			current.SetActive(true);
-		}
+        if (contains.Length > 0)
+        {
+            foreach (GameObject current in contains)
+            {
+                if (current)
+                {
+                    current.transform.position = transform.position;
+                    current.SetActive(true);
+                }
+            }
+        }
 		shatter();
 	}
 }
