@@ -44,6 +44,11 @@ namespace Interaction
 				responseMessage = responseMessage.Replace ("[load_cutscene]", "");
 				return true;
 			}
+			if (src.Contains ("[main_menu]")) {
+				LevelManager.LoadStartScreen ();
+				responseMessage = responseMessage.Replace ("[main_menu]", "");
+				return true;
+			}
 			return false;
 		}
 	}

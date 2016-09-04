@@ -22,8 +22,12 @@ public class RenderToonIconWizard : ScriptableWizard {
 	private const int RESOLUTION = 512;
 	private const string ICON_PATH = "Assets/_custom_Assets/Icons/";
 
+	/**
+	 * Wizard checking function. Used to activate the Render button and preset field values
+	 */
 	void OnWizardUpdate () {
 		helpString = "Align your SceneView camera first.\nThats how the icon will be shown.";
+		helpString += "\n( PATH: /" + ICON_PATH + " )";
 
 		if (setInitialObj && renderObject == null && Selection.activeTransform) {
 			renderObject = Selection.activeTransform;
@@ -37,7 +41,9 @@ public class RenderToonIconWizard : ScriptableWizard {
 
 		isValid = (renderObject != null) && (iconName != null && iconName.Length > 0);
 	}
-
+	/**
+	 * Get active camera and render object with selected settings
+	 */
 	void OnWizardCreate () {
 		Camera cam = SceneView.lastActiveSceneView.camera;
 
@@ -64,7 +70,11 @@ public class RenderToonIconWizard : ScriptableWizard {
 		cam.cullingMask = prevCullingMask;
 		cam.clearFlags = prevClearFlag;
 	}
-
+	/**
+	 * Create a copy of the object, attach all selected lights, take screenshot and delete copy
+	 * @param camera which camera should be used to take screenshot
+	 * @param fname filename for the screenshot
+	 */
 	void copyObjectAndRender (Camera camera, string fname) {
 		GameObject aCopy = GameObject.Instantiate (renderObject.gameObject);
 		SetLayerRecursively (aCopy, 28);
@@ -77,13 +87,21 @@ public class RenderToonIconWizard : ScriptableWizard {
 		TakeScreenshotWithCam (camera, fname);
 		DestroyImmediate (aCopy);
 	}
-
+	/**
+	 * Set the layer property of an object and all its children (destructive)
+	 * @param obj should be a copy of the object
+	 * @param newLayer int between [0 .. 31]
+	 */
 	void SetLayerRecursively(GameObject obj, int newLayer) {
 		obj.layer = newLayer;
 		foreach (Transform child in obj.transform)
 			SetLayerRecursively (child.gameObject, newLayer);
 	}
-
+	/**
+	 * Set camera render path to a local {@link RenderTexture} and convert that image file to png
+	 * @param camera which camera should be used to take screenshot
+	 * @param filename just the name, will be saved to a pre-defined location
+	 */
 	void TakeScreenshotWithCam(Camera camera, string filename) {
 		RenderTexture prevTexture = camera.targetTexture;
 		RenderTexture rt = new RenderTexture(RESOLUTION, RESOLUTION, 32, RenderTextureFormat.ARGB32);
@@ -101,7 +119,10 @@ public class RenderToonIconWizard : ScriptableWizard {
 		byte[] bytes = screenShot.EncodeToPNG();
 		System.IO.File.WriteAllBytes(ICON_PATH + filename + ".png", bytes);
 	}
-
+	/**
+	 * Create two directional light sources and attach them to the object
+	 * @param parent the object where the light will be added
+	 */
 	void addDirectionalLight(Transform parent) {
 		GameObject fst = new GameObject ();
 		fst.AddComponent<Light> ();
@@ -114,7 +135,10 @@ public class RenderToonIconWizard : ScriptableWizard {
 		snd.transform.eulerAngles = new Vector3 (-35, 30, -288);
 		snd.transform.SetParent (parent);
 	}
-
+	/**
+	 * Create a point light in the camera center and attach it to the object
+	 * @param parent the object where the light will be added
+	 */
 	void addPointLight(Transform parent) {
 		GameObject trd = new GameObject ();
 		trd.AddComponent<Light> ();
@@ -123,10 +147,30 @@ public class RenderToonIconWizard : ScriptableWizard {
 		trd.transform.position = newV;
 		trd.transform.SetParent (parent);
 	}
-
-	[MenuItem("-µ-/Render Toon Icon")]
-	static void RenderCubemap () {
+	/**
+	 * Create a wizard window in our custom menu
+	 */
+	[MenuItem("-µ-/Render Toon Icon GUI", false, 1)]
+	static void RenderToonIcon () {
 		ScriptableWizard.DisplayWizard<RenderToonIconWizard>(
-			"Render Toon Icon", "Render!");
+			"Render Toon Icon", "Render");
+	}
+	/**
+	 * Same like {@link #RenderToonIcon()} but without a window prompt
+	 */
+	[MenuItem("-µ-/Render Toon Icon %t", false, 2)] // cmd + T (%=cmd/ctrl #=shift &=alt)
+	static void RenderEffortlessWizardDetour() {
+		RenderToonIconWizard rtiw = ScriptableWizard.CreateInstance<RenderToonIconWizard> ();
+		rtiw.OnWizardUpdate ();
+		if (rtiw.isValid)
+			rtiw.OnWizardCreate ();
+		DestroyImmediate (rtiw);
+	}
+	/**
+	 * Checking method for wizardless version. User has to select an object in the hierarchy first
+	 */
+	[MenuItem("-µ-/Render Toon Icon %t", true)]
+	static bool what() {
+		return (Selection.activeTransform != null);
 	}
 }
