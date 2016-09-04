@@ -10,29 +10,23 @@ public class Room0Manager : MonoBehaviour
 	private bool doorLeft = false;
 	private bool doorVisited = false;
 
-	private GlobalSoundPlayer globalsSoundPlayer;
+	[SerializeField] private GameObject player;
+	[SerializeField] private GameObject door;
+	[SerializeField] private GameObject particleBeam;
 
-	GameObject player, door, particleBeam;
+	private GlobalSoundPlayer globalSoundPlayer;
 
-	/**
-	* Fades in Scene and intantiates all Class Variables. 
-	*/
+	/** Scene Fade in */
 	void Start () {
 		StartCoroutine(SceneFadeIn());
-		player = GameObject.Find ("FirstPersonCharacter");
-		door = GameObject.Find ("animated_door");
-		particleBeam = GameObject.Find ("doorIndicationBeam");
-		globalsSoundPlayer = gameObject.GetComponent<GlobalSoundPlayer> ();
-		globalsSoundPlayer.StartAudio ();
-		globalsSoundPlayer.PlayOtherSceneSound (0, true, 1.0f, true);
+		globalSoundPlayer = gameObject.GetComponent<GlobalSoundPlayer> ();
+		globalSoundPlayer.StartAudio ();
+		globalSoundPlayer.PlayOtherSceneSound (0, true, 1.0f, true);
 	}
-	
-	/**
-	* Checks if player is near the Door then opens the door. When Player is over a Specific Distance the door is shown.
-	*/
+	/** Automatically open door when player is near */
 	void Update ()
 	{
-		if (!doorLeft)
+		if (!doorLeft && particleBeam != null) // only used in previous room 0 version
 		{
 			float distance = Vector3.Distance (player.transform.position, door.transform.position);
 			doorLeft = distance > 25;
@@ -42,20 +36,19 @@ public class Room0Manager : MonoBehaviour
 		else if (!doorVisited)
 		{
 			float distance = Vector3.Distance (player.transform.position, door.transform.position);
-			doorVisited = distance < 5;
+			doorVisited = distance < 8;
 			// open door
 			Animator anim = door.GetComponent<Animator> ();
 			if (anim) anim.SetBool ("open", doorVisited);
 		}
 	}
-
-	/**
-	* Fades in Scene and Waits for a short Time. 
-	*/
+	/**  Fade scene in and wait for a short period */
 	IEnumerator SceneFadeIn(){
 		float fadeTime = gameObject.GetComponent<SceneFadingScript> ().BeginFade (-1);
 		yield return new WaitForSeconds (fadeTime);
 	}
-
-
+	/** Load cutscene when player enters door */
+	void OnTriggerEnter(Collider other) {
+		LevelManager.LoadRoom ("cutscene");
+	}
 }
