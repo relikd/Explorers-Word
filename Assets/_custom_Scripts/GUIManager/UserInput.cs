@@ -248,6 +248,11 @@ namespace XplrGUI
 		 * For a single Object (and all children), deactivate the Collider, Renderer and Rigidbody
 		 */
 		private void setObjectVisible(GameObject go, bool visible) {
+			if (go == null) {
+				Debug.LogError ("Schau im UserInput vom PLAYER prefab, ob alle Objekte gesetzt sind");
+				return;
+			}
+			
 			Collider[] colliders = go.GetComponentsInChildren<Collider> (true);
 			foreach (Collider c in colliders)
 				c.enabled = visible;
