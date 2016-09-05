@@ -121,8 +121,10 @@ namespace ExplorersBook
 		 */
 		private void setUserInputEnabled (bool flag)
 		{
-			Reachable.shouldRaycast = !flag;
-			MouseCrosshair.showCrosshair = !flag;
+			if (!ExplorersBook.BookController.isBookOpen ()) {
+				Reachable.shouldRaycast = !flag;
+				MouseCrosshair.showCrosshair = !flag;
+			}
 			ExplorersBook.BookController.disableBook = flag;
 			GameManager gameManager = GameManager.getInstance ();
 			gameManager.disablePlayerAudioSource (flag);
