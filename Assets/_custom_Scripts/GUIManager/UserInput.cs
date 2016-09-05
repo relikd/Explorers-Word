@@ -77,6 +77,8 @@ namespace ExplorersBook
 					handleUserInput (wordInputField.text);
 				setUserInputEnabled (!isUserInputOpen);
 			}
+			if (visibleObjects.Count > 0)
+				validateIntegrityOfVisibleObjects ();
 		}
 		/**
 		 * Display the Object Icon at the top screen area
@@ -95,12 +97,24 @@ namespace ExplorersBook
 				boxPos.x += IconSize + Padding;
 				count++;
 			}
-			// empty boxes if less than word limit
+			// draw empty boxes if fewer items than word limit
 			while (count < wordLimit) {
 				GUI.Box(boxPos, "");
 				boxPos.x += IconSize + Padding;
 				count++;
 			}
+		}
+		/**
+		 * Loop through all visible objects and delete those which dont have children. Will be used for pickable objects like matchbox or screwdriver
+		 */
+		private void validateIntegrityOfVisibleObjects() {
+			foreach (List<NamedObject> obj in visibleObjects)
+				if (obj[0].thing.transform.childCount == 0) {
+					visibleObjects.Remove (obj);
+					// recursively because modifying an array while enumerating is a bad thing
+					validateIntegrityOfVisibleObjects();
+					break;
+				}
 		}
 		/**
 		 * Sets the canvas visible and focus to text field
@@ -212,9 +226,10 @@ namespace ExplorersBook
 
 			word = word.ToUpperInvariant ().Trim ();
 			foreach (NamedObject obj in objects)
-				foreach (string n in obj.names)
-					if (word == n.ToUpperInvariant ())
-						allWithThisName.Add (obj);
+				if (obj.thing.transform.childCount > 0) // suppress collected items
+					foreach (string n in obj.names)
+						if (word == n.ToUpperInvariant ())
+							allWithThisName.Add (obj);
 			return allWithThisName;
 		}
 		/**
