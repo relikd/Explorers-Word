@@ -28,6 +28,9 @@ namespace Interaction
 		 */
 		override public void OnInteractionKeyPressed() {
 			centeredMessage (responseMessage);
+			LogWriter.WriteLog("toggle interaction (afterwards:"+onInteraction+")\n" +
+				"toggle scripts: "+toggleScriptsEnabledState.Length+"\n" +
+				"toggle objects: "+toggleGameObjectActiveState.Length, gameObject);
 			StartCoroutine (toggleScriptsAfter());
 		}
 		/**

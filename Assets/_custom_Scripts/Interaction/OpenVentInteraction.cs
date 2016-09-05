@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 
-namespace Interaction {
+namespace Interaction
+{
 	/**
 	* Functionality for the Vent Interaction in Room 3.
 	*/
@@ -16,7 +17,6 @@ namespace Interaction {
 		public override string interactMessage () {
 			return actionMessage;
 		}
-
 		/**
 		 * Method for checking if the Screws are removed.
 		 */
@@ -29,7 +29,6 @@ namespace Interaction {
 			}
 			return (count == Screws.Length);
 		}
-
 		/**
 		 * If all screws are removed and an interaction takes place, it loads the next Room .
 		 */
