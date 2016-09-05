@@ -11,7 +11,7 @@ namespace Interaction{
 
 		[SerializeField] private bool _destroyWhenFinished;
 		[SerializeField] private Vector3 _endposition;
-		[SerializeField] [Range(1.0f,5.0f)] private float _translationSpeed = 1.0f;
+		[SerializeField] [Range(0.1f,5.0f)] private float _translationSpeed;
 		private Transform _currentObjectPosition;
 
 		[SerializeField] 
@@ -29,6 +29,8 @@ namespace Interaction{
 					isMoving = false;
 					if (_destroyWhenFinished) {
 						DestroyObject (this.gameObject);
+					} else {
+						interactionEnabled = true;
 					}
 				} else {
 					_currentObjectPosition.position =  Vector3.MoveTowards (_currentObjectPosition.position, _endposition, 0.001f * _translationSpeed);
@@ -50,6 +52,7 @@ namespace Interaction{
 		{
 			LogWriter.WriteLog("Position durch Script geändert", gameObject);
 			isMoving = true;
+			interactionEnabled = false;
 		}
 	}
 }
