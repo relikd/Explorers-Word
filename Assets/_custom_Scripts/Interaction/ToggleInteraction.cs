@@ -5,10 +5,10 @@ using System.Collections;
 namespace Interaction
 {
 	/**
-	 * Toggles the assigned scripts active property
+	 * Can toggle Interactable.interactionEnabled and GameObject.activeSelf property
 	 */
 	public class ToggleInteraction : PlainInteraction {
-		/** Possible interaction outcome */
+		/** Possible interaction outcome after toggle */
 		[Serializable]
 		enum OnInteractionOperation {
 			DoNothing,

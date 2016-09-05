@@ -62,6 +62,19 @@ namespace XplrGUI
 		[SerializeField] private NamedObject[] objects;
 
 		/**
+		 * Our Debugging Interface
+		 */
+		private void evaluateDeveloperInput (string str) {
+			if (str == "xplr") {
+				deactivateAllGameObjects (false);
+			} else if (str == "_col") {
+				deactivateAllGameObjects (false);
+				XplrDebug.DeveloperFunctions.toggleCollissions ();
+			} else if (str == "_reset") {
+				XplrDebug.DeveloperFunctions.resetRoom ();
+			}
+		}
+		/**
 		 * Hide all GameObjects and input field
 		 */
 		void Start() {
@@ -142,10 +155,7 @@ namespace XplrGUI
 		 * Will be called whenever the user enters a new word
 		 */
 		public void handleUserInput(string inputString) {
-			if (inputString == "xplr") {
-				deactivateAllGameObjects (false);
-				return;
-			}
+			evaluateDeveloperInput (inputString);
 
 			bool validInput = hasObjectsForWord (inputString);
 			if (validInput)

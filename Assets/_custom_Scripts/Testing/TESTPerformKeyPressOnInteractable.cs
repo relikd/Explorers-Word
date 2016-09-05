@@ -1,13 +1,12 @@
 ﻿using UnityEngine;
 using Interaction;
 
-namespace XplrTest {
+namespace XplrDebug {
 	public class TESTPerformKeyPressOnInteractable : MonoBehaviour {
 		void Awake () {
 			Interactable[] scripts = GetComponents <Interactable>();
-			foreach (Interactable scpt in scripts) {
+			foreach (Interactable scpt in scripts)
 				scpt.OnInteractionKeyPressed ();
-			}
 		}
 	}
 }
