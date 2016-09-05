@@ -8,7 +8,7 @@ using ProceduralToolkit;
 */
 public class GUIManager : MonoBehaviour
 {
-	private int padding = 5;
+	private int padding = 7;
 	private Vector2Int boxSize = new Vector2Int(200, 25);
 	List<string> messageList  = new List<string> ();
 	private string centeredText;
@@ -31,11 +31,11 @@ public class GUIManager : MonoBehaviour
 	*/
 	void OnGUI() {
 		
-		float yWithOffset = 64 +10 +10;
+		float yWithOffset = Screen.height/2.0f;
 		foreach (string reg in messageList) {
+			yWithOffset -= boxSize.y + padding;
 			GUI.color = Color.white;
-			GUI.Box (new Rect (Screen.width - boxSize.x - padding, yWithOffset, boxSize.x, boxSize.y), reg);
-			yWithOffset += boxSize.y + padding;
+			GUI.Box (new Rect (Screen.width/2.0f + padding, yWithOffset, boxSize.x, boxSize.y), reg);
 		}
 		if (centeredText != null && centeredText != "") {
 			GUI.color = Color.white;

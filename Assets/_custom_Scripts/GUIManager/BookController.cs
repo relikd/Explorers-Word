@@ -15,8 +15,14 @@ namespace ExplorersBook
 		public Texture textureLeftPage;
 		public Texture textureRightPage;
 
-		private bool bookIsOpen = false;
+		static private bool bookIsOpen = false;
 
+		/**
+		 * Public getter used in {@link UserInput.setUserInputEnabled(bool)}
+		 */
+		public static bool isBookOpen() {
+			return bookIsOpen;
+		}
 		/**
 		* Set assigned Texture and make sure Explorers Book is inactive
 		*/
