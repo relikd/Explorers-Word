@@ -93,17 +93,19 @@ public class MainMenuScript : MonoBehaviour {
 	*/
 	void lockCursor() {
 		Cursor.lockState = CursorLockMode.None;
-		Cursor.visible = false;
+		Cursor.visible = true;
 	}
 	/**
 	* Starts Coroutine for Level Change. 
 	*/
 	public void StartGame(){
 		StartCoroutine (FadeAndChangeLevel());
+		Cursor.visible = false;
 	}
 
 	public void StartTutorial(){
 		LevelManager.LoadRoom("room_Tutorial");
+		Cursor.visible = false;
 	}
 
 	/**
@@ -112,7 +114,7 @@ public class MainMenuScript : MonoBehaviour {
 	IEnumerator FadeAndChangeLevel(){
 		float fadeTime = gameObject.GetComponent<SceneFadingScript> ().BeginFade(1);
 		yield return new WaitForSeconds (fadeTime);
-		LevelManager.LoadRoom ("room_0");
+		LevelManager.LoadRoom ("room_0_new");
 	}
 
 	/**
