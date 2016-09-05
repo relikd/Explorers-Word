@@ -18,6 +18,8 @@ namespace XplrGUI {
 		void Awake() {
 			if (_i == null)
 				_i = this;
+			messageList.Clear ();
+			centeredText = "";
 		}
 
 		/**
