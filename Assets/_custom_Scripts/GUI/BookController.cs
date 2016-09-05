@@ -43,7 +43,7 @@ namespace XplrGUI
 		* Call all neccessary methods to de-/activate the book and player movement
 		*/
 		public void openExplorersBook(bool flag) { 
-			LogWriter.WriteLog("Opened The book: " + flag + "; Should depict the Book: " + !disableBook, gameObject);
+			XplrDebug.LogWriter.Write("Opened The book: " + flag + "; Should depict the Book: " + !disableBook, gameObject);
 			if (!disableBook) {
 				bookIsOpen = flag;
 				StartCoroutine(playAnimation ());

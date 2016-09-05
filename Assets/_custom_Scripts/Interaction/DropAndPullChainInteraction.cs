@@ -16,12 +16,12 @@ namespace Interaction
         {
             EnableGUI(false);
             if (!ChainControlScript.isDropping()) {
-                LogWriter.WriteLog("Kronleuchter fallen gelassen",gameObject);
+				XplrDebug.LogWriter.Write("Kronleuchter fallen gelassen",gameObject);
                 ChainControlScript.drop();
             }
             else
             {
-                LogWriter.WriteLog("Kronleuchter nach oben gezogen", gameObject);
+				XplrDebug.LogWriter.Write("Kronleuchter nach oben gezogen", gameObject);
                 ChainControlScript.pull();
             }
             EnableGUI(true);
