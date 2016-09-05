@@ -1,6 +1,5 @@
 ﻿using UnityEngine;
 using Interaction;
-using System;
 
 /**
  * Search for objects which are in reach of the player
@@ -9,11 +8,8 @@ public class Reachable : MonoBehaviour
 {
 	public static bool shouldRaycast = true;
 	private GameObject currentGameObject;
-	public float Reach = 0F;
-	public float proceduralReach;
-
-	// PRIVATE SETTINGS
-	[HideInInspector] public RaycastHit RaycastHit;
+	public float Reach = 1.5f;
+	public XplrGUI.MouseCrosshair crosshair;
 
 	/**
 	 * Cast a ray in each update to see whats in front of the camera
@@ -25,18 +21,18 @@ public class Reachable : MonoBehaviour
 		Ray ray = Camera.main.ViewportPointToRay (new Vector3 (0.5F, 0.5F, 0F));
 		RaycastHit hit; // Variable reading information about the collider hit.
 
-		proceduralReach = getDownLookingReach (1.9f, 50, 10);
+		float proceduralReach = getDownLookingReach (1.9f, 50, 10);
 		// Cast a ray from the center of screen towards where the player is looking.
-		if (shouldRaycast && Physics.Raycast (ray, out hit, proceduralReach)) {
-			RaycastHit = hit;
-
+		if (shouldRaycast && Physics.Raycast (ray, out hit, proceduralReach))
+		{
+			// deactivate previous interaction message
 			GameObject go = hit.transform.gameObject;
 			if (currentGameObject != go ) {
 				deactiveGUI();
 				activateCrosshair (false);
 				currentGameObject = go;
 			}
-
+			// and reevaluate new interactable scripts
 			Interactable[] goInteraction = go.GetComponentsInChildren<Interactable> ();
 			foreach (Interactable i in goInteraction) {
 				if (i.shouldDisplayInteraction ()) {
@@ -71,8 +67,8 @@ public class Reachable : MonoBehaviour
 	 * Update Cursor if interaction is possible
 	 */
 	private void activateCrosshair(bool enable) {
-		MouseCrosshair ch = gameObject.GetComponent<MouseCrosshair> ();
-		if (ch) ch.activateCrosshair(enable);
+		if (crosshair)
+			crosshair.interactionPossible = enable;
 	}
 	/**
 	 * Go through all children and deactivate the interaction GUI

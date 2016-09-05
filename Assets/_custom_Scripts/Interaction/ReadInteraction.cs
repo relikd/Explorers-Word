@@ -33,9 +33,9 @@ namespace Interaction
 			EnableGUI(false);
 
 			reading = flag;
-			ExplorersBook.BookController.disableBook = flag;
-			MouseCrosshair.showCrosshair = !flag;
-			ExplorersBook.UserInput.disableInput = flag;
+			XplrGUI.MouseCrosshair.showCrosshair = !flag;
+			XplrGUI.BookController.disableBook = flag;
+			XplrGUI.UserInput.disableInput = flag;
 
 			GameManager gameManager = GameManager.getInstance ();
 			gameManager.disablePlayerAudioSource (flag);

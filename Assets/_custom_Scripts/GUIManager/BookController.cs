@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-namespace ExplorersBook
+namespace XplrGUI
 {
 	/**
 	* Manages the Opening and Closing of the Book

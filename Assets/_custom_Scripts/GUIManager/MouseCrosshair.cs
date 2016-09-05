@@ -1,45 +1,39 @@
 ﻿using UnityEngine;
-using System.Collections;
 
-public class MouseCrosshair : MonoBehaviour
-{
-	public static bool showCrosshair = true;
-	public Texture2D CrosshairDot;
-	public Texture2D CrosshairCircle;
-	private Rect positionDot;
-	private Rect positionCircle;
-	private bool shouldChangeTexture;
-
+namespace XplrGUI {
 	/**
-	* Instantiates the possition of the Crosshair components. 
-	*/
-	void Start () {
-		
-	}
-		
-	/**
-	*  changes the Look of the Crosshair. 
-	*/
-	public void activateCrosshair(bool enable) {
-		shouldChangeTexture = enable;
-	}
-
-	/**
-	* Displays the Croshhair components. 
-	*/
-	void OnGUI ()
+	 * Draw red dot instead of mouse cursor. Change image if interaction is possible
+	 */
+	public class MouseCrosshair : MonoBehaviour
 	{
-		positionDot = new Rect((Screen.width - CrosshairDot.width) / 2, (Screen.height - 
-			CrosshairDot.height) /2, CrosshairDot.width, CrosshairDot.height);
-		positionCircle = new Rect((Screen.width - CrosshairDot.width*2) / 2, (Screen.height - 
-			CrosshairDot.height*2) /2, CrosshairDot.width*2, CrosshairDot.height*2);	
-		
-		if (!showCrosshair)
-			return;
-		GUI.DrawTexture (positionDot, CrosshairDot);
-		if (shouldChangeTexture) {
-			GUI.DrawTexture (positionCircle,  CrosshairCircle);
+		public static bool showCrosshair = true;
+		[SerializeField] private Texture2D textureDefault;
+		[SerializeField] private Texture2D textureActive;
+		[HideInInspector] public bool interactionPossible;
+
+		/**
+		* Display screen centered crosshair
+		*/
+		void OnGUI () {
+			if (!showCrosshair)
+				return;
+
+			if (interactionPossible && textureActive != null)
+			{
+				Rect positionActive = new Rect(
+					(Screen.width - textureActive.width) / 2,
+					(Screen.height - textureActive.height) /2,
+					textureActive.width, textureActive.height);
+				GUI.DrawTexture (positionActive, textureActive);
+			}
+			else if (textureDefault != null)
+			{
+				Rect positionDefault = new Rect(
+					(Screen.width - textureDefault.width) / 2,
+					(Screen.height - textureDefault.height) /2,
+					textureDefault.width, textureDefault.height);
+				GUI.DrawTexture (positionDefault, textureDefault);
+			}
 		}
 	}
-
 }
