@@ -1,10 +1,8 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-
 namespace Interaction
 {
-
     [RequireComponent(typeof(BoxCollider))]
     [RequireComponent(typeof(Rigidbody))]
     /**
@@ -45,6 +43,7 @@ namespace Interaction
          */
         void Awake()
         {
+			tarRotation = new Quaternion ();
             Player = GameObject.Find("FPSController");
             mainCamera = Player.GetComponentInChildren<Camera>();
             myCollider = gameObject.GetComponent<BoxCollider>();

@@ -25,6 +25,7 @@ namespace Interaction
 		 * Will run the evaluation script and display the message (can be modified in the script)
 		 */
 		override public void OnInteractionKeyPressed() {
+			LogWriter.WriteLog("trigger interaction with response: "+responseMessage, gameObject);
 			if (triggerScript)
 				triggerScript.OnTriggerInteraction (this);
 			scriptedActionExecuter (responseMessage);
