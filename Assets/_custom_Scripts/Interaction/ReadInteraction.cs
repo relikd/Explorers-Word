@@ -23,7 +23,7 @@ namespace Interaction
 		 */
 		override public void OnInteractionKeyPressed() {
 			setCanvasVisible (!reading);
-			LogWriter.WriteLog ("Set Canvas to: " + (!reading).ToString(), gameObject);
+			XplrDebug.LogWriter.Write ("Set Canvas to: " + (!reading).ToString(), gameObject);
 		}
 		/**
 		 * Schaltet die Sichtbarkeit des Canvas um.

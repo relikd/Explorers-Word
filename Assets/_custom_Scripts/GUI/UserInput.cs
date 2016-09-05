@@ -162,7 +162,7 @@ namespace XplrGUI
 				addWordAndUpdate (inputString);
 
 			Events.instance.Raise (new XplrEvents.WordEntered (inputString, validInput));
-			LogWriter.WriteLog ("Wort eingegeben: '"+inputString+"' existiert: "+validInput, gameObject);
+			XplrDebug.LogWriter.Write ("Wort eingegeben: '"+inputString+"' existiert: "+validInput, gameObject);
 			wordInputField.text = "";
 			// wordInputField.ActivateInputField ();
 		}

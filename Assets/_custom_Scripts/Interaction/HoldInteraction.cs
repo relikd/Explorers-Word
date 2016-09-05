@@ -75,7 +75,7 @@ namespace Interaction
                 gameObject.transform.position = NewLoc;
                 gameObject.transform.rotation = saferotate;
                 dropIfBelow();
-				LogWriter.WriteLog ("Carrying Object: " + carrying, gameObject);
+				XplrDebug.LogWriter.Write ("Carrying Object: " + carrying, gameObject);
             }
         }
         public override string interactMessage()
@@ -106,7 +106,7 @@ namespace Interaction
             {
 				playInteractionSound (0);
                 carrying = true;
-                LogWriter.WriteLog("aufgehoben", gameObject);
+				XplrDebug.LogWriter.Write("aufgehoben", gameObject);
                 oldLayer = gameObject.layer;
                 gameObject.layer = newLayer;
                 myRigid.isKinematic = true;
@@ -123,7 +123,7 @@ namespace Interaction
 				playInteractionSound (1);
                 carrying = false;
                 gameObject.layer = oldLayer;
-                LogWriter.WriteLog("fallen gelassen", gameObject);
+				XplrDebug.LogWriter.Write("fallen gelassen", gameObject);
                 myRigid.velocity = Vector3.zero;
                 myRigid.angularVelocity = Vector3.zero;
                 myRigid.isKinematic = false;

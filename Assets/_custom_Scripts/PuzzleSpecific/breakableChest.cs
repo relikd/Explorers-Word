@@ -37,7 +37,7 @@ public class breakableChest : Breakable {
 	 * Schaltet den Inhalt auf Aktiv und ruft shatter() auf.
 	 */
 	public void shatterChest() {
-		LogWriter.WriteLog("Truhe zerbrochen", gameObject);
+		XplrDebug.LogWriter.Write("Truhe zerbrochen", gameObject);
         if (contains.Length > 0)
         {
             foreach (GameObject current in contains)

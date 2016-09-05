@@ -55,7 +55,7 @@ public class RoomEndOfGameManager : MonoBehaviour {
 
 		float lookDirection = mainCamera.transform.rotation.eulerAngles.y;
 		bool blackEnd = (lookDirection >= 0 && lookDirection < 180);
-		LogWriter.WriteLog ("Game End: "+ (blackEnd ? "BLACK" : "WHITE"));
+		XplrDebug.LogWriter.Write ("Game End: "+ (blackEnd ? "BLACK" : "WHITE"));
 
 		// background color
 		creditCanvas.GetComponent<Image> ().color = (blackEnd ? Color.black : Color.white);

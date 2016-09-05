@@ -50,7 +50,7 @@ namespace Interaction{
 		 */
 		override public void OnInteractionKeyPressed()
 		{
-			LogWriter.WriteLog("Position durch Script geändert", gameObject);
+			XplrDebug.LogWriter.Write("Position durch Script geändert", gameObject);
 			isMoving = true;
 			interactionEnabled = false;
 		}

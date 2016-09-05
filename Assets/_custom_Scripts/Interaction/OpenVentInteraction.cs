@@ -36,9 +36,9 @@ namespace Interaction
 			if (checkIfAllScrewsAreRemoved ()) {
 				responseMessage = messageIfAllUnscrewed;
 				gameObject.SetActive (false);
-				LogWriter.WriteLog ("Opened Vent", gameObject);
+				XplrDebug.LogWriter.Write ("Opened Vent", gameObject);
 			} else {
-				LogWriter.WriteLog ("Tryed to Open Vent", gameObject);
+				XplrDebug.LogWriter.Write ("Tryed to Open Vent", gameObject);
 			}
 			base.OnInteractionKeyPressed ();
 		}

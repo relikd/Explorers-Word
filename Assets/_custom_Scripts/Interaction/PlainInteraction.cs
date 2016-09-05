@@ -14,12 +14,12 @@ namespace Interaction
 		[Multiline] public string responseMessage = "Interaction not possible";
 
 		override public string interactMessage() {
-			LogWriter.WriteLog ("Action Message: " + actionMessage, gameObject);
+			XplrDebug.LogWriter.Write ("Action Message: " + actionMessage, gameObject);
 			return actionMessage;
 		}
 		/** Just display the text on screen */
 		override public void OnInteractionKeyPressed() {
-			LogWriter.WriteLog ("Centered Message: " + responseMessage, gameObject);
+			XplrDebug.LogWriter.Write ("Centered Message: " + responseMessage, gameObject);
 			centeredMessage (responseMessage);
 		}
 	}
