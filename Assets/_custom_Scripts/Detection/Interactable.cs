@@ -42,13 +42,10 @@ namespace Interaction
 				playInteractionSound ();
 				OnInteractionKeyPressed ();
 			}
-			if (Input.GetButton ("Interact")) {
+			if (Input.GetButton ("Interact"))
 				OnInteractionKeyHold ();
-			}
 			if (Input.GetButtonDown("Interact"))
-			{
 				OnInteractionKeyDown();
-			}
 		}
 		/**
 		 * Will inform {@link GUIManager} to display text on the right side of the screen
@@ -57,10 +54,8 @@ namespace Interaction
 		 */
 		public void EnableGUI (bool enable) {
 			string msg = interactMessage ();
-			if (msg != null && msg != "") {
-				GUIManager gm = GameObject.FindObjectOfType<GUIManager> ();
-				if (gm) gm.register (msg, enable);
-			}
+			if (msg != null && msg != "")
+				XplrGUI.ScreenMessage.registerActionMessage (msg, enable);
 		}
 
 		//
@@ -80,8 +75,7 @@ namespace Interaction
 		 * @param timeout duration visible on screen (in seconds)
 		 */
 		protected void centeredMessage(string message, float timeout) {
-			GUIManager gm = GameObject.FindObjectOfType<GUIManager> ();
-			if (gm) gm.centeredMessage (message, timeout);
+			XplrGUI.ScreenMessage.centeredMessage (message, timeout);
 		}
 		/**
 		 * Play any assigned sound for each {@link #OnInteractionKeyPressed()}
