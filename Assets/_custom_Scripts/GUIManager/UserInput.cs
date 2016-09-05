@@ -38,7 +38,7 @@ public class NamedObject {
 //	}
 }
 
-namespace ExplorersBook
+namespace XplrGUI
 {
 	/**
 	 * Handles text input from user. Will be used when the Explorer's Book is open and user wants to enter a word.
@@ -121,11 +121,11 @@ namespace ExplorersBook
 		 */
 		private void setUserInputEnabled (bool flag)
 		{
-			if (!ExplorersBook.BookController.isBookOpen ()) {
+			if (!XplrGUI.BookController.isBookOpen ()) {
 				Reachable.shouldRaycast = !flag;
 				MouseCrosshair.showCrosshair = !flag;
 			}
-			ExplorersBook.BookController.disableBook = flag;
+			XplrGUI.BookController.disableBook = flag;
 			GameManager gameManager = GameManager.getInstance ();
 			gameManager.disablePlayerAudioSource (flag);
 			gameManager.disableWalking (flag);
