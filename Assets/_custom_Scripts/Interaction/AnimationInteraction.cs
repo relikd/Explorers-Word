@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using XplrDebug;
 
 namespace Interaction
 {
@@ -9,20 +10,21 @@ namespace Interaction
 	{
 		public Animation animationToPlay;
 		public bool animateOnce;
-		public bool deactCollider;
-		public Collider collider;
+		public bool deactColliderAfterwards;
+		public Collider colliderToDeactivate;
 
 		/**
 		 * Will run the attached animation and display the message
 		 */
 		override public void OnInteractionKeyPressed() {
 
+			LogWriter.Write ("Animation abgespielt: " + animationToPlay.name, this.gameObject);
 			animationToPlay.Play ();
 
 			if (animateOnce)
 				this.interactionEnabled = false;
-			if (deactCollider) {
-				collider.enabled = false;
+			if (deactColliderAfterwards) {
+				colliderToDeactivate.enabled = false;
 			}
 			centeredMessage (responseMessage);
 		}
