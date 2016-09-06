@@ -2,14 +2,14 @@
 using System.Collections;
 namespace Interaction
 {
-    /*
+    /**
      * Ein Interaktionsskript, mit dem der Kronleuchter im zweiten Raum zu Fall gebracht bzw. nach oben gezogen werden kann.
      */
     public class DropAndPullChainInteraction : Interactable
     {
         [SerializeField]
         DropAndMoveChains ChainControlScript;
-        /*
+        /**
          * Laesst den Kronleuchter Fallen bzw. zieht ihn nach oben. Schaltet die angezeigte Nachricht um.
          */ 
         public override void OnInteractionKeyPressed()
@@ -27,7 +27,7 @@ namespace Interaction
             EnableGUI(true);
 
         }
-        /*
+        /**
          * Setzt die angezeigte Nachricht je nach aktuellem Zustand.
          */
         public override string interactMessage()

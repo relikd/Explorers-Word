@@ -4,7 +4,7 @@ using System.Collections;
 
 [RequireComponent (typeof(Rigidbody))]
 
-/*
+/**
  * Ein Skript fuer Raum 2, mit dem die 2 diagonalen Ketten im Raum 2 bewegt werden, wenn sich der Kronleuchter bewegt. Steuert auserdem die Schwerkraft des Kronleuchters.
  */ 
 public class DropAndMoveChains : MonoBehaviour {
@@ -29,7 +29,7 @@ public class DropAndMoveChains : MonoBehaviour {
         dropping = myRigid.useGravity;
     }
 
-    /*
+    /**
      * Aktualisiert die Positionen der 2 diagonalen Ketten. 
      */
 	void Update () {
