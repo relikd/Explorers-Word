@@ -4,7 +4,7 @@ using XplrDebug;
 namespace Interaction
 {
 	/**
-	 * Handle an interaction which is evaluated by a second script
+	 * Handle an interaction which starts an attached animation
 	 */
 	public class AnimationInteraction : PlainInteraction
 	{

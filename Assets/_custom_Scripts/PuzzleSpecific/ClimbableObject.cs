@@ -1,19 +1,31 @@
 ﻿using UnityEngine;
 using System.Collections;
 
+/// <summary>
+/// Makes an Object climbable by the player
+/// </summary>
 public class ClimbableObject : MonoBehaviour {
 
 	public GameObject player;
 	public GameObject ground;
 	public XplrCharacter.FPSController fps_controller;
 
+	/// <summary>
+	/// The collider of the climbableObject. 
+	/// </summary>
 	private BoxCollider climbCollider;
 
+	/// <summary>
+	/// Is "true" when the player is climping and "false" if not.
+	/// </summary>
 	private bool onWall = false;
 
 	private float distanceToGround;
 
-	// Use this for initialization
+	/// <summary>
+	/// Start this instance. 
+	/// Fetches the collider of the climbable object and sets the isTrigger property to "true".
+	/// </summary>
 	void Start () {
 		climbCollider = this.gameObject.GetComponent<BoxCollider> ();
 		climbCollider.isTrigger = true;
@@ -40,6 +52,11 @@ public class ClimbableObject : MonoBehaviour {
 		}
 	}
 
+	/// <summary>
+	/// Raises the trigger enter event and sets the onWall property to "true".
+	/// Disables shouldJump, shouldWalk, shouldPlayAudioSounds and the headBob animation of the PlayerPrefab
+	/// </summary>
+	/// <param name="col">The collider which is sending the Trigger Event</param>
 	void OnTriggerEnter(Collider col){
 		player.GetComponent<Rigidbody> ().mass = 0.0f;
 		onWall = true;
@@ -49,6 +66,11 @@ public class ClimbableObject : MonoBehaviour {
 		fps_controller.m_UseHeadBob = false;
 	}
 
+	/// <summary>
+	/// Raises the trigger exit event and sets the onWall property to "false".
+	/// Enables shouldJump, shouldWalk, shouldPlayAudioSounds and the headBob animation of the PlayerPrefab
+	/// </summary>
+	/// <param name="col">The collider which is sending the Trigger Event</param>
 	void OnTriggerExit(Collider col){
 		player.GetComponent<Rigidbody> ().mass = 1.0f;
 		onWall = true;
