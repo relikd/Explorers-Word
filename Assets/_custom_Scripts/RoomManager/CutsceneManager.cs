@@ -23,20 +23,24 @@ namespace RoomManager
 
 		private AudioSource audioSource;
 		private bool audioHasStarted = false;
+		private bool prologPlayed = false;
 		private float timePassed = 0.0f;
 
 		void Start () {
-			prepareCutscene ();
+			if (LevelManager.currentLevel == 0)
+				prepareCutscene (0);
+			else
+				prepareCutscene (LevelManager.currentLevel + 1);
 		}
 		/** Reset all variables, set text and play audio */
-		void prepareCutscene() {
+		void prepareCutscene(int index) {
 			timePassed = 0.0f;
 			audioHasStarted = false;
 
-			if (LevelManager.currentLevel < chapters.Length) {
-				title.text = chapters [LevelManager.currentLevel].title;
-				subtitle.text = chapters [LevelManager.currentLevel].subtitle;
-				StartCutsceneAudio (LevelManager.currentLevel);
+			if (index < chapters.Length) {
+				title.text = chapters [index].title;
+				subtitle.text = chapters [index].subtitle;
+				StartCutsceneAudio (index);
 			}
 		}
 		/** Wait till audio playback finishes then load next level */
@@ -47,16 +51,16 @@ namespace RoomManager
 			// wait till audio finishes
 			if (audioHasStarted && !audioSource.isPlaying)
 				shouldLoadNextLevel = true;
-			// or wait at least 3 seconds if no audio provided
+				// or wait at least 3 seconds if no audio provided
 			else if (audioHasStarted == false && timePassed > 3.0f)
 				shouldLoadNextLevel = true;
 
 			if (shouldLoadNextLevel) {
-				if (LevelManager.currentLevel == 0) {
-					LevelManager.currentLevel++;
-					prepareCutscene ();
+				if (LevelManager.currentLevel == 0 && prologPlayed == false) {
+					prologPlayed = true;
+					prepareCutscene (1);
 				} else {
-					LevelManager.LoadNextRoom ();
+					LevelManager.LoadRoom (LevelManager.currentLevel + 1);
 				}
 			}
 		}
