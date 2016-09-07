@@ -1,44 +1,41 @@
 ﻿using UnityEngine;
-using System.Collections;
 
 /**
-* Fading for Scene Start or End. 
+* Fading for Scene Start or End
 */
-public class SceneFadingScript : MonoBehaviour {
-
-	public Texture2D fadeTexture;
+public class SceneFadingScript : MonoBehaviour
+{
 	public float fadeSpeed = 0.4f;
 
-	private int drawDepth;
-	private float alpha = 1.0f;
-	private int fadeDir = -1;
+	private float progress = 0;
+	private bool fadeIn = true;
 
-	/**
-	* Depicts a Texture with the current alpha value. 
-	*/
-	void OnGUI(){
-		fadeTexture = Texture2D.whiteTexture;
-		alpha += fadeDir * fadeSpeed * Time.deltaTime;
-
-		alpha = Mathf.Clamp01 (alpha);
-
-		drawDepth = -1000;
-		GUI.color = new Color (GUI.color.r, GUI.color.g, GUI.color.b, alpha);
-		GUI.depth = drawDepth;
-		GUI.DrawTexture (new Rect (0, 0, Screen.width, Screen.height), fadeTexture);
+	/** Do a fade in for every scene */
+	void Awake() {
+		BeginFadeIn ();
 	}
+	/** Draw white texture over the whole screen, gradually change alpha value */
+	void OnGUI () {
+		progress += Time.deltaTime;
 
-	/**
-	* Starts the Fading. 
-	*/
-	public float BeginFade(int direction){
-		fadeDir = direction;
+		float alpha = Mathf.Clamp01 (progress / fadeSpeed);
+		if (fadeIn)
+			alpha = 1 - alpha;
+		
+		GUI.color = new Color (GUI.color.r, GUI.color.g, GUI.color.b, alpha);
+		GUI.depth = -1000;
+		GUI.DrawTexture (new Rect (0, 0, Screen.width, Screen.height), Texture2D.whiteTexture);
+	}
+	/** Start fade in and return time */
+	public float BeginFadeIn () {
+		progress = 0;
+		fadeIn = true;
 		return (fadeSpeed);
 	}
-	/**
-	* Sets The Start Fade. 
-	*/
-	void OnSceneWasLoaded(){
-		BeginFade (-1);
+	/** Start fade out and return time */
+	public float BeginFadeOut () {
+		progress = 0;
+		fadeIn = false;
+		return (fadeSpeed);
 	}
 }

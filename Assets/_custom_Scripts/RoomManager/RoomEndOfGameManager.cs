@@ -41,7 +41,7 @@ public class RoomEndOfGameManager : MonoBehaviour {
 
 		if (textObject != null) {
 			if (textObject.GetComponent<RectTransform>().position.y >= 1400) {
-				LevelManager.LoadRoom ("startMenu");
+				LevelManager.LoadStartScreen ();
 			}
 		}
 	}

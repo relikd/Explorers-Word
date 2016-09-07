@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using System.Collections;
 
 /**
  * Interface for {@link TriggerInteraction}
@@ -36,13 +37,8 @@ namespace Interaction
 		 */
 		bool scriptedActionExecuter (string src) {
 			if (src.Contains ("[leave_room]")) {
-				LevelManager.LoadNextRoom ();
+				StartCoroutine (FadeOutAndLeaveRoom ());
 				responseMessage = responseMessage.Replace ("[leave_room]", "");
-				return true;
-			}
-			if (src.Contains ("[load_cutscene]")) {
-				LevelManager.LoadRoom ("cutscene");
-				responseMessage = responseMessage.Replace ("[load_cutscene]", "");
 				return true;
 			}
 			if (src.Contains ("[main_menu]")) {
@@ -51,6 +47,17 @@ namespace Interaction
 				return true;
 			}
 			return false;
+		}
+		/** Do the scene fading and load next room */
+		IEnumerator FadeOutAndLeaveRoom(){
+			SceneFadingScript sfs = Component.FindObjectOfType<SceneFadingScript> ();
+			if (sfs) {
+				float fadeTime = sfs.BeginFadeOut ();
+				yield return new WaitForSeconds (fadeTime);
+			} else {
+				yield return null;
+			}
+			LevelManager.LeaveRoom ();
 		}
 	}
 }

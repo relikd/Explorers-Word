@@ -104,17 +104,17 @@ public class MainMenuScript : MonoBehaviour {
 	}
 
 	public void StartTutorial(){
-		LevelManager.LoadRoom("room_Tutorial");
+		LevelManager.LoadTutorial ();
 		Cursor.visible = false;
 	}
 
 	/**
-	* Fades Out and Starts Level. 
+	* Fades Out and Starts first Level
 	*/
 	IEnumerator FadeAndChangeLevel(){
-		float fadeTime = gameObject.GetComponent<SceneFadingScript> ().BeginFade(1);
+		float fadeTime = gameObject.GetComponent<SceneFadingScript> ().BeginFadeOut();
 		yield return new WaitForSeconds (fadeTime);
-		LevelManager.LoadRoom ("room_0_new");
+		LevelManager.LoadNextRoom ();
 	}
 
 	/**
