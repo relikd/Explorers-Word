@@ -8,8 +8,8 @@ public class LevelManager
 	public static int currentLevel = 0;
 
 	/** Load level based on #currentLevel */
-	static public void LoadNextRoom() {
-		SceneManager.LoadScene (currentLevel + 3, LoadSceneMode.Single); // current build settings
+	static public void LoadRoom(int index) {
+		SceneManager.LoadScene (index + 3, LoadSceneMode.Single); // current build settings
 	}
 	/** Load main menu */
 	static public void LoadStartScreen() {
@@ -22,7 +22,8 @@ public class LevelManager
 	/** Load cutscene and increase #currentLevel */
 	static public void LeaveRoom (){
 //		currentLevel++;
-		currentLevel = SceneManager.GetActiveScene ().buildIndex -3 +1; // for development
+		// TODO: save unlocked room
+		currentLevel = SceneManager.GetActiveScene ().buildIndex -3; // for development
 		SceneManager.LoadScene ("Cutscene", LoadSceneMode.Single);
 	}
 }
