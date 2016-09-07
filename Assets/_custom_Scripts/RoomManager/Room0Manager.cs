@@ -41,6 +41,6 @@ public class Room0Manager : MonoBehaviour
 	}
 	/** Load cutscene when player enters door */
 	void OnTriggerEnter(Collider other) {
-		LevelManager.LoadRoom ("cutscene");
+		LevelManager.LoadNextRoom ();
 	}
 }
