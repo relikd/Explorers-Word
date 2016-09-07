@@ -24,6 +24,7 @@ public class LevelManager
 //		currentLevel++;
 		// TODO: save unlocked room
 		currentLevel = SceneManager.GetActiveScene ().buildIndex -3; // for development
+		SaveAndLoad.LevelsCompleted = currentLevel + 1;
 		SceneManager.LoadScene ("Cutscene", LoadSceneMode.Single);
 	}
 }
