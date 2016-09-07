@@ -13,13 +13,13 @@ namespace Interaction
 		/** Response text to be displayed in the center of the screen after intercation happend */
 		[Multiline] public string responseMessage = "Interaction not possible";
 
+		/** Display the interaction message on screen */
 		override public string interactMessage() {
-			XplrDebug.LogWriter.Write ("Action Message: " + actionMessage, gameObject);
 			return actionMessage;
 		}
-		/** Just display the text on screen */
+		/** Just display the centered text on screen */
 		override public void OnInteractionKeyPressed() {
-			XplrDebug.LogWriter.Write ("Centered Message: " + responseMessage, gameObject);
+			XplrDebug.LogWriter.Write ("plain interaction: "+actionMessage, gameObject);
 			centeredMessage (responseMessage);
 		}
 	}
