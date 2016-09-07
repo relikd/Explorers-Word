@@ -29,7 +29,7 @@ public  class GameManager : MonoBehaviour
 
 	public bool canEnableCrosshair() {
 		bool result;
-		if (XplrGUI.UserInput.UserInputStatus () || XplrGUI.BookController.isBookOpen ())
+		if (XplrGUI.UserInput.isUserInputOpen () || XplrGUI.BookController.isBookOpen ())
 			result = false;
 		else
 			result = true;
