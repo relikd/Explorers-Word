@@ -49,7 +49,7 @@ namespace XplrGUI
 	public class UserInput : MonoBehaviour {
 		
 		public static bool disableInput = false;
-		private bool isUserInputOpen;
+		private static bool isUserInputOpen;
 
 		private LinkedList<List<NamedObject>> visibleObjects = new LinkedList<List<NamedObject>>();
 		/** This canvas will be used as on/off toggle */
@@ -61,6 +61,10 @@ namespace XplrGUI
 		/** The list of objects which can be toggled visible */
 		[SerializeField] private NamedObject[] objects;
 
+
+		public static bool UserInputStatus() {
+			return isUserInputOpen;
+		}
 		/**
 		 * Our Debugging Interface
 		 */

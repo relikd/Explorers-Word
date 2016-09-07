@@ -27,6 +27,15 @@ public  class GameManager : MonoBehaviour
 		FPSScript.m_UseHeadBob = !flag;
 	}
 
+	public bool canEnableCrosshair() {
+		bool result;
+		if (XplrGUI.UserInput.UserInputStatus () || XplrGUI.BookController.isBookOpen ())
+			result = false;
+		else
+			result = true;
+		return result;
+	}
+
 	/**
 	* Disables Jumping in Custom First Person Controller Script. 
 	*/
