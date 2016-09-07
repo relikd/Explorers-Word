@@ -110,7 +110,7 @@ namespace RoomManager
 		IEnumerator FadeAndChangeLevel(){
 			float fadeTime = gameObject.GetComponent<SceneFadingScript> ().BeginFadeOut();
 			yield return new WaitForSeconds (fadeTime);
-			LevelManager.LoadNextRoom ();
+			LevelManager.LoadRoom (0);
 		}
 		/**
 		* Canceles the Exit Game Menu
