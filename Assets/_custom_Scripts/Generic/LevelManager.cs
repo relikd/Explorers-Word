@@ -13,16 +13,16 @@ public class LevelManager
 	}
 	/** Load main menu */
 	static public void LoadStartScreen() {
-		SceneManager.LoadScene ("startMenu", LoadSceneMode.Single);
+		SceneManager.LoadScene ("StartMenu", LoadSceneMode.Single);
 	}
 	/** Load tutorial room */
 	static public void LoadTutorial() {
-		SceneManager.LoadScene ("room_Tutorial", LoadSceneMode.Single);
+		SceneManager.LoadScene ("Tutorial", LoadSceneMode.Single);
 	}
 	/** Load cutscene and increase #currentLevel */
 	static public void LeaveRoom (){
 //		currentLevel++;
 		currentLevel = SceneManager.GetActiveScene ().buildIndex -3 +1; // for development
-		SceneManager.LoadScene ("cutscene", LoadSceneMode.Single);
+		SceneManager.LoadScene ("Cutscene", LoadSceneMode.Single);
 	}
 }
