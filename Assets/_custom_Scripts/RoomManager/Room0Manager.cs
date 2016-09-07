@@ -43,7 +43,7 @@ namespace RoomManager
 		}
 		/** Load cutscene when player enters door */
 		void OnTriggerEnter(Collider other) {
-			LevelManager.LoadNextRoom ();
+			LevelManager.LeaveRoom ();
 		}
 	}
 }
