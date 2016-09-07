@@ -49,7 +49,7 @@ namespace XplrGUI
 	public class UserInput : MonoBehaviour {
 		
 		public static bool disableInput = false;
-		private static bool isUserInputOpen;
+		private static bool isInputOpen;
 
 		private LinkedList<List<NamedObject>> visibleObjects = new LinkedList<List<NamedObject>>();
 		/** This canvas will be used as on/off toggle */
@@ -62,8 +62,8 @@ namespace XplrGUI
 		[SerializeField] private NamedObject[] objects;
 
 
-		public static bool UserInputStatus() {
-			return isUserInputOpen;
+		public static bool isUserInputOpen() {
+			return isInputOpen;
 		}
 		/**
 		 * Our Debugging Interface
@@ -90,9 +90,9 @@ namespace XplrGUI
 		*/
 		void LateUpdate() {
 			if (!disableInput && Input.GetButtonUp ("Spell Word")) {
-				if (isUserInputOpen)
+				if (isInputOpen)
 					handleUserInput (wordInputField.text);
-				setUserInputEnabled (!isUserInputOpen);
+				setUserInputEnabled (!isInputOpen);
 			}
 			if (visibleObjects.Count > 0)
 				validateIntegrityOfVisibleObjects ();
@@ -149,7 +149,7 @@ namespace XplrGUI
 			gameManager.disableJumping (flag);
 
 			inputCanvas.SetActive (flag);
-			isUserInputOpen = flag;
+			isInputOpen = flag;
 			if (flag)
 				wordInputField.ActivateInputField ();
 			else
