@@ -29,6 +29,11 @@ namespace RoomManager
 		void Start () {
 			if (LevelManager.currentLevel == 0)
 				prepareCutscene (0);
+			else if (LevelManager.currentLevel + 1 == chapters.Length) {
+				title.text = "";
+				subtitle.text = "";
+				LevelManager.LoadStartScreen ();
+			}
 			else
 				prepareCutscene (LevelManager.currentLevel + 1);
 		}
