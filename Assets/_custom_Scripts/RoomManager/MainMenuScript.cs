@@ -264,5 +264,9 @@ namespace RoomManager{
 				currentButton++;
 			}
 		}
+
+		public void OpenFeedbackDocumentInWebBrowser(){
+			Application.OpenURL ("https://goo.gl/forms/Wg4TjY1n9jlVi5Dj2");
+		}
 	}
 }
