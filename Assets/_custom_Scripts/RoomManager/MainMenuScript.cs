@@ -9,6 +9,9 @@ namespace RoomManager{
 	/// </summary>
 	public class MainMenuScript : MonoBehaviour {
 
+		private string version = "1.2.2";
+		public Text versionString;
+
 		public Button startGameButton;
 		public Button openChapterSelectionButton;
 		public Button[] chaptersAsButtons;
@@ -17,7 +20,7 @@ namespace RoomManager{
 		public Button submitExitGame;
 		public Button cancelExitGame;
 		public Canvas chapterSelectionScreen;
-		public Canvas quitMenuPopUp;	
+		public Canvas quitMenuPopUp;
 
 		private int selectedButtonIndex = -1;
 
@@ -35,6 +38,7 @@ namespace RoomManager{
 			exitGameButton = exitGameButton.GetComponent < Button> ();
 			chapterSelectionScreen = chapterSelectionScreen.GetComponent<Canvas> ();
 			quitMenuPopUp = quitMenuPopUp.GetComponent<Canvas> ();
+			versionString.text = "Version " + version;
 
 			LoadSaveStates ();
 
@@ -266,7 +270,7 @@ namespace RoomManager{
 		}
 
 		public void OpenFeedbackDocumentInWebBrowser(){
-			Application.OpenURL ("https://goo.gl/forms/Wg4TjY1n9jlVi5Dj2");
+			Application.OpenURL ("https://docs.google.com/forms/d/e/1FAIpQLSdfW1Oly_KOXAYVyVgKNaYKY0b1sHbKK4KmG-eNbltpZKMeiA/viewform?entry.1686500798="+version);
 		}
 	}
 }
