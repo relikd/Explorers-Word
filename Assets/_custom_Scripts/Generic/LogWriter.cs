@@ -34,20 +34,30 @@ namespace XplrDebug
 		 * importieren kann. Sie umfasst die Uhrzeit,
 		 * den uebergebnen Objektnamen,
 		 * die Klasse und die Funktion aus der der Aufruf stammt,
-		 * sowie den uebergebenen String.*/
+		 * sowie den uebergebenen String.
+         *
+         * Schlaegt fehl, solange keine Berechtigung besteht um die Datei zu erstellen oder zu beschreiben.
+         * In diesem Fall wird kein Log Eintrag erstellt.
+         */
 		public static void Write(String line, GameObject callingObj) {
-			#if (LOG)
-			if (!Directory.Exists(path)) Directory.CreateDirectory(dir);
+#if (LOG)
+            try
+            {
+                if (!Directory.Exists(path)) Directory.CreateDirectory(dir);
 
-			using (StreamWriter sw = File.AppendText(path))
-			{
-				StackTrace stackTrace = new StackTrace();
-				MethodBase methodBase = stackTrace.GetFrame(1).GetMethod();
-				String CallingObjName = (callingObj== null ? "Kein Objektname gegeben" : callingObj.name);
-				string methodName = methodBase.Name;
-				string typeName = methodBase.DeclaringType.Name;
-				sw.WriteLine(DateTime.Now.ToString("HH:mm:ss: ") + " ; " + CallingObjName + " ; " + typeName + " ; " + methodName + " ; " + line);
-			}
+                using (StreamWriter sw = File.AppendText(path))
+                {
+                    StackTrace stackTrace = new StackTrace();
+                    MethodBase methodBase = stackTrace.GetFrame(1).GetMethod();
+                    String CallingObjName = (callingObj == null ? "Kein Objektname gegeben" : callingObj.name);
+                    string methodName = methodBase.Name;
+                    string typeName = methodBase.DeclaringType.Name;
+                    sw.WriteLine(DateTime.Now.ToString("HH:mm:ss: ") + " ; " + CallingObjName + " ; " + typeName + " ; " + methodName + " ; " + line);
+                }
+            }
+            catch(Exception) {
+
+            }
 			#endif
 		}
 
