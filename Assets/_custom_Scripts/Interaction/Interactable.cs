@@ -34,6 +34,13 @@ namespace Interaction
 			return interactionEnabled; // override this in your custom class
 		}
 		/**
+		 * An Interactable script can override this to get an additional layer of configuration control
+		 * @see TriggerInteraction#shouldPlayInteractionSound()
+		 */
+		virtual public bool shouldPlayInteractionSound () {
+			return true; // override this in your custom class
+		}
+		/**
 		 * Will be called from {@link Reachable} when object is in reach
 		 * @see Reachable
 		 */
@@ -82,7 +89,7 @@ namespace Interaction
 		 * @see #OnInteractionKeyPressed()
 		 */
 		protected void playInteractionSound(){
-			if (m_Sounds != null) {
+			if (m_Sounds != null && shouldPlayInteractionSound() == true) {
 				if (m_Sounds.Length == 1) {
 					AudioSource.PlayClipAtPoint (m_Sounds [0], gameObject.transform.position, m_SoundsVolume);
 				} else if (m_Sounds.Length > 2) {
