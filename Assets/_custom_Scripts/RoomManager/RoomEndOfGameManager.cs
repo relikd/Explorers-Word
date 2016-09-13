@@ -26,7 +26,6 @@ namespace RoomManager
 			float distanceWhite = Vector3.Distance (mainCamera.transform.position, whitePortalBorder.transform.position);
 			float distanceBlack = Vector3.Distance (mainCamera.transform.position, blackPortalBorder.transform.position);
 
-			Debug.Log ("Distance white: " + distanceWhite.ToString () + " / Distance black: " + distanceBlack.ToString ());
 			if (distanceBlack < 80 || distanceWhite < 80) {
 				cameraShaker.shakeAmount = 0.4f;
 			}
