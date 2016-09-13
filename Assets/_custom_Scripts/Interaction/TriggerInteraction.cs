@@ -22,6 +22,10 @@ namespace Interaction
 		/** Attached script has to be conform to {@link TriggerInteractionCallback} interface */
 		public TriggerInteractionCallback triggerScript;
 
+		/** Only play sound if trigger is active */
+		override public bool shouldPlayInteractionSound () {
+			return triggerActive;
+		}
 		/**
 		 * Will run the evaluation script and display the message (can be modified in the script)
 		 */
