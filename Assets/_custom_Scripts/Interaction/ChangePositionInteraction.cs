@@ -9,31 +9,28 @@ namespace Interaction{
 	 */
 	public class ChangePositionInteraction : Interactable {
 
+		[SerializeField] string actionMessage;
 		[SerializeField] private bool _destroyWhenFinished;
 		[SerializeField] private Vector3 _endposition;
-		[SerializeField] [Range(0.1f,5.0f)] private float _translationSpeed;
-		private Transform _currentObjectPosition;
+		[SerializeField] private float translationDuration = 1.0f;
 
-		[SerializeField] 
-		string actionMessage; 
-
+		private Vector3 startingPosition;
 		private bool isMoving = false;
+		private float moveProgress = 0.0f;
+		private Vector3 movingDirection;
 
-		void Awake(){
-			_currentObjectPosition = gameObject.GetComponent<Transform> ();
-		}
-
+		/** Moves the object to the new position and deletes it if selected */
 		void Update(){
 			if (isMoving) {
-				if (_endposition == _currentObjectPosition.position) {
+				moveProgress += (Time.deltaTime / translationDuration);
+				moveProgress = Mathf.Min (moveProgress, 1.0f);
+				gameObject.transform.position =  startingPosition + (movingDirection * moveProgress);
+				if (moveProgress >= 1.0f) {
 					isMoving = false;
+					moveProgress = 0.0f;
 					if (_destroyWhenFinished) {
 						DestroyObject (this.gameObject);
-					} else {
-						interactionEnabled = true;
 					}
-				} else {
-					_currentObjectPosition.position =  Vector3.MoveTowards (_currentObjectPosition.position, _endposition, 0.001f * _translationSpeed);
 				}
 			}
 		}
@@ -51,6 +48,8 @@ namespace Interaction{
 		override public void OnInteractionKeyPressed()
 		{
 			XplrDebug.LogWriter.Write("Position durch Script geändert", gameObject);
+			startingPosition = gameObject.transform.position;
+			movingDirection = _endposition - startingPosition;
 			isMoving = true;
 			interactionEnabled = false;
 		}

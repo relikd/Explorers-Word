@@ -56,7 +56,8 @@ namespace XplrGUI {
 		* @param timeout time in seconds
 		*/
 		public static void centeredMessage (string msg, float timeout) {
-			ScreenMessage._i.StartCoroutine(ScreenMessage._i.showTemporaryMessage(msg, timeout));
+			if (ScreenMessage._i)
+				ScreenMessage._i.StartCoroutine(ScreenMessage._i.showTemporaryMessage(msg, timeout));
 		}
 		/**
 		* Coroutine to reset text after a few seconds
