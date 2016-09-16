@@ -12,7 +12,10 @@ namespace RoomManager
 		private CameraShakeScript cameraShaker;
 		private Transform textObject;
 		private Text creditText;
+		public RawImage whiteIcon;
+		public RawImage blackIcon;
 
+		private float creditsHeight = 0.0f;
 		// Use this for initialization
 		void Start () {
 			mainCamera = mainCamera.GetComponent<Camera> ();
@@ -39,8 +42,12 @@ namespace RoomManager
 				cameraShaker.shakeAmount = 0.0f;
 			}
 
+
 			if (textObject != null) {
-				if (textObject.GetComponent<RectTransform>().position.y >= 1400) {
+				Debug.Log (Screen.currentResolution.height.ToString ());
+				if (textObject.GetComponent<RectTransform>().position.y >= 
+					Screen.currentResolution.height + creditsHeight/2 && 
+					textObject.GetComponent<RectTransform>().position.y != 0.0f) {
 					LevelManager.LoadStartScreen ();
 				}
 			}
@@ -65,6 +72,15 @@ namespace RoomManager
 			// text color
 			creditText.color = (blackEnd ? Color.white : Color.black);
 			creditText.GetComponent<CreditsTranslation> ().StartCredits ();
+
+			creditsHeight = creditText.GetComponent<RectTransform> ().rect.height;
+
+			if (creditText.color == Color.white) {
+				Destroy (blackIcon);
+				} else {
+				Destroy (whiteIcon);
+			}
+
 		}
 	}
 }
