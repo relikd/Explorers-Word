@@ -30,11 +30,18 @@ public class RotationLimiter : MonoBehaviour {
 	public int outOfLimit () {
 		int outCode = 0;
 		Vector3 deg = getCurrentRotation ();
-		if (deg.x > maxAngle.x+0.0001F && deg.x < minAngle.x+359.9999F) { outCode |= 1; }
-		if (deg.y > maxAngle.y+0.0001F && deg.y < minAngle.y+359.9999F) { outCode |= 2; }
-		if (deg.z > maxAngle.z+0.0001F && deg.z < minAngle.z+359.9999F) { outCode |= 4; }
+		if (absoluteAngle) {
+			if (deg.x > maxAngle.x+0.0001F || deg.x < minAngle.x-0.0001F) { outCode |= 1; }
+			if (deg.y > maxAngle.y+0.0001F || deg.y < minAngle.y-0.0001F) { outCode |= 2; }
+			if (deg.z > maxAngle.z+0.0001F || deg.z < minAngle.z-0.0001F) { outCode |= 4; }
+		} else {
+			if (deg.x > maxAngle.x+0.0001F && deg.x < minAngle.x+359.9999F) { outCode |= 1; }
+			if (deg.y > maxAngle.y+0.0001F && deg.y < minAngle.y+359.9999F) { outCode |= 2; }
+			if (deg.z > maxAngle.z+0.0001F && deg.z < minAngle.z+359.9999F) { outCode |= 4; }
+		}
 		return outCode;
 	}
+
 	/**
 	 * Same like {@link #outOfLimit()} but bit will be set if directly on border
 	 * @return Bitmask same like {@link #outOfLimit()}
@@ -43,9 +50,9 @@ public class RotationLimiter : MonoBehaviour {
 	public int directlyOnLimit() {
 		int outCode = 0;
 		Vector3 deg = getCurrentRotation ();
-		if (Mathf.Min( Mathf.Abs(deg.x-maxAngle.x), Mathf.Abs(deg.x-360-minAngle.x) ) < 0.0001F) { outCode |= 1; }
-		if (Mathf.Min( Mathf.Abs(deg.y-maxAngle.y), Mathf.Abs(deg.y-360-minAngle.y) ) < 0.0001F) { outCode |= 2; }
-		if (Mathf.Min( Mathf.Abs(deg.z-maxAngle.z), Mathf.Abs(deg.z-360-minAngle.z) ) < 0.0001F) { outCode |= 4; }
+		if (Mathf.Min( Mathf.Abs(deg.x-maxAngle.x), Mathf.Abs(deg.x-minAngle.x-(absoluteAngle?0:360)) ) < 0.0001F) { outCode |= 1; }
+		if (Mathf.Min( Mathf.Abs(deg.y-maxAngle.y), Mathf.Abs(deg.y-minAngle.y-(absoluteAngle?0:360)) ) < 0.0001F) { outCode |= 2; }
+		if (Mathf.Min( Mathf.Abs(deg.z-maxAngle.z), Mathf.Abs(deg.z-minAngle.z-(absoluteAngle?0:360)) ) < 0.0001F) { outCode |= 4; }
 		return outCode;
 	}
 	/**
