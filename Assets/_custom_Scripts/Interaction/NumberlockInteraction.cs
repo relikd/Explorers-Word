@@ -2,13 +2,14 @@
 using System.Collections;
 using UnityEngine.UI;
 using System;
+namespace Interaction{
+
 /**
  * A script that extends {@link ReadInteraction}. It is used to implement an input for alphanumeric codes. It will toggle the specified canvas on interaction.
  * When the user presses "Enter" the script will verify wether the code in the inputfield is correct.
  * If the code is correct the script will toggle the given interactions and gameobjects just like  {@link ToggleInteraction}.
  */
-namespace Interaction
-{
+
     public class NumberlockInteraction : ReadInteraction
     {
         [SerializeField]
