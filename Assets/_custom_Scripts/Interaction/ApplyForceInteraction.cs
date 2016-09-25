@@ -1,10 +1,11 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-
-
 namespace Interaction
 {
+	/**
+	 * Pushes an object upon interaction with predefined force
+	 */
 	public class ApplyForceInteraction : Interactable 
 	{
 		/// <summary>
@@ -13,8 +14,7 @@ namespace Interaction
 		public Vector3 ForceToApply;
 		private Rigidbody body;
 
-		[SerializeField] 
-		string actionMessage; 
+		[SerializeField] string actionMessage;
 
 		// Use this for initialization
 		void Start () {
