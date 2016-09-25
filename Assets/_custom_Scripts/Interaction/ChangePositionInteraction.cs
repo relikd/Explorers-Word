@@ -5,7 +5,7 @@ using Interaction;
 namespace Interaction{
 
 	/**
-	 * Erlaubt die Position eines Objektes, zeitgesteuert an eine bestimmte Endpostition zu translieren. 
+	 * Translate the position of an object over time
 	 */
 	public class ChangePositionInteraction : Interactable {
 
@@ -19,7 +19,7 @@ namespace Interaction{
 		private float moveProgress = 0.0f;
 		private Vector3 movingDirection;
 
-		/** Moves the object to the new position and deletes it if selected */
+		/** Moves the object to the new position and deletes it if chosen */
 		void Update(){
 			if (isMoving) {
 				moveProgress += (Time.deltaTime / translationDuration);
@@ -36,14 +36,14 @@ namespace Interaction{
 		}
 
 		/**
-		 * Gibt den Text zurueck, der dem Spieler angezeigt wird, wenn er mit der Maus über das interagierbare Objekt faehrt.
-		 */ 
+		 * Interaction text to be shown if the player is in reach
+		 */
 		override public string interactMessage() {
 			return actionMessage;
 		}
 
 		/**
-		 * Startet die Translation
+		 * Tell script to begin translation and set all relevant variables
 		 */
 		override public void OnInteractionKeyPressed()
 		{

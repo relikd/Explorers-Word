@@ -4,7 +4,7 @@ using Interaction;
 namespace XplrDebug
 {
 	/**
-	 * Used for integration tests. Performs a key press event on all attached Interactable scripts
+	 * Performs a key press event on all attached Interactable scripts (used for integration tests).
 	 * Will use all scripts which are on the same GameObject
 	 */
 	public class TESTPerformKeyPressOnInteractable : MonoBehaviour

@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
+/** Everything which has to do with displaying Player controls */
 namespace XplrGUI
 {
 	/**

@@ -4,6 +4,7 @@ using UnityEngine.UI;
 
 namespace RoomManager
 {
+	/** Go through a step by step tutorial guide */
 	public class TutorialManager : MonoBehaviour
 	{
 		private int tutorialStep = 0;
@@ -57,7 +58,7 @@ namespace RoomManager
 				}
 			}
 		}
-
+		/** Play puzzle solved sound */
 		IEnumerator Yielder(){
 			yield return new WaitForSeconds (2.0f);
 			GlobalSoundPlayer.playPuzzleSolved ();

@@ -1,16 +1,13 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class ContinousCameraRotationMainMenu : MonoBehaviour {
-
-	private Transform cameraTransform;
-	// Use this for initialization
-	void Start () {
-		cameraTransform =  this.gameObject.GetComponent<Transform> ();
-	}
-	
-	// Update is called once per frame
-	void Update () {
-		cameraTransform.Rotate (new Vector3 (0, 0.1f, 0));
+namespace ContinuousTransformation
+{
+	/** Used in main menu for displaying moving mountains in the background */
+	public class ContinousCameraRotationMainMenu : MonoBehaviour {
+		/** Rotation happens every frame */
+		void Update () {
+			transform.Rotate (new Vector3 (0, 0.1f, 0));
+		}
 	}
 }

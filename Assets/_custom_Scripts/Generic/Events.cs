@@ -1,6 +1,9 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 
+/**
+ * Code taken from <a href="http://www.willrmiller.com/?p=87">http://www.willrmiller.com/?p=87</a>
+ */
 public class GameEvent{}
 
 /**

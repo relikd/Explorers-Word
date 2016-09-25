@@ -2,6 +2,7 @@
 using UnityEditor;
 using System.IO;
 
+/** Contains all Unity Editor windows and developer helper tools */
 namespace XplrUnityExtension
 {
 	/**

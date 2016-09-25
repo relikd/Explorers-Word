@@ -1,24 +1,21 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-
-[RequireComponent (typeof(Rigidbody))]
-
 /**
- * Ein Skript fuer Raum 2, mit dem die 2 diagonalen Ketten im Raum 2 bewegt werden, wenn sich der Kronleuchter bewegt. Steuert auserdem die Schwerkraft des Kronleuchters.
- */ 
+ * Fake the chain movement and chandelier gravity in room 2
+ */
+[RequireComponent (typeof(Rigidbody))]
 public class DropAndMoveChains : MonoBehaviour {
 
-    [SerializeField]
-    GameObject Chain1;
-    [SerializeField]
-    GameObject Chain2;
+    [SerializeField] GameObject Chain1;
+    [SerializeField] GameObject Chain2;
     private Vector3 InitialPos;
     private Vector3 LastPos;
     private Vector3 Direction1;
     private Vector3 Direction2;
     private bool dropping;
     private Rigidbody myRigid;
+
     void Start ()
     {
         InitialPos = transform.position;
@@ -30,11 +27,11 @@ public class DropAndMoveChains : MonoBehaviour {
     }
 
     /**
-     * Aktualisiert die Positionen der 2 diagonalen Ketten. 
+     * Update the position for the two diagonal chains
      */
 	void Update () {
         if(!dropping)
-            gameObject.transform.position = Vector3.Lerp(LastPos, InitialPos, Time.deltaTime * 4); 
+            gameObject.transform.position = Vector3.Lerp(LastPos, InitialPos, Time.deltaTime * 4);
         float Distance = Vector3.Distance( transform.position,  LastPos);
         if (LastPos.y > transform.position.y)
         {
@@ -49,25 +46,25 @@ public class DropAndMoveChains : MonoBehaviour {
         LastPos = transform.position;
     }
     /**
-     * Laesst den Kronleuchter fallen.
+     * Drops the chandelier
      */
-    public void drop() 
+    public void drop()
     {
         myRigid.useGravity = true;
         dropping = true;
     }
     /**
-     * Zieht den Kronleuchter nach oben.
+     * Pull up the chandelier
      */
-    public void pull() 
+    public void pull()
     {
         myRigid.useGravity = false; 
         dropping = false; ;
     }
     /**
-     * Gibt zurueck, ober de Kronleuchter gerade faellt.
+     * Returs if the chandelier is currently falling
      */
-    public bool isDropping() 
+    public bool isDropping()
     {
         return dropping;
     }

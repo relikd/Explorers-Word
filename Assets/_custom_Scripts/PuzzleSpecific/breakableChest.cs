@@ -2,19 +2,20 @@
 using System.Collections;
 
 /**
- * Das Skript zum Zerbrechen der Truhe in Raum 2. Es benoetigt die Ueberreste des OBjekts (Remains), Das Objekt, weclhes die Truhe zerbricht (BreakingObject),
- * sowie ein Array von GameObjects, die beim Zerbrechen als Inhalt activiert werden (contains).
- */ 
+ * Script for breaking the chest in room 2
+ */
 public class breakableChest : Breakable {
 
-	[SerializeField]
-	GameObject BreakingObject;
-	[SerializeField]
-	GameObject[] contains;
+	/** The object which will break the chest (chandelier) */
+	[Tooltip("Das Objekt, welches die Truhe zerbricht")]
+	[SerializeField] GameObject BreakingObject;
+	/** Chest remain parts and any content */
+	[Tooltip("Ein Array von GameObjects, die beim Zerbrechen als Inhalt aktiviert werden")]
+	[SerializeField] GameObject[] contains;
 	private bool rightSpot;
 
 	/**
-	 * Setzt den Inhalt der Truhe auf inaktiv.
+	 * Disable the chest content upon room loading
 	 */
 	void Start () {
         if (contains.Length > 0)
@@ -26,7 +27,7 @@ public class breakableChest : Breakable {
         }
 	}
 	/**
-	 * Prüft bei Kollision, ob die Kollision mit dem BreakingObject war unmd ob dieses sich schnell genung nach unten bewegt hat.
+	 * Validate if {@link #BreakingObject} caused the collision and if the chandelier is moving down
 	 */
 	public void OnCollisionEnter(Collision col) {
         if (col.gameObject == BreakingObject && BreakingObject.GetComponent<Rigidbody>().velocity.y < -0.2) { 
@@ -34,7 +35,7 @@ public class breakableChest : Breakable {
 		}
 	}
 	/**
-	 * Schaltet den Inhalt auf Aktiv und ruft shatter() auf.
+	 * Enables content and call {@link Breakable#shatter()}
 	 */
 	public void shatterChest() {
 		XplrDebug.LogWriter.Write("Truhe zerbrochen", gameObject);
