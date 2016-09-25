@@ -10,35 +10,27 @@ using System.Diagnostics;
 namespace XplrDebug
 {
 	/**
-	 * Eine statische Klasse, die eine ueberladene oeffentliche Funktion zur Verfuegung stellt, um strukturierte Log Eintraege zu erzeugen.
+	 * Static class for handling the structured debug logging
 	 */
 	public static class LogWriter {
 
 		#if (LOG)
 		/**
-		 * Das Verzeichnis, in dem die Logdateien erstellt werden.*/
+		 * The directory for all log files */
 		private static string dir = @"Logs";
 		/**
-		 * Der Name des Logdatei, die erzeugt wird.*/
+		 * The name of the log file. Will be generated each time the game starts. */
 		private static string path = @"Logs/GameLog "+ DateTime.Now.ToString("yyyy-MM-dd")+" "+ DateTime.Now.ToString("HH-mm-ss") + ".txt";
 		#endif
 
 		/**
-		 * Eine oeffentliche Funktion, die eine Zeile in die Logdatei
-		 * eintraegt. Die Zeile umfasst das uebergebene GamebOject und
-		 * den uebergebenen Text. Das GO sollte immer das
-		 * aufrufende Object oder ein relevantes Parent-Object sein.
+		 * Writes information to the log file. Will automatically add timestamp, calling method, current GameObject and a custom string
+		 * The output is ";" separated and can be used for table calculation programs like Excel
+		 * If the user don't have writting permission, no log is created
 		 * 
-		 * Die Ausgabe im Logfile ist durch ";" getrennt,
-		 * damit man sie in ein Tabellenkalkulationsprogramm
-		 * importieren kann. Sie umfasst die Uhrzeit,
-		 * den uebergebnen Objektnamen,
-		 * die Klasse und die Funktion aus der der Aufruf stammt,
-		 * sowie den uebergebenen String.
-         *
-         * Schlaegt fehl, solange keine Berechtigung besteht um die Datei zu erstellen oder zu beschreiben.
-         * In diesem Fall wird kein Log Eintrag erstellt.
-         */
+		 * @param line Custom information you want to log
+		 * @param callingObj The calling object to identify which object caused the logging
+		 */
 		public static void Write(String line, GameObject callingObj) {
 #if (LOG)
             try
@@ -62,14 +54,8 @@ namespace XplrDebug
 		}
 
 		/**
-		 * Eine oeffentliche Funktion, die eine Zeile in die Logdatei
-		 * eintraegt.
-		 * 
-		 * Die Ausgabe im Logfile ist durch ";" getrennt,
-		 * damit man sie in ein Tabellenkalkulationsprogramm
-		 * importieren kann. Sie umfasst die Uhrzeit,
-		 * die Klasse und die Funktion aus der der Aufruf stammt,
-		 * sowie den uebergebenen String.*/
+		 * Just calls the {@link #Write(String, GameObject)} method without an object
+		 */
 		public static void Write(String line) {
 			#if (LOG)
 			Write (line, null);

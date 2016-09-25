@@ -2,28 +2,25 @@
 
 namespace Interaction
 {
-	[RequireComponent (typeof(BoxCollider))]
 	/**
-	 * Erlaubt es das Material eines Objekts beim interagieren zu aendern. Die Interaktion kann nur einmal erfolgen.
+	 * Changes the material of an object (only once)
 	 */
+	[RequireComponent (typeof(BoxCollider))]
 	public class ChangeMatInteraction: Interactable
 	{
-		[SerializeField] 
-		string actionMessage; 
-		[SerializeField]
-		Material afterInteract;
-		[SerializeField]
-		BoxCollider BoxcolliderObj;
+		[SerializeField] string actionMessage;
+		[SerializeField] Material afterInteract;
+		[SerializeField] BoxCollider BoxcolliderObj;
 
 		/**
-		 * Gibt den Text zurueck, der dem Spieler angezeigt wird, wenn er mit der Maus über das interagierbare Objekt faehrt.
+		 * Interaction text to be shown if the player is in reach
 		 */
 		override public string interactMessage() {
 			return actionMessage;
 		}
 
 		/**
-		 * Ersetzt das Material des Bilds und zerstört den BoxCollider des Gameobjects um eine erneute Interaktion zu verhinden.
+		 * Replace the material and destroy the BoxCollider to prevent an additional interaction
 		 */
 		override public void OnInteractionKeyPressed()
 		{

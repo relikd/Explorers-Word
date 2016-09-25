@@ -9,7 +9,7 @@ namespace RoomManager{
 	/// </summary>
 	public class MainMenuScript : MonoBehaviour {
 
-		private string version = "1.3";
+		private string version = "1.4";
 		public Text versionString;
 
 		public Button startGameButton;

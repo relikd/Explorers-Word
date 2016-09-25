@@ -1,8 +1,12 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
+using ContinuousTransformation;
 
 namespace RoomManager
 {
+	/**
+	 * Determine if player reached the end then display credits (used in the ending scene)
+	 */
 	public class RoomEndOfGameManager : MonoBehaviour {
 
 		public Canvas creditCanvas;
@@ -16,7 +20,9 @@ namespace RoomManager
 		public RawImage blackIcon;
 
 		private float creditsHeight = 0.0f;
-		// Use this for initialization
+		/**
+		 * Assign all internal variables like camera, scripts and end position
+		 */
 		void Start () {
 			mainCamera = mainCamera.GetComponent<Camera> ();
 			cameraShaker = mainCamera.GetComponent<CameraShakeScript> ();
@@ -24,7 +30,9 @@ namespace RoomManager
 			blackPortalBorder = blackPortalBorder.GetComponent<Transform> ();
 			creditCanvas.enabled = false;
 		}
-
+		/**
+		 * Constantly check where the player is headed and if he reached the end
+		 */
 		void Update(){
 			float distanceWhite = Vector3.Distance (mainCamera.transform.position, whitePortalBorder.transform.position);
 			float distanceBlack = Vector3.Distance (mainCamera.transform.position, blackPortalBorder.transform.position);
@@ -52,7 +60,9 @@ namespace RoomManager
 				}
 			}
 		}
-
+		/**
+		 * Upon collision with the end, display the credits with correct color
+		 */
 		void OnTriggerEnter(Collider col){
 
 			XplrCharacter.FPSController fps_script = GetComponent<XplrCharacter.FPSController> ();

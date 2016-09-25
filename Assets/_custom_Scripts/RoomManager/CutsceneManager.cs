@@ -3,6 +3,7 @@ using System.Collections;
 using System;
 using UnityEngine.UI;
 
+/** Contains scripts for handling room specific logic */
 namespace RoomManager
 {
 	/**
@@ -10,6 +11,9 @@ namespace RoomManager
 	 */
 	public class CutsceneManager : MonoBehaviour
 	{
+		/**
+		 * Class for saving title, subtitle and audio clip for each cutscene
+		 */
 		[Serializable]
 		public class CutsceneChapter {
 			public string title;
@@ -26,6 +30,7 @@ namespace RoomManager
 		private bool prologPlayed = false;
 		private float timePassed = 0.0f;
 
+		/** Handles prologue after room 0 and loads start menu after ending scene */
 		void Start () {
 			if (LevelManager.currentLevel == 0)
 				prepareCutscene (0);

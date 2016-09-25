@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using UnityEngine.SceneManagement;
 
+/** Tools which help debugging the game for further analysis */
 namespace XplrDebug
 {
 	/**

@@ -1,17 +1,18 @@
 ﻿using UnityEngine;
 using System.Collections;
+
 namespace Interaction
 {
     /**
-     * Ein Interaktionsskript, mit dem der Kronleuchter im zweiten Raum zu Fall gebracht bzw. nach oben gezogen werden kann.
+     * Interaction script for the chandelier in room 2, handles the up down movement
      */
     public class DropAndPullChainInteraction : Interactable
     {
-        [SerializeField]
-        DropAndMoveChains ChainControlScript;
+        [SerializeField] DropAndMoveChains ChainControlScript;
         /**
-         * Laesst den Kronleuchter Fallen bzw. zieht ihn nach oben. Schaltet die angezeigte Nachricht um.
-         */ 
+         * Change the interaction text and perform drop or pull action
+         * @see DropAndMoveChains
+         */
         public override void OnInteractionKeyPressed()
         {
             EnableGUI(false);
@@ -28,12 +29,11 @@ namespace Interaction
 
         }
         /**
-         * Setzt die angezeigte Nachricht je nach aktuellem Zustand.
+         * Display action text based on private bool
          */
         public override string interactMessage()
         {
             return !ChainControlScript.isDropping()? "Kronleuchter fallen lassen": "Kronleuchter hochziehen";
         }
-
     }
 }

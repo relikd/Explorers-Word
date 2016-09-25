@@ -3,6 +3,9 @@ using System.Collections.Generic;
 using UnityEngine.UI;
 using System;
 
+/**
+ * All classes used for game wide notification messaging
+ */
 namespace XplrEvents
 {
 	/**

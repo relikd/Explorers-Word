@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using XplrDebug;
 
+/** Contains all classes with which the user can interact */
 namespace Interaction
 {
 	/**

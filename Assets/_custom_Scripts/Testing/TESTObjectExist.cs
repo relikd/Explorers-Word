@@ -4,7 +4,7 @@ using UnityTest;
 namespace XplrDebug
 {
 	/**
-	 * Used for integration tests. Checks if the assigned GameObject was removed from scene
+	 * Checks if the assigned GameObject was removed from scene (used for integration tests).
 	 */
 	public class TESTObjectExist : MonoBehaviour
 	{

@@ -3,11 +3,11 @@ using System.Collections;
 
 namespace Interaction
 {
+	/**
+	 * Enables the player to carry an object (Rigidbody and BoxCollider required)
+	 */
     [RequireComponent(typeof(BoxCollider))]
     [RequireComponent(typeof(Rigidbody))]
-    /**
-     * Ein Skript, dass es erlaubt, Objekte zu tragen, die einen Rigidbody und einen BoxCollider besitzen.
-     */
     public class HoldInteraction : Interactable
     {
         [SerializeField]
@@ -39,7 +39,7 @@ namespace Interaction
 
 
         /**
-         *Initialisieren von Variablen. 
+         * Initialise all variables
          */
         void Awake()
         {
@@ -54,7 +54,8 @@ namespace Interaction
             saferotate = gameObject.transform.rotation;
         }
         /**
-         * Erneuert die Position des Objekts beim Tragen und erlaubt es das Tragen auch dann abzubrechen, wenn das Objekt eigentlich nicht in Reichweite ist. Bricht  Tragen ab, wenn unerlaubte Bewegungen versucht werden.
+         * Constantly update the object position and disable hold interaction even if the user is not in reach
+         * Drop the object if a prohibited movement is detected
          */
         void Update()
         {   
@@ -78,10 +79,16 @@ namespace Interaction
 				XplrDebug.LogWriter.Write ("Carrying Object: " + carrying, gameObject);
             }
         }
+		/**
+		 * Just display the interaction message
+		 */
         public override string interactMessage()
         {
             return "Taste halten zum Tragen";
         }
+		/**
+		 * Drop object upon mouse release
+		 */
         public override void OnInteractionKeyPressed()
         {
             if (carrying)
@@ -89,6 +96,9 @@ namespace Interaction
                 drop();
             }
         }
+		/**
+		 * Carry while mouse button hold
+		 */
         public override void OnInteractionKeyDown()
 		{
 			if (!carrying)
@@ -98,7 +108,7 @@ namespace Interaction
             }
         }
         /**
-        * Hebt das Objekt auf und setzt entsprechende Parameter.
+        * Pickup and set necessary parameters and variables
         */
         private void pickup()
         {
@@ -114,7 +124,7 @@ namespace Interaction
             }
         }
         /**
-         * Laesst das Objekt fallen und setzt entsprechende Parameter.
+         * Drop and reset all necessary parameters and variables
          */
         private void drop()
         {
@@ -134,7 +144,7 @@ namespace Interaction
 
         }
         /**
-         * Prueft ob an der Zielposition eine Kollision stattfinden wuerde.
+         * Check if the destination position will have a collision
          */
         private bool colliding()
         {
@@ -148,7 +158,7 @@ namespace Interaction
             return Physics.Raycast(ray, out hit, Checkdistance );
         }
         /**
-         * Sucht den am weitesten entfernten Punkt, auf dem das Objekt nicht kollidiert
+         * Find the furthest point without a collision 
          */
         private Vector3 mostDistantSafePosition()
         {
@@ -170,7 +180,7 @@ namespace Interaction
             return safe;
         }
         /**
-         * Prueft, ob es eine direkte Linie zwischen der aktuellen und der geplanten Position gibt. 
+         * Check for any obstacles between player and the predestinated position
          */
         private bool hasLineOfSight(Vector3 PositiontoTest)
         {
@@ -191,9 +201,9 @@ namespace Interaction
             return true;
         }
         /*
-         * Laesst das Objekt fallen, falls es sich in einer Sphaere unter dem Spieler befindet.
+         * Drop the object if it is in a sphere beneath the player
          */
-        private void dropIfBelow() 
+        private void dropIfBelow()
         {
             Collider[] hitColliders = Physics.OverlapSphere(Player.transform.position + 0.45f * controller.height * Vector3.down, controller.radius * 0.95f, Physics.IgnoreRaycastLayer);
             int i = 0;
@@ -204,7 +214,7 @@ namespace Interaction
                     drop();
                     return;
                 }
-                i++;    
+                i++;
             }
         }
     }
