@@ -4,7 +4,7 @@ using System.Collections;
 /**
  * Used to shatter the planks in room 4. Needs the remains of the breakable Object and the object which triggers the script.
  */ 
-public class breakableChest : Breakable {
+public class BreakablePlanks : Breakable {
 
 	/// <summary>
 	/// The object which triggers the script.
