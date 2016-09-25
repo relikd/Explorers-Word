@@ -195,11 +195,9 @@ namespace RoomManager{
 			if (sender == chaptersAsButtons [2]) {
 				StartCoroutine (FadeAndChangeLevel(3));
 			} 
-
-			//TODO:Uncomment when room4 is added to Game + add chapter4button to buttonarray + set chapter4button active in editor
-			//		if (sender == chaptersAsButtons [3]) {
-			//			StartCoroutine (FadeAndChangeLevel(4));
-			//		}
+			if (sender == chaptersAsButtons [3]) {
+						StartCoroutine (FadeAndChangeLevel(4));
+			}
 		}
 
 		/// <summary>
