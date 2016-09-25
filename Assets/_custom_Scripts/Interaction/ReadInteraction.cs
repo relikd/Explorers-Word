@@ -8,7 +8,7 @@ namespace Interaction
 		[SerializeField] string actionMessage;
 		[SerializeField] string actionMessageWhileOpen;
 		[SerializeField] Canvas CanvasToShow;
-		private bool reading = false;
+		protected bool reading = false;
 
 		/* Show interaction message depending on current state */
 		override public string interactMessage() {
@@ -19,8 +19,11 @@ namespace Interaction
 			setCanvasVisible (!reading);
 			XplrDebug.LogWriter.Write ("Set Canvas to: " + (!reading).ToString(), gameObject);
 		}
+        public void Update() {
+            if (reading && Input.GetKeyDown(KeyCode.Escape)) setCanvasVisible(false);
+        }
 		/** Toggles the canvas and disables player movement until finished */
-		private void setCanvasVisible (bool flag) {
+		protected virtual void setCanvasVisible (bool flag) {
 			EnableGUI(false);
 
 			reading = flag;
