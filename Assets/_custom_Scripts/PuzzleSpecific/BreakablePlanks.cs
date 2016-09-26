@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
+
 /**
  * Used to shatter the planks in room 4. Needs the remains of the breakable Object and the object which triggers the script.
  */ 
@@ -17,6 +18,12 @@ public class BreakablePlanks : Breakable {
 	public void OnCollisionEnter(Collision col) {
 		if (col.gameObject == BreakingObject) {
 			shatter ();
+			wait2SecondsAndPlayPuzzleSolvedSound ();
 		}
+	}
+
+	IEnumerator wait2SecondsAndPlayPuzzleSolvedSound(){
+		yield return new WaitForSeconds(2.0f);
+		GlobalSoundPlayer.playPuzzleSolved();
 	}
 }
