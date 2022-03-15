@@ -1,0 +1,6 @@
+Assets/** linguist-vendored
+Assets/-rooms/** -linguist-vendored
+Assets/Audiofiles/** -linguist-vendored
+Assets/Resources/** -linguist-vendored
+Assets/_custom_Assets/** -linguist-vendored
+Assets/_custom_Scripts/** -linguist-vendored
